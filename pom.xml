@@ -44,8 +44,4 @@
 	<build>
 		<finalName>visitors</finalName>
 	</build>
-
-	<modules>
-		<module>visitors-backend</module>
-	</modules>
 </project>
