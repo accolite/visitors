@@ -3,7 +3,12 @@
  */
 package com.accolite.visitors.model;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,28 +18,53 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  */
 @Document(collection = "visitor")
-public class Visitor {
+public class Visitor implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	private String id;
 
+	@NotBlank
+	@Size(max = 50)
 	private String firstName;
+
+	@NotBlank
+	@Size(max = 50)
 	private String lastName;
+
+	@NotBlank
 	private long phoneNumber;
+
+	@NotBlank
+	@Email
 	private String email;
+
+	@NotBlank
 	private String location;
 
 	// Aadhar or PAN or License etc.,
+	@NotBlank
+	@Size(max = 50)
 	private String uniqueIdType;
+
+	@NotBlank
+	@Size(max = 50)
+	//@Indexed(unique = true)
 	private String uniqueIdNumber;
 
 	private Date inTime;
+
 	private Date outTime;
 
 	private String personOfContact;
 	private String purpose;
 
 	// Employee or Guest
+	@NotBlank
 	private String visitorType;
 
 	// applicable only for Accolite employees
@@ -45,11 +75,11 @@ public class Visitor {
 		super();
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
