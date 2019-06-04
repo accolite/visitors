@@ -13,6 +13,6 @@ import com.accolite.visitors.model.Visitor;
  *
  */
 @Repository
-public interface VisitorDao extends MongoRepository<Visitor, Integer> {
+public interface VisitorDao extends MongoRepository<Visitor, String> {
 
 }
