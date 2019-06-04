@@ -1,0 +1,90 @@
+/* app css stylesheet */
+/*
+.menu {
+  list-style: none;
+  border-bottom: 0.2em solid rgb(43, 90, 219);
+  margin-bottom: 2em;
+  padding: 0 0 2em;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row-reverse;
+  
+}
+
+
+.menu  a{
+  text-decoration: none;
+  color: white;
+  font-size: 2em;
+  padding-right: 5em;
+  
+}
+
+li a.active{
+  background-color: rgb(140, 143, 143);
+  text-decoration: underline;
+
+  color: rgb(177, 37, 37);
+
+}
+.menu a:hover{
+ background-color: brown;
+ color:black;
+}
+/*
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+*/
+
+
+/*
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  padding-right: 5em;
+}
+*/
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+li {
+  float: left;
+}
+
+li a#url {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 28px 170px;
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+li a:hover:not(.active) {
+  background-color: rgb(52, 97, 182);
+}
+
+.active {
+  background-color: #4CAF50;
+}
+.topnav-right {
+  float: right;
+}
