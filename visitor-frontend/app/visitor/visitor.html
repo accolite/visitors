@@ -1,1 +1,103 @@
-<p> This is visitor page</p>
+<div style="margin: 40px;" ng-app="myApp.visitor" ng-controller="VisitorCtrl">
+    <h1>Create New Visitor</h1>
+    <form novalidate>
+
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="firstName">First Name:</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Enter your first name"
+                    name="firstName" ng-model="visitor.firstName">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" name="lastName"
+                    ng-model="visitor.lastName">
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="email">Email Id:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                    ng-model="visitor.emailId">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="phoneNumber" placeholder="Enter your phone number"
+                    name="phoneNumber" ng-model="visitor.phoneNumber" />
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="idType">Id Type:</label>
+                <select class="form-control" id="idType" name="idType" ng-model="visitor.idType">
+                    <option value="">Select</option>
+                    <option>Voter Id</option>
+                    <option>Adhar Card</option>
+                    <option>Driving Licence</option>
+                    <option>Pan Card</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="idNumber">Id Number</label>
+                <input type="text" class="form-control" id="idNumber" name="idNumber" ng-model="visitor.idNumber" />
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="inTime">In Time:</label>
+                <input type="datetime-local" class="form-control" id="inTime" name="inTime" ng-model="visitor.inTime" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="outTime">Out Time:</label>
+                <input type="datetime-local" class="form-control" id="outTime" name="outTime"
+                    ng-model="visitor.outTime" />
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="contactPerson">Contact Person:</label>
+                <input type="text" class="form-control" id="contactPerson" name="contactPerson"
+                    ng-model="visitor.contactPerson" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="purpose">Purpose:</label>
+                <select class="form-control" ng-model="visitor.purpose">
+                    <option value="">Select</option>
+                    <option>Interview</option>
+                    <option>Meeting</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="officeLocation">Office Location:</label>
+                <select class="form-control" ng-model="visitor.officeLocation">
+                    <option value="">Select</option>
+                    <option>Bengaluru</option>
+                    <option>Hyderabad</option>
+                    <option>Mumbai</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="comingFrom">Coming From:</label>
+                <input type="text" class="form-control" id="comingFrom" name="comingFrom"
+                    placeholder="Person coming from" ng-model="visitor.comingFrom" />
+            </div>
+        </div>
+
+
+        <button class="btn btn-primary" ng-click="createVisitor()">Create</button>
+
+    </form>
+</div>
