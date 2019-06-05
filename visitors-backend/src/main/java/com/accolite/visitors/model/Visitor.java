@@ -7,7 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
@@ -28,32 +29,31 @@ public class Visitor implements Serializable {
 	@Id
 	private String id;
 
-	@NotBlank
+	@NotEmpty
 	@Size(max = 50)
 	private String firstName;
 
-	@NotBlank
+	@NotEmpty
 	@Size(max = 50)
 	private String lastName;
 
-	@NotBlank
+	@NotNull
 	private long phoneNumber;
 
-	@NotBlank
+	@NotEmpty
 	@Email
 	private String email;
 
-	@NotBlank
+	@NotEmpty
 	private String location;
 
 	// Aadhar or PAN or License etc.,
-	@NotBlank
+	@NotEmpty
 	@Size(max = 50)
 	private String uniqueIdType;
 
-	@NotBlank
+	@NotEmpty
 	@Size(max = 50)
-	//@Indexed(unique = true)
 	private String uniqueIdNumber;
 
 	private Date inTime;
@@ -64,7 +64,7 @@ public class Visitor implements Serializable {
 	private String purpose;
 
 	// Employee or Guest
-	@NotBlank
+	@NotEmpty
 	private String visitorType;
 
 	// applicable only for Accolite employees
