@@ -61,7 +61,7 @@ public class VisitorController {
 		return new ResponseEntity<Boolean>(exit, HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping(value = "/")
 	public ResponseEntity<List<Visitor>> getVisitors() {
 		List<Visitor> visitors = visitorService.getVisitors();
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
