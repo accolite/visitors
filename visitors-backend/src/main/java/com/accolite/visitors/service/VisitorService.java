@@ -4,7 +4,6 @@
 package com.accolite.visitors.service;
 
 import java.util.List;
-
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.Visitor;
 
@@ -38,5 +37,10 @@ public interface VisitorService {
 	 * @throws VisitorNotFoundException
 	 */
 	public boolean exitVisitor(String id, long exitTime) throws VisitorNotFoundException;
+
+	/**
+	 * @return
+	 */
+	public List<Visitor> getVisitors();
 
 }

@@ -1,7 +1,6 @@
 package com.accolite.visitors.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -60,6 +59,12 @@ public class VisitorController {
 			return new ResponseEntity<Boolean>(exit, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Boolean>(exit, HttpStatus.OK);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<Visitor>> getVisitors() {
+		List<Visitor> visitors = visitorService.getVisitors();
+		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
 
 }

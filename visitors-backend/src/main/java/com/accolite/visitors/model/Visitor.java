@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.accolite.visitors.util.VisitorType;
+
 /**
  * @author Lavanya
  *
@@ -29,43 +31,43 @@ public class Visitor implements Serializable {
 	@Id
 	private String id;
 
-	@NotEmpty
+	@NotEmpty(message = "First Name is mandatory")
 	@Size(max = 50)
 	private String firstName;
 
-	@NotEmpty
+	@NotEmpty(message = "Last Name is mandatory")
 	@Size(max = 50)
 	private String lastName;
 
-	@NotNull
+	@NotNull(message = "Phone Number is mandatory")
 	private long phoneNumber;
 
-	@NotEmpty
+	@NotEmpty(message = "Email ID is mandatory")
 	@Email
-	private String email;
+	private String emailId;
 
-	@NotEmpty
-	private String location;
+	@NotEmpty(message = "Location is mandatory")
+	private String comingFrom;
 
 	// Aadhar or PAN or License etc.,
-	@NotEmpty
+	@NotEmpty(message = "ID Type is mandatory")
 	@Size(max = 50)
-	private String uniqueIdType;
+	private String idType;
 
-	@NotEmpty
+	@NotEmpty(message = "ID Number is mandatory")
 	@Size(max = 50)
-	private String uniqueIdNumber;
+	private String idNumber;
 
 	private Date inTime;
 
 	private Date outTime;
 
-	private String personOfContact;
+	private String contactPerson;
 	private String purpose;
 
 	// Employee or Guest
-	@NotEmpty
-	private String visitorType;
+	//@NotEmpty(message = "Visitor Type is mandatory")
+	private VisitorType visitorType;
 
 	// applicable only for Accolite employees
 	private String officeLocation;
@@ -107,36 +109,36 @@ public class Visitor implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailId() {
+		return emailId;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getComingFrom() {
+		return comingFrom;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setComingFrom(String comingFrom) {
+		this.comingFrom = comingFrom;
 	}
 
-	public String getUniqueIdType() {
-		return uniqueIdType;
+	public String getIdType() {
+		return idType;
 	}
 
-	public void setUniqueIdType(String uniqueIdType) {
-		this.uniqueIdType = uniqueIdType;
+	public void setIdType(String idType) {
+		this.idType = idType;
 	}
 
-	public String getUniqueIdNumber() {
-		return uniqueIdNumber;
+	public String getIdNumber() {
+		return idNumber;
 	}
 
-	public void setUniqueIdNumber(String uniqueIdNumber) {
-		this.uniqueIdNumber = uniqueIdNumber;
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
 	}
 
 	public Date getInTime() {
@@ -155,12 +157,12 @@ public class Visitor implements Serializable {
 		this.outTime = outTime;
 	}
 
-	public String getPersonOfContact() {
-		return personOfContact;
+	public String getContactPerson() {
+		return contactPerson;
 	}
 
-	public void setPersonOfContact(String personOfContact) {
-		this.personOfContact = personOfContact;
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
 	}
 
 	public String getPurpose() {
@@ -171,11 +173,11 @@ public class Visitor implements Serializable {
 		this.purpose = purpose;
 	}
 
-	public String getVisitorType() {
+	public VisitorType getVisitorType() {
 		return visitorType;
 	}
 
-	public void setVisitorType(String visitorType) {
+	public void setVisitorType(VisitorType visitorType) {
 		this.visitorType = visitorType;
 	}
 
@@ -198,10 +200,10 @@ public class Visitor implements Serializable {
 	@Override
 	public String toString() {
 		return "Visitor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber="
-				+ phoneNumber + ", email=" + email + ", location=" + location + ", uniqueIdType=" + uniqueIdType
-				+ ", uniqueIdNumber=" + uniqueIdNumber + ", inTime=" + inTime + ", outTime=" + outTime
-				+ ", personOfContact=" + personOfContact + ", purpose=" + purpose + ", visitorType=" + visitorType
-				+ ", officeLocation=" + officeLocation + ", employeeId=" + employeeId + "]";
+				+ phoneNumber + ", emailId=" + emailId + ", comingFrom=" + comingFrom + ", idType=" + idType
+				+ ", idNumber=" + idNumber + ", inTime=" + inTime + ", outTime=" + outTime + ", contactPerson="
+				+ contactPerson + ", purpose=" + purpose + ", visitorType=" + visitorType + ", officeLocation="
+				+ officeLocation + ", employeeId=" + employeeId + "]";
 	}
 
 }
