@@ -51,7 +51,8 @@ public class VisitorController {
 
 	// exitTime in milliseconds (epoch) format
 	@PutMapping(value = "/exit/{id}")
-	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id, @RequestParam("exitTime") long exitTime) {
+	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id,
+			@RequestParam(required = false) long exitTime) {
 		boolean exit = false;
 		try {
 			exit = visitorService.exitVisitor(id, exitTime);
