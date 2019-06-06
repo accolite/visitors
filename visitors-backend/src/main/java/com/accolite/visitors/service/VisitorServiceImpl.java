@@ -55,6 +55,12 @@ public class VisitorServiceImpl implements VisitorService {
 		return visitorDao.findAll(Sort.by(Sort.Direction.DESC, "inTime"));
 	}
 
+	@Override
+	public boolean deleteVisitor(String id) {
+		visitorDao.deleteById(id);
+		return true;
+	}
+
 	/**
 	 * @param startDate
 	 * @return

@@ -43,4 +43,12 @@ public interface VisitorService {
 	 */
 	public List<Visitor> getVisitors();
 
+	/**
+	 * delete visitor by id
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteVisitor(String id);
+
 }
