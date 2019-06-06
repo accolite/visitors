@@ -44,7 +44,7 @@ public class VisitorController {
 	// date in MM/DD/YYYY format
 	@GetMapping(value = "/getVisitorsByInTime")
 	public ResponseEntity<List<Visitor>> getVisitorsByInTime(@RequestParam("startDate") String startDate,
-			@RequestParam(required = false) String endDate) {
+			@RequestParam(value = "endDate", required = false) String endDate) {
 		List<Visitor> list = visitorService.getVisitorsByInTime(startDate, endDate);
 		return new ResponseEntity<List<Visitor>>(list, HttpStatus.OK);
 	}
@@ -52,7 +52,7 @@ public class VisitorController {
 	// exitTime in milliseconds (epoch) format
 	@PutMapping(value = "/exit/{id}")
 	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id,
-			@RequestParam(required = false) long exitTime) {
+			@RequestParam(value = "exitTime", required = false) Long exitTime) {
 		boolean exit = false;
 		try {
 			exit = visitorService.exitVisitor(id, exitTime);
