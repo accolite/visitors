@@ -36,7 +36,7 @@ public interface VisitorService {
 	 * @return
 	 * @throws VisitorNotFoundException
 	 */
-	public boolean exitVisitor(String id, long exitTime) throws VisitorNotFoundException;
+	public boolean exitVisitor(String id, Long exitTime) throws VisitorNotFoundException;
 
 	/**
 	 * @return

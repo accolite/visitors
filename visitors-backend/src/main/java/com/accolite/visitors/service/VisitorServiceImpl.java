@@ -40,10 +40,10 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public boolean exitVisitor(String id, long exitTime) throws VisitorNotFoundException {
+	public boolean exitVisitor(String id, Long exitTime) throws VisitorNotFoundException {
 		Visitor visitor = visitorDao.findById(id).orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
 		if (visitor != null) {
-			visitor.setOutTime((exitTime != 0) ? new Date(exitTime) : new Date());
+			visitor.setOutTime((exitTime != null) ? new Date(exitTime) : new Date());
 			visitorDao.save(visitor);
 			return true;
 		}
