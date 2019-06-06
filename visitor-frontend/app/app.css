@@ -88,3 +88,27 @@ li a:hover:not(.active) {
 .topnav-right {
   float: right;
 }
+
+
+#visitor {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#visitor td, #visitor th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#visitor tr:nth-child(even){background-color: #f2f2f2;}
+
+#visitor tr:hover {background-color: #ddd;}
+
+#visitor th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(69, 115, 175);
+  color: white;
+}

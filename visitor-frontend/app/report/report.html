@@ -1,1 +1,40 @@
-<p> This is Report page</p>
+<div ng-controller="ReportCtrl">
+<table id="visitor">
+    <thead>
+        <tr>
+       <th ng-repeat="header in headElement" >{{tableHeaders[header]}}</th>
+       <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in lstClients| filter:Filter">
+          <td ng-repeat="inRow in headElement">{{row[inRow]}}</td>
+          <td>
+            <i class="material-icons" ng-click="setExitTime(row.id)">exit_to_app</i>
+            <i class="material-icons" ng-click="editItem(row.id)" ng-if="editable">edit</i>
+            <i class="material-icons" ng-click="editItem(row.id)" ng-if="!editable"> done_outline</i>
+            <i class="material-icons">close</i>
+            
+
+                  
+                   
+
+          </td>
+     <!--  <td>{{row.firstName}}</td>
+       <td>{{row.lastName}}</td>
+       <td>{{row.phoneNumber}}</td>
+       <td>{{row.emailId}}</td>
+       <td>{{row.comingFrom}}</td>
+       <td>{{row.idType}}</td>
+       <td>{{row.idNumber}}</td>
+       <td>{{row.inTime}}</td>
+       <td>{{row.outTime}}</td>
+       <td>{{row.contactPerson}}</td>
+       <td>{{row.purpose}}</td>
+       <td>{{row.visitorType}}</td>
+       <td>{{row.officeLocation}}</td>
+       <td>{{row.employeeId}}</td>-->
+       </tr>
+    </tbody>
+ </table>
+</div>
