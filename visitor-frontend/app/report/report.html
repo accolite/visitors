@@ -10,15 +10,10 @@
       <tr ng-repeat="row in lstClients| filter:Filter">
           <td ng-repeat="inRow in headElement">{{row[inRow]}}</td>
           <td>
-            <i class="material-icons" ng-click="setExitTime(row.id)">exit_to_app</i>
-            <i class="material-icons" ng-click="editItem(row.id)" ng-if="editable">edit</i>
+            <i  class="material-icons" ng-click="setExitTime(row.id)" style="cursor:default;color:green">exit_to_app</i>
+            <i class="material-icons" ng-click="editItem(row.id)" ng-if="editable" style="cursor:default;color: blue" >edit</i>
             <i class="material-icons" ng-click="editItem(row.id)" ng-if="!editable"> done_outline</i>
-            <i class="material-icons">close</i>
-            
-
-                  
-                   
-
+            <i class="material-icons" ng-click="deleteRec(row.id)" style="cursor:default;color: red">delete_forever</i>
           </td>
      <!--  <td>{{row.firstName}}</td>
        <td>{{row.lastName}}</td>

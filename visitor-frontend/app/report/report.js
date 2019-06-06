@@ -66,9 +66,10 @@ $scope.setExitTime= function(id){
 
   $http.put('http://localhost:8081/api/visitor/exit/' + id).then(function (response) {
 
-    if (response.data)
+    if (response.data){
     
     $scope.msg = "Put Data Method Executed Successfully!";
+    fillTable();}
     
     }, function (response) {
     
@@ -82,6 +83,28 @@ $scope.setExitTime= function(id){
     
     });
 
+}
+
+
+$scope.deleteRec = function(id){
+  $http.delete('http://localhost:8081/api/visitor/'+ id).then(function (response) {
+
+    if (response.data){
+      $scope.msg = "Data Deleted Successfully!";
+      fillTable();
+    }
+    
+    }, function (response) {
+    
+    $scope.msg = "Service not Exists";
+    
+    $scope.statusval = response.status;
+    
+    $scope.statustext = response.statusText;
+    
+    $scope.headers = response.headers();
+    
+    });
 }
 
 $scope.editable = true;
