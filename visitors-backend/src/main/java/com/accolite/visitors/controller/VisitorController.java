@@ -27,7 +27,7 @@ import com.accolite.visitors.service.VisitorService;
  *
  */
 @RestController
-@RequestMapping(value = "/api/visitor")
+@RequestMapping(value = {"/api/visitor", "/api-dev/visitor"})
 public class VisitorController {
 
 	@Autowired
