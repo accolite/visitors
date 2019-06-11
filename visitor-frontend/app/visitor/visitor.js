@@ -9,19 +9,29 @@ app.config(['$routeProvider', function ($routeProvider) {
   });
 }]);
 
-app.controller('VisitorCtrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('VisitorCtrl', ['$scope', '$http','$routeParams', function ($scope, $http,$routeParams ) {
+ var loc = (window.location.href.split("?")[1]).substr((window.location.href.split("?")[1]).indexOf("loc=") + 4);
+ console.log("aaaa" + loc);
+ var locations ={ 
+         "BLR" : "Bangalore",
+         "HYD" : "Hyderabad",
+         "DEL" : "Delhi"
+ }
+ console.log(locations[loc]);
+
+  console.log("afaaff" + $routeParams.parm);
   $scope.visitor = {
     firstName: 'Yashavanta',
     lastName: 'Byagawadi',
     emailId: 'yashavanta92@gmail.com',
-    phoneNumber: '8105236319',
+    phoneNumber: 8105236319,
     idType: 'Voter Id',
     idNumber: '12345',
     inTime: '1559717904000',
     outTime: '1559717904000',
     contactPerson: 'Srikanth',
     purpose: 'Interview',
-    officeLocation: 'Bengaluru',
+    officeLocation: locations[loc],
     comingFrom: 'BTM',
     visitorType: 'Guest',
     employeeId: '1111'
@@ -30,6 +40,7 @@ app.controller('VisitorCtrl', ['$scope', '$http', function ($scope, $http) {
     console.log('pojo', $scope.visitor);
     var inTimeDate = new Date($scope.visitor.inTime);
     console.log('in time', inTimeDate);
+    console.log("afaaff" + $routeParams.parm);
 
     $http.post("http://localhost:8081/api/visitor/create", $scope.visitor)
       .then(function myResponse(response) {
