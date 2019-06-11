@@ -1,4 +1,11 @@
 <div ng-controller="ReportCtrl">
+<div class="col-md-12">
+  <span>From</span>
+  <input type="date" name="from" ng-model="time.fromTime">
+  <span>To</span>
+  <input type="date" name="from" ng-model="time.toTime" ng-change="restric()">
+  <button  type="button" ng-click="filtrTablDt()">Filter</button>
+</div>
 <table id="visitor">
     <thead>
         <tr>

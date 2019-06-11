@@ -22,6 +22,12 @@ $scope.tableHeaders = {
                        "inTime"       : 'In Time',        "outTime"       : 'Out Time', 
                        "contactPerson": 'Contact Person', "purpose"       : 'Purpose',
                        "visitorType"  : 'Visitor Type',   "employeeId"    : 'Emp Id' };
+
+var tDate= new Date();
+$scope.time={
+  fromTime : tDate,
+  toTime: tDate
+}
 // if error in our request to the server
 function errorHandler(response) {s
     if (!angular.isObject(response))
@@ -37,8 +43,10 @@ function successHandler(response) {
 };
 // get Clients Info from DataBase
  function getClients() {
+   console.log($scope.time.fromTime);
     var response = $http.get("http://localhost:8081/api/visitor/", {},{});
     return response.then(successHandler, errorHandler);
+
  };
 // fill our table
 function headFilter(val){
@@ -112,6 +120,26 @@ $scope.editItem = function(id){
   $scope.editable = !$scope.editable;
 }
 fillTable();
+$scope.restric = function(){
+  if($scope.time.fromTime > $scope.time.toTime){
+    $scope.time.toTime = $scope.time.fromTime;
+    console.log( $scope.time.toTime);
+   
+    //fillTable();
+  }
+
+  console.log( "faf" + $scope.lstClients);
+}
+
+$scope.filtrTablDt = function(){
+  console.log("aaaa");
+  console.log("aaa" + $scope.lstClients);
+  $scope.lstClients =$scope.lstClients.filter(function(o){
+    var d= new Date(o.inTime);
+         return (d.getFullYear() == $scope.time.fromTime.getFullYear() && d.getMonth() == $scope.time.fromTime.getMonth() &&   d.getDate() == $scope.time.fromTime.getDate()).promise  });
+
+         console.log("aaa" + $scope.lstClients);
+        }
 
 
 }]);
