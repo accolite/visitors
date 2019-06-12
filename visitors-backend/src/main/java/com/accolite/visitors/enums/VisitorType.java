@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.accolite.visitors.util;
+package com.accolite.visitors.enums;
 
 /**
  * @author Lavanya

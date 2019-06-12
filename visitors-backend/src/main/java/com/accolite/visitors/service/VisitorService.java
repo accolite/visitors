@@ -4,7 +4,10 @@
 package com.accolite.visitors.service;
 
 import java.util.List;
+
+import com.accolite.visitors.bo.VisitorBO;
 import com.accolite.visitors.exception.VisitorNotFoundException;
+import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 
 /**
@@ -14,10 +17,10 @@ import com.accolite.visitors.model.Visitor;
 public interface VisitorService {
 
 	/**
-	 * @param visitor
+	 * @param visitorBO
 	 * @return
 	 */
-	public Visitor createVisitor(Visitor visitor);
+	public VisitorBO createVisitor(VisitorBO visitorBO);
 
 	/**
 	 * returns visitors between startDate and endDate order by DateTime descending
@@ -26,7 +29,7 @@ public interface VisitorService {
 	 * @param endDate
 	 * @return
 	 */
-	public List<Visitor> getVisitorsByInTime(String startDate, String endDate);
+	public List<VisitorBO> getVisitorsByInTime(String startDate, String endDate);
 
 	/**
 	 * update exit/out time of the visitor
@@ -41,7 +44,7 @@ public interface VisitorService {
 	/**
 	 * @return
 	 */
-	public List<Visitor> getVisitors();
+	public List<VisitorBO> getVisitors();
 
 	/**
 	 * delete visitor by id
@@ -50,5 +53,13 @@ public interface VisitorService {
 	 * @return
 	 */
 	public boolean deleteVisitor(String id);
+
+	/**
+	 * @param searchTerm
+	 * @return
+	 */
+	public List<VisitorBO> searchVisitor(String searchTerm);
+
+	List<VisitSummary> findByComingFromOrFirstName(String text);
 
 }

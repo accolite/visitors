@@ -4,17 +4,15 @@
 package com.accolite.visitors.model;
 
 import java.io.Serializable;
-import java.util.Date;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.accolite.visitors.util.VisitorType;
+import com.accolite.visitors.enums.VisitorType;
 
 /**
  * @author Lavanya
@@ -31,10 +29,12 @@ public class Visitor implements Serializable {
 	@Id
 	private String id;
 
+	@Indexed
 	@NotEmpty(message = "First Name is mandatory")
 	@Size(max = 50)
 	private String firstName;
 
+	@Indexed
 	@NotEmpty(message = "Last Name is mandatory")
 	@Size(max = 50)
 	private String lastName;
@@ -42,35 +42,26 @@ public class Visitor implements Serializable {
 	@NotNull(message = "Phone Number is mandatory")
 	private long phoneNumber;
 
+	@Indexed
 	@NotEmpty(message = "Email ID is mandatory")
 	@Email
 	private String emailId;
-
-	@NotEmpty(message = "Location is mandatory")
-	private String comingFrom;
 
 	// Aadhar or PAN or License etc.,
 	@NotEmpty(message = "ID Type is mandatory")
 	@Size(max = 50)
 	private String idType;
 
+	@Indexed
 	@NotEmpty(message = "ID Number is mandatory")
 	@Size(max = 50)
 	private String idNumber;
 
-	private Date inTime;
-
-	private Date outTime;
-
-	private String contactPerson;
-	private String purpose;
-
 	// Employee or Guest
-	//@NotEmpty(message = "Visitor Type is mandatory")
+	// @NotEmpty(message = "Visitor Type is mandatory")
 	private VisitorType visitorType;
 
-	// applicable only for Accolite employees
-	private String officeLocation;
+	@Indexed
 	private long employeeId;
 
 	public Visitor() {
@@ -117,14 +108,6 @@ public class Visitor implements Serializable {
 		this.emailId = emailId;
 	}
 
-	public String getComingFrom() {
-		return comingFrom;
-	}
-
-	public void setComingFrom(String comingFrom) {
-		this.comingFrom = comingFrom;
-	}
-
 	public String getIdType() {
 		return idType;
 	}
@@ -141,52 +124,12 @@ public class Visitor implements Serializable {
 		this.idNumber = idNumber;
 	}
 
-	public Date getInTime() {
-		return inTime;
-	}
-
-	public void setInTime(Date inTime) {
-		this.inTime = inTime;
-	}
-
-	public Date getOutTime() {
-		return outTime;
-	}
-
-	public void setOutTime(Date outTime) {
-		this.outTime = outTime;
-	}
-
-	public String getContactPerson() {
-		return contactPerson;
-	}
-
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
-
-	public String getPurpose() {
-		return purpose;
-	}
-
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
-	}
-
 	public VisitorType getVisitorType() {
 		return visitorType;
 	}
 
 	public void setVisitorType(VisitorType visitorType) {
 		this.visitorType = visitorType;
-	}
-
-	public String getOfficeLocation() {
-		return officeLocation;
-	}
-
-	public void setOfficeLocation(String officeLocation) {
-		this.officeLocation = officeLocation;
 	}
 
 	public long getEmployeeId() {
@@ -198,12 +141,74 @@ public class Visitor implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((emailId == null) ? 0 : emailId.hashCode());
+		result = prime * result + (int) (employeeId ^ (employeeId >>> 32));
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idNumber == null) ? 0 : idNumber.hashCode());
+		result = prime * result + ((idType == null) ? 0 : idType.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + (int) (phoneNumber ^ (phoneNumber >>> 32));
+		result = prime * result + ((visitorType == null) ? 0 : visitorType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Visitor other = (Visitor) obj;
+		if (emailId == null) {
+			if (other.emailId != null)
+				return false;
+		} else if (!emailId.equals(other.emailId))
+			return false;
+		if (employeeId != other.employeeId)
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (idNumber == null) {
+			if (other.idNumber != null)
+				return false;
+		} else if (!idNumber.equals(other.idNumber))
+			return false;
+		if (idType == null) {
+			if (other.idType != null)
+				return false;
+		} else if (!idType.equals(other.idType))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (phoneNumber != other.phoneNumber)
+			return false;
+		if (visitorType != other.visitorType)
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "Visitor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber="
-				+ phoneNumber + ", emailId=" + emailId + ", comingFrom=" + comingFrom + ", idType=" + idType
-				+ ", idNumber=" + idNumber + ", inTime=" + inTime + ", outTime=" + outTime + ", contactPerson="
-				+ contactPerson + ", purpose=" + purpose + ", visitorType=" + visitorType + ", officeLocation="
-				+ officeLocation + ", employeeId=" + employeeId + "]";
+				+ phoneNumber + ", emailId=" + emailId + ", idType=" + idType + ", idNumber=" + idNumber
+				+ ", visitorType=" + visitorType + ", employeeId=" + employeeId + "]";
 	}
 
 }

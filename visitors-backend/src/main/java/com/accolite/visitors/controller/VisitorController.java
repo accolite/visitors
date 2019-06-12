@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accolite.visitors.bo.VisitorBO;
 import com.accolite.visitors.exception.VisitorNotFoundException;
-import com.accolite.visitors.model.Visitor;
+import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.service.VisitorService;
 
 /**
@@ -27,7 +28,7 @@ import com.accolite.visitors.service.VisitorService;
  *
  */
 @RestController
-@RequestMapping(value = {"/api/visitor", "/api-dev/visitor"})
+@RequestMapping(value = { "/api/visitor", "/api-dev/visitor" })
 public class VisitorController {
 
 	@Autowired
@@ -36,17 +37,17 @@ public class VisitorController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@PostMapping(value = "/create")
-	public ResponseEntity<Visitor> createVisitor(@Valid @RequestBody Visitor requestData) {
-		Visitor visitor = visitorService.createVisitor(requestData);
-		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
+	public ResponseEntity<VisitorBO> createVisitor(@Valid @RequestBody VisitorBO requestData) {
+		VisitorBO visitorBO = visitorService.createVisitor(requestData);
+		return new ResponseEntity<VisitorBO>(visitorBO, HttpStatus.OK);
 	}
 
 	// date in MM/DD/YYYY format
 	@GetMapping(value = "/getVisitorsByInTime")
-	public ResponseEntity<List<Visitor>> getVisitorsByInTime(@RequestParam("startDate") String startDate,
+	public ResponseEntity<List<VisitorBO>> getVisitorsByInTime(@RequestParam("startDate") String startDate,
 			@RequestParam(value = "endDate", required = false) String endDate) {
-		List<Visitor> list = visitorService.getVisitorsByInTime(startDate, endDate);
-		return new ResponseEntity<List<Visitor>>(list, HttpStatus.OK);
+		List<VisitorBO> visitors = visitorService.getVisitorsByInTime(startDate, endDate);
+		return new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK);
 	}
 
 	// exitTime in milliseconds (epoch) format
@@ -63,15 +64,28 @@ public class VisitorController {
 	}
 
 	@GetMapping(value = "/")
-	public ResponseEntity<List<Visitor>> getVisitors() {
-		List<Visitor> visitors = visitorService.getVisitors();
-		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
+	public ResponseEntity<List<VisitorBO>> getVisitors() {
+		List<VisitorBO> visitors = visitorService.getVisitors();
+		return new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteVisitor(@PathVariable("id") String id) {
 		boolean status = visitorService.deleteVisitor(id);
 		return new ResponseEntity<Boolean>(status, HttpStatus.OK);
+	}
+
+	// TODO -- Not working 
+	@GetMapping(value = "/search")
+	public ResponseEntity<List<VisitorBO>> searchVisitor(@RequestParam("searchTerm") String searchTerm) {
+		List<VisitorBO> visitors = visitorService.searchVisitor(searchTerm);
+		return new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK);
+	}
+
+	// TODO -- only location search is working
+	@GetMapping(value = "/searchBy")
+	public List<VisitSummary> findByComingFromOrFirstName(@RequestParam("text") String text) {
+		return visitorService.findByComingFromOrFirstName(text);
 	}
 
 }
