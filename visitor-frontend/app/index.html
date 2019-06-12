@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -6,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>Accolite Visitor</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="lib/html5-boilerplate/dist/css/normalize.css">
@@ -31,15 +33,23 @@
   </ul>
   -->
 
-
   
 
-  <ul style="z-index: 10;">
-    <li><a href="#!/home">
-      <img src="static/img/accolite.jpg"></a></li>
+  <ul style="z-index: 10;" ng-controller="urlController">  
+    <li style="display: inline-block"><a href="#!/home{{'?' + locURL}}">
+      <img src="static/img/accolite.jpg"></a>
+      <select  style="bottom:0; background-color:black;color:white" ng-model="locat" ng-required="true">
+        <option value="">Location</option>
+        <option>Bangalore</option>
+        <option>Hyderabad</option>
+        <option>Mumbai</option>
+    </select>
+    </li>
     <div class="topnav-right">
-      <li><a id="url" href="#!/visitor">Visitor</a></li>
-      <li><a id="url" href="#!/report">Report</a></li>
+      <li><a id="url" href="#!/visitor{{'?' + locURL}}">Visitor</a>
+    
+      </li>
+      <li><a id="url" href="#!/report{{'?' + locURL}}">Report</a></li>
       <li style=" padding: 14px 16px;"><img src="static/img/userlogo.png" width="50px"></li>
     </div>
   </ul>
