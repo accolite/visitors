@@ -27,8 +27,9 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     "HYD" : "Hyderabad",
     "DEL" : "Delhi"
 }
-
+if( $scope.locURL != null){
 $scope.locat =  locations[$scope.locURL.substr($scope.locURL.indexOf("loc=") + 4)];
+}
 
 }]);
 ;
