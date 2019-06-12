@@ -47,7 +47,7 @@ app.controller('VisitorCtrl', ['$scope', '$http','$routeParams', function ($scop
     console.log('in time', inTimeDate);
     console.log("afaaff" + $routeParams.parm);
 
-    $http.post("http://localhost:8081/api/visitor/create", $scope.visitor)
+    $http.post("http://localhost:8081/visitors/api-dev/visitor/create", $scope.visitor)
       .then(function myResponse(response) {
         console.log('response ', response);
       }, function myError(response) {
