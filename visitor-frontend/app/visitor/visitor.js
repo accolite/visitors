@@ -34,7 +34,7 @@ app.controller('VisitorCtrl', ['$scope', '$http','$routeParams', function ($scop
     idNumber: '12345',
     inTime: currentDat,
     outTime: '',
-    contactPerson: 'Srikanth',
+    contactPerson: 'Srikanth  Jenkins',
     purpose: 'Interview',
     officeLocation: locations[loc],
     comingFrom: 'BTM',
