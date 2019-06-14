@@ -14,6 +14,9 @@ app.controller('VisitorCtrl', ['$scope', '$http','$routeParams', function ($scop
   if(urlPart != null){
  var loc = (urlPart).substr(urlPart.indexOf("loc=") + 4);
   }
+
+
+var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor/";
  console.log("aaaa" + loc);
  var locations ={ 
          "BLR" : "Bangalore",
@@ -47,7 +50,7 @@ app.controller('VisitorCtrl', ['$scope', '$http','$routeParams', function ($scop
     console.log('in time', inTimeDate);
     console.log("afaaff" + $routeParams.parm);
 
-    $http.post("http://localhost:8081/visitors/api-dev/visitor/create", $scope.visitor)
+    $http.post(url + "/create", $scope.visitor)
       .then(function myResponse(response) {
         console.log('response ', response);
       }, function myError(response) {

@@ -22,14 +22,54 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   // window.location.replace(new RegExp("^(?:.*[&\\?]" + "loc".replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1");  
   //window.location.href.substr(window.location.href.lastIndexOf('#!/') + 2);
   console.log($scope.locURL);
-  var locations ={ 
+  /*$scope.locations =[{ 
+      id: "BLR",
+      loc: "Bangalore"
+  },{
+      id:  "HYD",
+      loc: "Hyderabad"
+  },{
+      id: "DEL",
+      loc: "Delhi" 
+
+  }]; */
+
+
+   $scope.locations ={ 
     "BLR" : "Bangalore",
     "HYD" : "Hyderabad",
     "DEL" : "Delhi"
 }
 if( $scope.locURL != null){
-$scope.locat =  locations[$scope.locURL.substr($scope.locURL.indexOf("loc=") + 4)];
+  $scope.locat =  $scope.locations[$scope.locURL.substr($scope.locURL.indexOf("loc=") + 4,3)];
+  console.log($scope.locat );
+  }
+$scope.locOpt = Object.keys( $scope.locations);
+console.log($scope.locOpt);
+
+function urlpar(){
+  for(var op of $scope.locOpt){
+    console.log("dadd" + op);
+    if($scope.locations[op] == $scope.locat){
+      return op;
+    }
+  }
 }
+
+
+$scope.changeUrl= function(){
+ // var par = Object.keys($scope.locations.find(function(obj){ return Object.values(obj)== $scope.locat }));
+// var par = $scope.locations.indexOf($scope.locat);
+
+  //console.log("aaccc" + par);
+ // urlpar();
+ 
+  console.log(" onch" + $scope.locations[$scope.locat] + urlpar() );
+  window.location.href =  window.location.href.split("?loc")[0] + "?loc="+  urlpar() ;
+
+}
+
+
 
 }]);
 ;

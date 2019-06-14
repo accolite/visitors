@@ -23,6 +23,7 @@ $scope.tableHeaders = {
                        "contactPerson": 'Contact Person', "purpose"       : 'Purpose',
                        "visitorType"  : 'Visitor Type',   "employeeId"    : 'Emp Id' };
 
+var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor/";
 var tDate= new Date();
 $scope.time={
   fromTime : tDate,
@@ -44,14 +45,15 @@ function successHandler(response) {
 // get Clients Info from DataBase
  function getClients() {
    console.log($scope.time.fromTime);
-    var response = $http.get("http://localhost:8081/api/visitor/", {},{});
+  //  var response = $http.get("http://localhost:8081/api/visitor/", {},{});
+  var response = $http.get(url, {},{});
     return response.then(successHandler, errorHandler);
 
  };
 // fill our table
 function headFilter(val){
   // include header what you want to exclude
- var excludeHead =['id'];
+ var excludeHead =['id', 'visitSummaryId'];
  return !excludeHead.includes(val);
 
 }
@@ -72,7 +74,7 @@ function fillTable() {
 $scope.setExitTime= function(id){
   console.log($scope.lstClients);
 
-  $http.put('http://localhost:8081/api/visitor/exit/' + id).then(function (response) {
+  $http.put(url+ '/exit/' + id).then(function (response) {
 
     if (response.data){
     
@@ -95,7 +97,7 @@ $scope.setExitTime= function(id){
 
 
 $scope.deleteRec = function(id){
-  $http.delete('http://localhost:8081/api/visitor/'+ id).then(function (response) {
+  $http.delete(url + id).then(function (response) {
 
     if (response.data){
       $scope.msg = "Data Deleted Successfully!";
