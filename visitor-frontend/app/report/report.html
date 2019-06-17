@@ -11,7 +11,10 @@
         <tr>
        <th ng-repeat="header in headElement" >
          <span>{{tableHeaders[header]}}</span>
-        <input ng-if="searchHead.includes(header)">
+        <input ng-if="searchHead.includes(header) && header!= 'officeLocation' ">
+        <select ng-if="searchHead.includes(header) && header == 'officeLocation' " >
+            <option ng-repeat="loc in locOpt">{{locations[loc]}}</option>
+        </select>
        </th>
        <th>Operations</th>
         </tr>

@@ -24,8 +24,13 @@ $scope.tableHeaders = {
                        "visitorType"  : 'Visitor Type',   "employeeId"    : 'Emp Id' };
 
 
-$scope.searchHead = ["firstName" , "lastName", "emailId", "idNumber", "comingFrom", "officeLocation"];
-
+$scope.searchHead = ["firstName" , "lastName", "emailId", "idNumber", "comingFrom", "officeLocation", "visitorType", "idType", "employeeId"];
+$scope.locations ={ 
+  "BLR" : "Bangalore",
+  "HYD" : "Hyderabad",
+  "DEL" : "Delhi"
+}
+$scope.locOpt = Object.keys( $scope.locations);
 var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor/";
 var dateQuery;
 var tDate= new Date();
