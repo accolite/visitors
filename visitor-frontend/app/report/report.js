@@ -39,7 +39,7 @@ $scope.time={
   toTime: tDate
 }
 // if error in our request to the server
-function errorHandler(response) {s
+function errorHandler(response) {
     if (!angular.isObject(response))
     return null;
     // if the response is an object return his value
