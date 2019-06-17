@@ -4,11 +4,11 @@
 package com.accolite.visitors.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.accolite.visitors.bo.VisitorBO;
+import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
-import com.accolite.visitors.model.VisitSummary;
-import com.accolite.visitors.model.Visitor;
 
 /**
  * @author Lavanya
@@ -55,11 +55,9 @@ public interface VisitorService {
 	public boolean deleteVisitor(String id);
 
 	/**
-	 * @param searchTerm
+	 * @param searchParams
 	 * @return
 	 */
-	public List<VisitorBO> searchVisitor(String searchTerm);
-
-	List<VisitSummary> findByComingFromOrFirstName(String text);
+	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams);
 
 }

@@ -5,9 +5,9 @@ package com.accolite.visitors.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +24,6 @@ public interface VisitSummaryDao extends MongoRepository<VisitSummary, String>, 
 
 	public void deleteByVisitor(String id);
 
-	@Query("{'$or' : [{'comingFrom' : {$eq : ?0}}, {'visitSummary.visitor.firstName' : {$eq : ?0}}]}")
-	public List<VisitSummary> findByComingFromOrFirstName(String searchTerm);
+	public List<VisitSummary> findByVisitorIn(Set<String> ids);
 
 }
