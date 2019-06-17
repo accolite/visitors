@@ -6,12 +6,14 @@
   <input type="date" name="from" ng-model="time.toTime" ng-change="restric()">
   <button  type="button" ng-click="filtrTablDt()">Filter</button>
 </div>
+<br>
 <table id="visitor">
     <thead>
         <tr>
        <th ng-repeat="header in headElement" >
          <span>{{tableHeaders[header]}}</span>
-        <input ng-if="searchHead.includes(header) && header!= 'officeLocation' ">
+        <input ng-if="searchHead.includes(header) && header!= 'officeLocation' "  
+              ng-keydown="$event.keyCode === 13 && filter($event.target.value)">
         <select ng-if="searchHead.includes(header) && header == 'officeLocation' " >
             <option ng-repeat="loc in locOpt">{{locations[loc]}}</option>
         </select>

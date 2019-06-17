@@ -52,23 +52,45 @@ function successHandler(response) {
   return response.data;
 };
 // get Clients Info from DataBase
- function getClients(str) {
-   console.log($scope.time.fromTime);
-  //  var response = $http.get("http://localhost:8081/api/visitor/", {},{});
-  if(str == undefined){
+ function getClients(str, type = null) {
+   //console.log($scope.time.fromTime);
+  if(type == null){
+    var getUrl = url;
+    if(str != null){
+      getUrl = url + str;
+    } 
+    var response = $http.get(getUrl, {},{});
+  } else {
+
     
-    var response = $http.get(url, {},{});
-  }
-  else{
-    var response = $http.get(url + str, {},{});
-   
+  
   }
 
-
-    return response.then(successHandler, errorHandler);
-
+  return response.then(successHandler, errorHandler);
  };
 // fill our table
+
+function search(){
+  $scope.searchParms =   {
+    "firstName": "User",
+    "lastName": "test",
+    "emailId": "test.abc@gmail.com",
+    "phoneNumber": 9823415670,
+    "employeeId": 2146,
+    "idNumber": "AMPXXXXD",
+    "comingFrom": "Hyderabad",
+    "officeLocation": "Bangalore"
+  }
+  
+  $http.post(url + "/search", $scope.searchParms)
+  .then(function myResponse(response) {
+    console.log('response ', response);
+    return response;
+  }, function myError(response) {
+    console.log('error response ', response);
+  });
+
+}
 function headFilter(val){
   // include header what you want to exclude
  var excludeHead =['id', 'visitSummaryId'];
@@ -96,22 +118,26 @@ $scope.setExitTime= function(id){
 
     if (response.data){
     
-    $scope.msg = "Put Data Method Executed Successfully!";
-    fillTable();}
+      $scope.msg = "Put Data Method Executed Successfully!";
+      fillTable();}
     
     }, function (response) {
     
-    $scope.msg = "Service not Exists";
-    
-    $scope.statusval = response.status;
-    
-    $scope.statustext = response.statusText;
-    
-    $scope.headers = response.headers();
+        $scope.msg = "Service not Exists";
+        
+        $scope.statusval = response.status;
+        
+        $scope.statustext = response.statusText;
+        
+        $scope.headers = response.headers();
     
     });
 
 }
+$scope.filter = function(val){
+  fillTable();
+}
+
 
 
 $scope.deleteRec = function(id){
@@ -161,15 +187,14 @@ $scope.filtrTablDt = function(){
          console.log("aaa" + $scope.lstClients);
 
          */
-console.log(  $scope.time.toTime + "   " + $scope.time.fromTime );
+  console.log(  $scope.time.toTime + "   " + $scope.time.fromTime );
    var toYear = $scope.time.toTime.getFullYear();
    var toMonth = 1 + $scope.time.toTime.getMonth();
    var toDate = $scope.time.toTime.getDate();
    var fromYear = $scope.time.fromTime.getFullYear();
    var fromMonth = 1 + $scope.time.fromTime.getMonth();
-   var fromDate = $scope.time.fromTime.getDate()
-
-   
+   var fromDate = $scope.time.fromTime.getDate();
+ 
  dateQuery = "getVisitorsByInTime?startDate=" + fromMonth+ '/'+ fromDate+ '/'+ fromYear + "&endDate=" + toMonth+ '/'+ toDate +'/' + toYear; 
 console.log(dateQuery);
  fillTable(dateQuery);
