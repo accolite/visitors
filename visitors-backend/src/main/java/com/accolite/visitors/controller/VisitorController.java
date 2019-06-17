@@ -1,6 +1,8 @@
 package com.accolite.visitors.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accolite.visitors.bo.VisitorBO;
+import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
-import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.service.VisitorService;
 
 /**
@@ -29,6 +32,7 @@ import com.accolite.visitors.service.VisitorService;
  */
 @RestController
 @RequestMapping(value = { "/api/visitor", "/api-dev/visitor" })
+@CrossOrigin(origins = { "http://visitors.accolitelabs.com", "http://visitors-dev.accolitelabs.com" })
 public class VisitorController {
 
 	@Autowired
@@ -75,17 +79,11 @@ public class VisitorController {
 		return new ResponseEntity<Boolean>(status, HttpStatus.OK);
 	}
 
-	// TODO -- Not working 
-	@GetMapping(value = "/search")
-	public ResponseEntity<List<VisitorBO>> searchVisitor(@RequestParam("searchTerm") String searchTerm) {
-		List<VisitorBO> visitors = visitorService.searchVisitor(searchTerm);
+	@PostMapping(value = "/search")
+	public ResponseEntity<List<VisitorBO>> searchVisitor(
+			@Valid @RequestBody Map<VisitorSearchCriteria, Object> searchParams) {
+		List<VisitorBO> visitors = visitorService.searchVisitor(searchParams);
 		return new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK);
-	}
-
-	// TODO -- only location search is working
-	@GetMapping(value = "/searchBy")
-	public List<VisitSummary> findByComingFromOrFirstName(@RequestParam("text") String text) {
-		return visitorService.findByComingFromOrFirstName(text);
 	}
 
 }

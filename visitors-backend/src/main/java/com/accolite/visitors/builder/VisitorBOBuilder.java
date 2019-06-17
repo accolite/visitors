@@ -4,6 +4,7 @@
 package com.accolite.visitors.builder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import com.accolite.visitors.bo.VisitorBO;
@@ -21,7 +22,7 @@ public class VisitorBOBuilder {
 		Visitor visitor = null;
 		if (visitorBO != null) {
 			visitor = new Visitor();
-			
+
 			visitor.setFirstName(visitorBO.getFirstName());
 			visitor.setLastName(visitorBO.getLastName());
 			visitor.setEmailId(visitorBO.getEmailId());
@@ -42,12 +43,12 @@ public class VisitorBOBuilder {
 		VisitSummary visitSummary = null;
 		if (visitorBO != null) {
 			visitSummary = new VisitSummary();
-			
+
 			visitSummary.setComingFrom(visitorBO.getComingFrom());
 			visitSummary.setContactPerson(visitorBO.getContactPerson());
 			visitSummary.setPurpose(visitorBO.getPurpose());
 			visitSummary.setOfficeLocation(visitorBO.getOfficeLocation());
-			visitSummary.setInTime(visitorBO.getInTime());
+			visitSummary.setInTime((visitorBO.getInTime() == null) ? new Date() : visitorBO.getInTime());
 			visitSummary.setOutTime(visitorBO.getOutTime());
 			if (visitorBO.getVisitSummaryId() != null) {
 				visitSummary.setId(visitorBO.getVisitSummaryId());
@@ -61,7 +62,7 @@ public class VisitorBOBuilder {
 		VisitorBO visitorBO = null;
 		if (visitor != null && visitSummary != null) {
 			visitorBO = new VisitorBO();
-			
+
 			visitorBO.setId(visitor.getId());
 			visitorBO.setFirstName(visitor.getFirstName());
 			visitorBO.setLastName(visitor.getLastName());
@@ -85,10 +86,6 @@ public class VisitorBOBuilder {
 	public static List<VisitorBO> buildVisitorBOBySummary(List<VisitSummary> visitSummaryList) {
 
 		final List<VisitorBO> visitorBOs = new ArrayList<>();
-		/*Optional.ofNullable(visitSummaryList).get().forEach(e -> {
-			VisitorBO bo = buildVisitorBO(e.getVisitor(), e);
-			visitorBOs.add(bo);
-		});*/
 		if (visitSummaryList != null) {
 			visitSummaryList.stream().filter(Objects::nonNull).forEach(e -> {
 				VisitorBO bo = buildVisitorBO(e.getVisitor(), e);
