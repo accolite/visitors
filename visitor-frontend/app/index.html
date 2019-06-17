@@ -35,17 +35,17 @@
 
   
 
-  <ul style="z-index: 10;" ng-controller="urlController">  
-    <li style="display: inline-block"><a href="#!/home{{'?' + locURL}}">
+  <ul style="z-index: 10;box-shadow: 0px 9px 0px #8cd5ff;" ng-controller="urlController">  
+    <li id="logo" style=""><a href="#!/home{{'?' + locURL}}">
       <img src="static/img/accolite.jpg"></a>
      
     </li>
     <div class="topnav-right">
-      <li><a id="url" href="#!/visitor{{'?' + locURL}}">Visitor</a>
+      <li ng-style="selecColrV" ng-click="selecColrV={'box-shadow': '0px 4px 31px #2171a9 inset'};selecColrR={'box-shadow': 'none'}"><a id="url" href="#!/visitor{{'?' + locURL}}">Visitor</a>
     
       </li>
-      <li><a id="url" href="#!/report{{'?' + locURL}}">Report</a></li>
-      <li>
+      <li ng-style="selecColrR" ng-click="selecColrR={'box-shadow': '0px 4px 31px #2171a9 inset'}; selecColrV={'box-shadow': 'none'}"><a id="url" href="#!/report{{'?' + locURL}}">Report</a></li>
+      <li style="margin-left:100px">
         <div style="position: relative;"><img style="position:absolute;left:20%;margin-top:10%" src="static/img/userlogo.png" width="50px">
           
         

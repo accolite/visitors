@@ -53,6 +53,28 @@ li a.active{
   padding-right: 5em;
 }
 */
+#logo{
+
+  display: inline-block; 
+/*box-shadow: 34px 1px 56px #1a8ad9;*/
+ -webkit-animation: mymove 5s infinite;
+  animation: mymove 5s infinite;
+
+}
+
+
+@-webkit-keyframes mymove {
+  from { box-shadow: 34px 1px 56px #1a8ad9;}
+  to { box-shadow: 15px 1px 56px #1a8ad9;}
+}
+
+@keyframes mymove {
+  from { box-shadow: 34px 1px 56px #1a8ad9;}
+  to { box-shadow: 15px 1px 56px #044574;}
+}
+
+
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -66,6 +88,7 @@ ul {
 
 li {
   float: left;
+  transition:   box-shadow 1s;
 }
 
 li a#url {

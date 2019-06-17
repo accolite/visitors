@@ -23,7 +23,11 @@ $scope.tableHeaders = {
                        "contactPerson": 'Contact Person', "purpose"       : 'Purpose',
                        "visitorType"  : 'Visitor Type',   "employeeId"    : 'Emp Id' };
 
+
+$scope.searchHead = ["firstName" , "lastName", "emailId", "idNumber", "comingFrom", "officeLocation"];
+
 var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor/";
+var dateQuery;
 var tDate= new Date();
 $scope.time={
   fromTime : tDate,
@@ -43,10 +47,19 @@ function successHandler(response) {
   return response.data;
 };
 // get Clients Info from DataBase
- function getClients() {
+ function getClients(str) {
    console.log($scope.time.fromTime);
   //  var response = $http.get("http://localhost:8081/api/visitor/", {},{});
-  var response = $http.get(url, {},{});
+  if(str == undefined){
+    
+    var response = $http.get(url, {},{});
+  }
+  else{
+    var response = $http.get(url + str, {},{});
+   
+  }
+
+
     return response.then(successHandler, errorHandler);
 
  };
@@ -57,8 +70,8 @@ function headFilter(val){
  return !excludeHead.includes(val);
 
 }
-function fillTable() {
-   getClients()
+function fillTable(str) {
+   getClients(str)
    .then(function(response){
        $scope.lstClients = response;
        $scope.headElement= (Object.keys($scope.lstClients[0])).filter(headFilter);
@@ -74,7 +87,7 @@ function fillTable() {
 $scope.setExitTime= function(id){
   console.log($scope.lstClients);
 
-  $http.put(url+ '/exit/' + id).then(function (response) {
+  $http.put(url+ 'exit/' + id).then(function (response) {
 
     if (response.data){
     
@@ -136,11 +149,26 @@ $scope.restric = function(){
 $scope.filtrTablDt = function(){
   console.log("aaaa");
   console.log("aaa" + $scope.lstClients);
-  $scope.lstClients =$scope.lstClients.filter(function(o){
+/* $scope.lstClients =$scope.lstClients.filter(function(o){
     var d= new Date(o.inTime);
          return (d.getFullYear() == $scope.time.fromTime.getFullYear() && d.getMonth() == $scope.time.fromTime.getMonth() &&   d.getDate() == $scope.time.fromTime.getDate()).promise  });
 
          console.log("aaa" + $scope.lstClients);
+
+         */
+console.log(  $scope.time.toTime + "   " + $scope.time.fromTime );
+   var toYear = $scope.time.toTime.getFullYear();
+   var toMonth = 1 + $scope.time.toTime.getMonth();
+   var toDate = $scope.time.toTime.getDate();
+   var fromYear = $scope.time.fromTime.getFullYear();
+   var fromMonth = 1 + $scope.time.fromTime.getMonth();
+   var fromDate = $scope.time.fromTime.getDate()
+
+   
+ dateQuery = "getVisitorsByInTime?startDate=" + fromMonth+ '/'+ fromDate+ '/'+ fromYear + "&endDate=" + toMonth+ '/'+ toDate +'/' + toYear; 
+console.log(dateQuery);
+ fillTable(dateQuery);
+  
         }
 
 
