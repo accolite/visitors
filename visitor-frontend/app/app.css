@@ -135,3 +135,14 @@ li a:hover:not(.active) {
   background-color: rgb(69, 115, 175);
   color: white;
 }
+
+input[type="search"] {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-appearance: searchfield;
+ }
+ 
+ input[type="search"]::-webkit-search-cancel-button {
+ -webkit-appearance: searchfield-cancel-button;
+ }

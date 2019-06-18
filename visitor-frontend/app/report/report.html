@@ -12,11 +12,16 @@
         <tr>
        <th ng-repeat="header in headElement" >
          <span>{{tableHeaders[header]}}</span>
-        <input ng-if="searchHead.includes(header) && header!= 'officeLocation' "  
-              ng-keydown="$event.keyCode === 13 && filter($event.target.value)">
+        <input type="search" ng-if="searchHead.includes(header) && header!= 'officeLocation'  && header!='visitorType'"  
+              ng-keydown="$event.keyCode === 13 && filter(header,$event.target.value)">
         <select ng-if="searchHead.includes(header) && header == 'officeLocation' " >
             <option ng-repeat="loc in locOpt">{{locations[loc]}}</option>
-        </select>
+          </select>
+        
+        <select ng-if="searchHead.includes(header) &&  header =='visitorType' " >
+              <option ng-repeat="vis in visitorTypes">{{vis}}</option>
+            </select>    
+       
        </th>
        <th>Operations</th>
         </tr>

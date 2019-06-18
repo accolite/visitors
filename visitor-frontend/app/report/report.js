@@ -26,12 +26,22 @@ $scope.tableHeaders = {
 
 $scope.searchHead = ["firstName" , "lastName", "emailId", "idNumber", "comingFrom", "officeLocation", "visitorType", "idType", "employeeId"];
 $scope.locations ={ 
+  ""    : "",
   "BLR" : "Bangalore",
   "HYD" : "Hyderabad",
   "DEL" : "Delhi"
 }
+
+$scope.visitorTypes=["", "Guest", "EMPLOYEE"];
+
+var get= "get";
+var post ="post";
+
+var filterString= {};
+var filterParm=[];
 $scope.locOpt = Object.keys( $scope.locations);
 var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor/";
+//var url = "http://localhost:8081/api/visitor/"
 var dateQuery;
 var tDate= new Date();
 $scope.time={
@@ -52,17 +62,17 @@ function successHandler(response) {
   return response.data;
 };
 // get Clients Info from DataBase
- function getClients(str, type = null) {
+ function getClients(type,str) {
    //console.log($scope.time.fromTime);
-  if(type == null){
+  if(type == "get"){
     var getUrl = url;
     if(str != null){
       getUrl = url + str;
     } 
     var response = $http.get(getUrl, {},{});
   } else {
-
-    
+   console.log(JSON.stringify("aaa -> " + str));
+   var response =  $http.post(url + "search", JSON.stringify(str))  
   
   }
 
@@ -97,8 +107,8 @@ function headFilter(val){
  return !excludeHead.includes(val);
 
 }
-function fillTable(str) {
-   getClients(str)
+function fillTable(type,str) {
+   getClients(type,str)
    .then(function(response){
        $scope.lstClients = response;
        $scope.headElement= (Object.keys($scope.lstClients[0])).filter(headFilter);
@@ -119,7 +129,9 @@ $scope.setExitTime= function(id){
     if (response.data){
     
       $scope.msg = "Put Data Method Executed Successfully!";
-      fillTable();}
+     // fillTable(get);
+     filterString!== null ?fillTable(get) : fillTable(post,filterString) ;
+    }
     
     }, function (response) {
     
@@ -134,8 +146,18 @@ $scope.setExitTime= function(id){
     });
 
 }
-$scope.filter = function(val){
-  fillTable();
+$scope.filter = function(parm, val){
+console.log("chk" + filterString !== null);
+ var arr = JSON.parse("{"  + JSON.stringify(parm) + ":" + JSON.stringify(val) + "}");
+ //var arr1= JSON.parse(arr);
+ //var str = {};
+// var str = JSON.parse(arr);
+Object.assign(filterString, arr);
+
+ console.log("tar : "+ JSON.stringify(filterString));     
+
+ fillTable(post,  filterString);
+
 }
 
 
@@ -145,7 +167,7 @@ $scope.deleteRec = function(id){
 
     if (response.data){
       $scope.msg = "Data Deleted Successfully!";
-      fillTable();
+      filterString!== null ?fillTable(get) : fillTable(post,filterString) ;
     }
     
     }, function (response) {
@@ -165,7 +187,7 @@ $scope.editable = true;
 $scope.editItem = function(id){
   $scope.editable = !$scope.editable;
 }
-fillTable();
+fillTable(get);
 $scope.restric = function(){
   if($scope.time.fromTime > $scope.time.toTime){
     $scope.time.toTime = $scope.time.fromTime;
@@ -197,7 +219,7 @@ $scope.filtrTablDt = function(){
  
  dateQuery = "getVisitorsByInTime?startDate=" + fromMonth+ '/'+ fromDate+ '/'+ fromYear + "&endDate=" + toMonth+ '/'+ toDate +'/' + toYear; 
 console.log(dateQuery);
- fillTable(dateQuery);
+ fillTable(get,dateQuery);
   
         }
 
