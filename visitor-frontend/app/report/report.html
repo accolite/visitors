@@ -14,11 +14,15 @@
          <span>{{tableHeaders[header]}}</span>
         <input type="search" ng-if="searchHead.includes(header) && header!= 'officeLocation'  && header!='visitorType'"  
               ng-keydown="$event.keyCode === 13 && filter(header,$event.target.value)">
-        <select ng-if="searchHead.includes(header) && header == 'officeLocation' " >
+        <select ng-if="searchHead.includes(header) && header == 'officeLocation' "  
+                ng-change="filter(header,locsel)"
+                ng-model="locsel">
             <option ng-repeat="loc in locOpt">{{locations[loc]}}</option>
           </select>
         
-        <select ng-if="searchHead.includes(header) &&  header =='visitorType' " >
+        <select ng-if="searchHead.includes(header) &&  header =='visitorType' "
+              ng-change="filter(header,visiType)"
+              ng-model="visiType" >
               <option ng-repeat="vis in visitorTypes">{{vis}}</option>
             </select>    
        
