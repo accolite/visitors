@@ -15,9 +15,8 @@ app.controller('VisitorCtrl', ['$scope', '$http','$routeParams', function ($scop
  var loc = (urlPart).substr(urlPart.indexOf("loc=") + 4);
   }
 
+var url = "http://visitors.accolitelabs.com/visitors/api/visitor";
 
-var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor";
-//var url = "http://localhost:8081/api/visitor"
  console.log("aaaa" + loc);
  var locations ={ 
          "BLR" : "Bangalore",
@@ -38,7 +37,7 @@ var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor";
     idNumber: '12345',
     inTime: currentDat,
     outTime: '',
-    contactPerson: 'Srikanth  Jenkins',
+    contactPerson: 'Srikanth ',
     purpose: 'Interview',
     officeLocation: locations[loc],
     comingFrom: 'BTM',
