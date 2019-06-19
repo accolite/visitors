@@ -58,14 +58,10 @@ function urlpar(){
 
 
 $scope.changeUrl= function(){
- // var par = Object.keys($scope.locations.find(function(obj){ return Object.values(obj)== $scope.locat }));
-// var par = $scope.locations.indexOf($scope.locat);
-
-  //console.log("aaccc" + par);
- // urlpar();
  
-  console.log(" onch" + $scope.locations[$scope.locat] + urlpar() );
+  $scope.locURL = "";
   window.location.href =  window.location.href.split("?loc")[0] + "?loc="+  urlpar() ;
+  $scope.locURL = "loc="+ urlpar();
 
 }
 
