@@ -27,7 +27,8 @@ var url = "http://visitors-dev.accolitelabs.com/visitors-dev/api-dev/visitor";
  }
  console.log(locations[loc]);
  var currentDat= new Date();
-
+ $scope.isSuccess = false;
+ $scope.isFailure = false;
   console.log("afaaff" + $routeParams.parm);
   $scope.visitor = {
     firstName: 'Yashavanta',
@@ -46,17 +47,31 @@ var url = "http://visitors-dev.accolitelabs.com/visitors-dev/api-dev/visitor";
     employeeId: '1111'
   };
   $scope.createVisitor = function () {
+    $scope.isSuccess = false;
+    $scope.isFailure = false
     console.log('pojo', $scope.visitor);
     var inTimeDate = new Date($scope.visitor.inTime);
     console.log('in time', inTimeDate);
     console.log("afaaff" + $routeParams.parm);
-
+    
     $http.post(url + "/create", $scope.visitor)
       .then(function myResponse(response) {
         console.log('response ', response);
+        if(response.status == 200){
+          $scope.isSuccess = true;
+          $scope.visitor = {};
+        }else{
+          $scope.isFailure = true;
+          $scope.failureMsg = response.statusText;
+        }
+                
       }, function myError(response) {
         console.log('error response ', response);
+        $scope.isFailure = true;
+        $scope.failureMsg = response.statusText;
+
       });
+      window.scrollTo(0,0);
   };
 
 }]);
