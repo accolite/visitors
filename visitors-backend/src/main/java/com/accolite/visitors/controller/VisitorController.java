@@ -32,8 +32,8 @@ import com.accolite.visitors.service.VisitorService;
  *
  */
 @RestController
-@RequestMapping(value = { "/api/visitor", "/api-dev/visitor" })
-@CrossOrigin(origins = { "http://visitors.accolitelabs.com", "http://visitors-dev.accolitelabs.com" })
+@RequestMapping(value = "/api/visitor")
+@CrossOrigin(origins = "http://visitors.accolitelabs.com")
 public class VisitorController {
 
 	@Autowired
