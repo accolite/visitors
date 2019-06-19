@@ -53,13 +53,13 @@ var url = "http://visitors-dev.accolitelabs.com/visitors-dev/api-dev/visitor";
     var inTimeDate = new Date($scope.visitor.inTime);
     console.log('in time', inTimeDate);
     console.log("afaaff" + $routeParams.parm);
-    
+
     $http.post(url + "/create", $scope.visitor)
       .then(function myResponse(response) {
         console.log('response ', response);
         if(response.status == 200){
           $scope.isSuccess = true;
-          $scope.visitor = {};
+          //$scope.visitor = {};
         }else{
           $scope.isFailure = true;
           $scope.failureMsg = response.statusText;
