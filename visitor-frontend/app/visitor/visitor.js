@@ -72,6 +72,7 @@ var url = "http://visitors.accolitelabs.com/visitors/api/visitor";
         $scope.failureMsg = response.statusText;
 
       });
+      window.scrollTo(0,0);
   };
 
 }]);
