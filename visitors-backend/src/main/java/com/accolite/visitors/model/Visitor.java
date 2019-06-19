@@ -42,26 +42,24 @@ public class Visitor implements Serializable {
 	@NotNull(message = "Phone Number is mandatory")
 	private long phoneNumber;
 
-	@Indexed
+	@Indexed(unique = true)
 	@NotEmpty(message = "Email ID is mandatory")
 	@Email
 	private String emailId;
 
 	// Aadhar or PAN or License etc.,
-	@NotEmpty(message = "ID Type is mandatory")
 	@Size(max = 50)
 	private String idType;
 
-	@Indexed
-	@NotEmpty(message = "ID Number is mandatory")
+	@Indexed(sparse = true)
 	@Size(max = 50)
 	private String idNumber;
 
 	// Employee or Guest
-	// @NotEmpty(message = "Visitor Type is mandatory")
+	@NotEmpty(message = "Visitor Type is mandatory")
 	private VisitorType visitorType;
 
-	@Indexed
+	@Indexed(sparse = true)
 	private long employeeId;
 
 	public Visitor() {

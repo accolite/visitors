@@ -27,6 +27,8 @@ public enum VisitorSearchCriteria {
 
 	comingFrom,
 
-	officeLocation;
+	officeLocation,
+	
+	contactPerson;
 
 }

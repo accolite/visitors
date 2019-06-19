@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 import com.accolite.visitors.bo.VisitorBO;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
@@ -83,7 +85,7 @@ public class VisitorBOBuilder {
 		return visitorBO;
 	}
 
-	public static List<VisitorBO> buildVisitorBOBySummary(List<VisitSummary> visitSummaryList) {
+	public static List<VisitorBO> buildVisitorBOBySummary(Set<VisitSummary> visitSummaryList) {
 
 		final List<VisitorBO> visitorBOs = new ArrayList<>();
 		if (visitSummaryList != null) {

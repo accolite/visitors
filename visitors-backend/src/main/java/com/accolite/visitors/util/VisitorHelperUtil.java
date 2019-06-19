@@ -2,7 +2,7 @@ package com.accolite.visitors.util;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +36,7 @@ public class VisitorHelperUtil {
 	 * @param searchParams
 	 * @return
 	 */
-	public List<VisitSummary> searchVisitors(Map<VisitorSearchCriteria, Object> searchParams) {
+	public Set<VisitSummary> searchVisitors(Map<VisitorSearchCriteria, Object> searchParams) {
 
 		QVisitSummary qVisitSummary = new QVisitSummary("visitSummary");
 		QVisitor qVisitor = new QVisitor("visitor");
@@ -103,6 +103,10 @@ public class VisitorHelperUtil {
 				vsFilter = (vsFilter != null) ? (vsFilter.and(qVisitSummary.officeLocation.startsWithIgnoreCase(value)))
 						: (qVisitSummary.officeLocation.startsWithIgnoreCase(value));
 				break;
+			case contactPerson:
+				vsFilter = (vsFilter != null) ? (vsFilter.and(qVisitSummary.contactPerson.startsWithIgnoreCase(value)))
+						: (qVisitSummary.contactPerson.startsWithIgnoreCase(value));
+				break;
 			default:
 				break;
 			}
@@ -115,9 +119,9 @@ public class VisitorHelperUtil {
 	 * @param vsFilter
 	 * @return
 	 */
-	public List<VisitSummary> getVisitorsBasedOnFilter(BooleanExpression vFilter, BooleanExpression vsFilter) {
+	public Set<VisitSummary> getVisitorsBasedOnFilter(BooleanExpression vFilter, BooleanExpression vsFilter) {
 
-		List<VisitSummary> visitSummaryList = new LinkedList<>();
+		Set<VisitSummary> visitSummaryList = new HashSet<>();
 		List<Visitor> visitors = new ArrayList<>();
 		if (vFilter != null) {
 			visitors = (List<Visitor>) visitorDao.findAll(vFilter);
@@ -129,6 +133,16 @@ public class VisitorHelperUtil {
 		if (vsFilter != null) {
 			visitSummaryList.addAll((List<VisitSummary>) visitSummaryDao.findAll(vsFilter));
 		}
+		return visitSummaryList;
+	}
+
+	/**
+	 * @param visitSummaryList
+	 * @return
+	 */
+	public Set<VisitSummary> removeDuplicates(Set<VisitSummary> visitSummaryList) {
+		Set<String> idsAlreadySeen = new HashSet<>();
+		visitSummaryList.removeIf(p -> !idsAlreadySeen.add(p.getVisitor().getId()));
 		return visitSummaryList;
 	}
 

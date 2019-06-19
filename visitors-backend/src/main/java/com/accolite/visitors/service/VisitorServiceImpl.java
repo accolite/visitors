@@ -4,8 +4,11 @@
 package com.accolite.visitors.service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,27 +57,26 @@ public class VisitorServiceImpl implements VisitorService {
 
 		Date start = new Date(startDate);
 		Date end = visitorHelperUtil.getEndDate(endDate, start);
-		List<VisitSummary> visitSummaryList = visitSummaryDao.findByInTimeBetweenOrderByInTimeDesc(start, end);
+		Set<VisitSummary> visitSummaryList = visitSummaryDao.findByInTimeBetweenOrderByInTimeDesc(start, end);
 		return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
 	}
 
 	@Override
 	public boolean exitVisitor(String id, Long exitTime) throws VisitorNotFoundException {
 
-		VisitSummary visitSummary = visitSummaryDao.findById(id).get();
-		if (visitSummary != null) {
-			visitSummary.setOutTime((exitTime != null) ? new Date(exitTime) : new Date());
-			visitSummaryDao.save(visitSummary);
-			return true;
-		}
-		return false;
+		VisitSummary visitSummary = visitSummaryDao.findById(id)
+				.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
+		visitSummary.setOutTime((exitTime != null) ? new Date(exitTime) : new Date());
+		visitSummaryDao.save(visitSummary);
+		return Boolean.TRUE;
 	}
 
 	@Override
 	public List<VisitorBO> getVisitors() {
 
-		List<VisitSummary> visitSummaryList = visitSummaryDao.findAll();
-		return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
+		List<VisitSummary> visitSummaryList = visitSummaryDao.findAllByOrderByInTimeDesc();
+		return VisitorBOBuilder
+				.buildVisitorBOBySummary(visitorHelperUtil.removeDuplicates(new HashSet<>(visitSummaryList)));
 	}
 
 	@Override
@@ -82,14 +84,20 @@ public class VisitorServiceImpl implements VisitorService {
 
 		visitorDao.deleteById(id);
 		visitSummaryDao.deleteByVisitor(id);
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
 	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams) {
 
-		List<VisitSummary> visitSummaryList = visitorHelperUtil.searchVisitors(searchParams);
+		Set<VisitSummary> visitSummaryList = visitorHelperUtil.searchVisitors(searchParams);
 		return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
+	}
+
+	@Override
+	public Visitor getVisitorById(String id) throws VisitorNotFoundException {
+
+		return visitorDao.findById(id).orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
 	}
 
 }
