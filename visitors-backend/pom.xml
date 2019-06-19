@@ -43,7 +43,7 @@
 
 
 	<build>
-		<finalName>visitors</finalName>
+		<finalName>visitors-dev</finalName>
 		<!-- <sourceDirectory>src/</sourceDirectory> -->
 		<plugins>
 			<plugin>
