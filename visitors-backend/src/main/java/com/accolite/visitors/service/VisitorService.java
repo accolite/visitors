@@ -9,6 +9,7 @@ import java.util.Map;
 import com.accolite.visitors.bo.VisitorBO;
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
+import com.accolite.visitors.model.Visitor;
 
 /**
  * @author Lavanya
@@ -59,5 +60,12 @@ public interface VisitorService {
 	 * @return
 	 */
 	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams);
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws VisitorNotFoundException
+	 */
+	public Visitor getVisitorById(String id) throws VisitorNotFoundException;
 
 }

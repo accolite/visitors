@@ -5,7 +5,6 @@ package com.accolite.visitors.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
@@ -35,7 +34,6 @@ public class VisitSummary implements Serializable {
 	@DBRef
 	private Visitor visitor;
 
-	@NotEmpty(message = "Location is mandatory")
 	@Size(max = 50)
 	private String comingFrom;
 

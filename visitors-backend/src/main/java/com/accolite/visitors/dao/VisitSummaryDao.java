@@ -20,10 +20,12 @@ import com.accolite.visitors.model.VisitSummary;
 @Repository
 public interface VisitSummaryDao extends MongoRepository<VisitSummary, String>, QuerydslPredicateExecutor<VisitSummary> {
 
-	public List<VisitSummary> findByInTimeBetweenOrderByInTimeDesc(Date startDate, Date endDate);
+	public Set<VisitSummary> findByInTimeBetweenOrderByInTimeDesc(Date startDate, Date endDate);
 
 	public void deleteByVisitor(String id);
 
 	public List<VisitSummary> findByVisitorIn(Set<String> ids);
+
+	public List<VisitSummary> findAllByOrderByInTimeDesc();
 
 }

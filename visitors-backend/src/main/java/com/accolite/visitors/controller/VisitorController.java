@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accolite.visitors.bo.VisitorBO;
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
+import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.service.VisitorService;
 
 /**
@@ -58,13 +59,12 @@ public class VisitorController {
 	@PutMapping(value = "/exit/{id}")
 	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id,
 			@RequestParam(value = "exitTime", required = false) Long exitTime) {
-		boolean exit = false;
 		try {
-			exit = visitorService.exitVisitor(id, exitTime);
+			boolean exit = visitorService.exitVisitor(id, exitTime);
+			return new ResponseEntity<Boolean>(exit, HttpStatus.OK);
 		} catch (VisitorNotFoundException e) {
-			return new ResponseEntity<Boolean>(exit, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Boolean>(exit, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/")
@@ -84,6 +84,17 @@ public class VisitorController {
 			@Valid @RequestBody Map<VisitorSearchCriteria, Object> searchParams) {
 		List<VisitorBO> visitors = visitorService.searchVisitor(searchParams);
 		return new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Visitor> getVisitorById(@PathVariable("id") String id) {
+		Visitor visitor = null;
+		try {
+			visitor = visitorService.getVisitorById(id);
+			return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
+		} catch (VisitorNotFoundException e) {
+			return new ResponseEntity<Visitor>(visitor, HttpStatus.NOT_FOUND);
+		}
 	}
 
 }
