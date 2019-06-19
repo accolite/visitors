@@ -40,7 +40,7 @@ var post ="post";
 var filterString= {};
 var filterParm=[];
 $scope.locOpt = Object.keys( $scope.locations);
-var url = "http://visitors.accolitelabs.com/visitors/api/visitor/";
+var url = "http://visitors.accolitelabs.com/visitors/api-dev/visitor/";
 //var url = "http://localhost:8081/api/visitor/"
 var dateQuery;
 var tDate= new Date();
