@@ -154,9 +154,10 @@ public class VisitorHelperUtil {
 	@SuppressWarnings("deprecation")
 	public Date getEndDate(String endDate, Date startDate) {
 
-		Date calculatedDate = new DateTime(startDate).plusDays(1).withTimeAtStartOfDay().toDate();
-		Date providedDate = new DateTime(new Date(endDate)).plusDays(1).withTimeAtStartOfDay().toDate();
-		return ((endDate == null || endDate.isEmpty()) ? calculatedDate : providedDate);
+		if (endDate == null || endDate.isEmpty()) {
+			return new DateTime(startDate).plusDays(1).withTimeAtStartOfDay().toDate();
+		}
+		return new DateTime(new Date(endDate)).plusDays(1).withTimeAtStartOfDay().toDate();
 	}
 
 }
