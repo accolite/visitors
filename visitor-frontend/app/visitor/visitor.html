@@ -27,7 +27,10 @@
             <div class="form-group col-sm-4" ng-show="visitor.visitorType=='Employee'">
                 <label for="employeeId">Employee Id:</label>
                 <input type="text" id="employeeId" name="employeeId" class="form-control"
+                ng-required="visitor.visitorType=='Employee'"
                     ng-model="visitor.employeeId" />
+                <span class="error text-danger" 
+                    ng-show="visitorForm.employeeId.$touched && visitorForm.employeeId.$invalid">Employee ID required </span>
             </div>
         </div>
         <div class="row">
@@ -36,14 +39,14 @@
             <input type="text" class="form-control" id="firstName" 
                     placeholder="Enter your first name" name="firstName" ng-model="visitor.firstName" ng-required="true" >
             <span class="error text-danger" 
-            ng-show="visitorForm.firstName.$touched && visitorForm.firstName.$invalid">First Name is required</span>
+            ng-show="visitorForm.firstName.$touched && visitorForm.firstName.$invalid && !isSuccess && !isFailure">First Name is required</span>
         </div>
         <div class="form-group col-sm-4">
             <label for="lastName">Last Name:</label>
             <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" name="lastName"
                 ng-model="visitor.lastName"  ng-required="true">
             <span class="error text-danger" 
-                ng-show="visitorForm.lastName.$touched && visitorForm.lastName.$invalid">Last Name is required</span>    
+                ng-show="visitorForm.lastName.$touched && visitorForm.lastName.$invalid  && !isSuccess && !isFailure">Last Name is required</span>    
         </div>
     </div>
     <div class="row">
@@ -52,20 +55,20 @@
             <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
                 ng-model="visitor.emailId" ng-required="true">
             <span class="error text-danger" 
-                ng-show="visitorForm.email.$touched && visitorForm.email.$invalid">Invalid Email </span>
+                ng-show="visitorForm.email.$touched && visitorForm.email.$invalid  && !isSuccess && !isFailure">Invalid Email </span>
         </div>
         <div class="form-group col-sm-4">
             <label for="phoneNumber">Phone Number:</label>
             <input type="number" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Enter your phone number"
                     ng-model="visitor.phoneNumber" ng-required="true" />
             <span class="error text-danger" 
-                ng-show="visitorForm.phoneNumber.$touched && visitorForm.phoneNumber.$invalid">Invalid Phone Number </span>
+                ng-show="visitorForm.phoneNumber.$touched && visitorForm.phoneNumber.$invalid  && !isSuccess && !isFailure">Invalid Phone Number </span>
         </div>
     </div>
     <div class="row" ng-show="visitor.visitorType !='Employee'">
         <div class="form-group col-sm-4">
             <label for="idType">Id Type:</label>
-            <select class="form-control" id="idType" name="idType" ng-model="visitor.idType" ng-required="true">
+            <select class="form-control" id="idType" name="idType" ng-model="visitor.idType" ng-required="visitor.visitorType=='Guest'">
                 <option value="">Select</option>
                 <option>Voter Id</option>
                 <option>Adhar Card</option>
@@ -73,15 +76,15 @@
                 <option>Pan Card</option>
             </select>
             <span class="error text-danger" 
-                ng-show="visitorForm.idType.$touched && visitorForm.idType.$invalid">Id Type is required </span>
+                ng-show="visitorForm.idType.$touched && visitorForm.idType.$invalid  && !isSuccess && !isFailure">Id Type is required </span>
         </div>
         <div class="form-group col-sm-4">
             <label for="idNumber">Id Number</label>
             <input type="text" class="form-control" id="idNumber" name="idNumber"
-            ng-required="true"
+            ng-required="visitor.visitorType=='Guest'"
             ng-model="visitor.idNumber" />
             <span class="error text-danger" 
-                ng-show="visitorForm.idNumber.$touched && visitorForm.idNumber.$invalid">Invalid Id number </span>
+                ng-show="visitorForm.idNumber.$touched && visitorForm.idNumber.$invalid  && !isSuccess && !isFailure">Invalid Id number </span>
         </div>
     </div>
     <div class="row">
@@ -103,18 +106,17 @@
         </div>
         <div class="form-group col-sm-4">
             <label for="purpose">Purpose:</label>
-            <select class="form-control" name="purpose" ng-model="visitor.purpose" ng-required="true">
+            <select class="form-control" name="purpose" ng-model="visitor.purpose" ng-required="visitor.visitorType=='Guest'">
                 <option value="">Select</option>
                 <option>Interview</option>
                 <option>Meeting</option>
             </select>
             <span class="error text-danger" 
-                ng-show="visitorForm.purpose.$touched && visitorForm.purpose.$invalid">Purpose is required </span>
+                ng-show="visitorForm.purpose.$touched && visitorForm.purpose.$invalid   && !isSuccess && !isFailure">Purpose is required </span>
         </div>
     </div>
 
     <div class="row">
-        
         <div class="form-group col-sm-4" ng-show="visitor.visitorType!='Employee'">
             <label for="comingFrom">Coming From:</label>
             <input type="text" class="form-control" id="comingFrom" name="comingFrom"
