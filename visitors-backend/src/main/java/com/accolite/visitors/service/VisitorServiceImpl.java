@@ -82,8 +82,7 @@ public class VisitorServiceImpl implements VisitorService {
 	@Override
 	public boolean deleteVisitor(String id) {
 
-		visitorDao.deleteById(id);
-		visitSummaryDao.deleteByVisitor(id);
+		visitSummaryDao.deleteById(id);
 		return Boolean.TRUE;
 	}
 
