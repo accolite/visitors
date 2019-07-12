@@ -1,7 +1,6 @@
 import { Component, Input, SimpleChanges, ContentChildren, QueryList } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ArrayUtil } from 'src/app/helpers/array.util';
-import { DataTableColumnComponent } from './data-table-column/data-table-column.component';
 
 
 
@@ -18,8 +17,8 @@ export class DataTableComponent {
   @Input()
   dataSource: MatTableDataSource<any>;
 
-  @ContentChildren( DataTableColumnComponent )
-  dataTableColumns: QueryList<DataTableColumnComponent>;
+  @Input()
+  titles: Array<string> = [];
 
   displayedColumns: string[] = [];
 
