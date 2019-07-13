@@ -1,0 +1,27 @@
+<mat-card [class.fullscreen]="enableFullScreen">
+  <mat-card-header>
+    <div class="title">
+      <mat-card-title *ngIf="cardTitle" class="card-title">{{cardTitle}}</mat-card-title>
+      <mat-card-subtitle *ngIf="cardSubTitle">{{cardSubTitle}}</mat-card-subtitle>
+    </div>
+    <div class="actions">
+      <mat-icon *ngIf="enableFullScreen" (click)="enableFullScreen = !enableFullScreen" class="icon action ng-star-inserted" title="Toggle full screen">fullscreen</mat-icon>
+      <mat-icon *ngIf="!enableFullScreen" (click)="enableFullScreen = !enableFullScreen" class="icon action ng-star-inserted" title="Toggle full screen">fullscreen_exit</mat-icon>
+      <mat-icon *ngIf="!expandCard" (click)="expandCard = !expandCard" class="icon action ng-star-inserted" title="Hide">expand_less</mat-icon>
+      <mat-icon *ngIf="expandCard" (click)="expandCard = !expandCard" class="icon action ng-star-inserted" title="Show" hidden="">expand_more</mat-icon>
+    </div>
+  </mat-card-header>
+    
+  <mat-card-content class="mat-content" *ngIf="expandCard">
+    <ng-content></ng-content>
+  </mat-card-content>
+  <!-- This tag is for images  -->
+  <!-- <img mat-card-image>	Card image. Stretches the image to the container width -->
+  
+  <!-- below tag is for actions -->
+  <!-- <mat-card-actions *ngIf="expandCard" align="end">
+    <button mat-button>A</button>
+    <button mat-button>B</button>
+  </mat-card-actions> -->
+        <!-- <mat-card-footer>	Section anchored to the bottom of the cardSimple card</mat-card-footer> -->
+</mat-card>
