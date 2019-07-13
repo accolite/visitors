@@ -1,11 +1,18 @@
-import { Component, Input, SimpleChanges, ContentChildren, QueryList } from '@angular/core';
+import { Component, Input, SimpleChanges, ContentChildren, QueryList, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ArrayUtil } from 'src/app/helpers/array.util';
-
-
+import { DataTableHelper } from 'src/app/helpers/data-table-helper.model';
+import { MatPaginator } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 /**
- * @title Table with filtering
+ * @author M.Shashikant(shashikant.mittapelli@accoliteindia.com)
+ * Gives flexibility to reduce code and create Material design table 
+ * 
+ * 
+ * @property dataSource - to add Array of object 
+ * @property tableHelpers - flexibility to add title and give sorting access
+ * 
  */
 @Component( {
   selector: 'data-table',
@@ -18,17 +25,31 @@ export class DataTableComponent {
   dataSource: MatTableDataSource<any>;
 
   @Input()
-  titles: Array<string> = [];
+  tableHelpers: DataTableHelper[] = [];
+
+  @Input()
+  usePagination: boolean = false;
+
+  @Input()
+  paginationTypes: Array<number> = [ 5, 10, 20 ];
+
+  @ViewChild( MatPaginator, { static: true } )
+  paginator: MatPaginator;
+
+  @ViewChild( MatSort, { static: true } )
+  sort: MatSort;
 
   displayedColumns: string[] = [];
-
-  showTable: boolean = false;
-
   ngOnChanges( changes: SimpleChanges ) {
     if ( changes.dataSource ) {
       this.dataSource = new MatTableDataSource( changes.dataSource.currentValue );
       this.getDisplayedColumns();
     }
+  }
+
+  ngOnInit() {
+    this.dataSource.paginator = this.usePagination ? this.paginator : this.dataSource.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   getDisplayedColumns() {
@@ -39,7 +60,4 @@ export class DataTableComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  ngAfterContentInit() {
-    this.showTable = true;
-  }
 }
