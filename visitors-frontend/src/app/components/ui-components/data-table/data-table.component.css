@@ -1,0 +1,11 @@
+.show{
+  display: inherit;
+}
+
+.hide{
+  display: none;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
