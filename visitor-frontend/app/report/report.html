@@ -1,0 +1,59 @@
+<div ng-controller="ReportCtrl">
+<div class="col-md-12">
+  <span>From</span>
+  <input type="date" name="from" ng-model="time.fromTime">
+  <span>To</span>
+  <input type="date" name="from" ng-model="time.toTime" ng-change="restric()">
+  <button  type="button" ng-click="filtrTablDt()">Filter</button>
+</div>
+<br>
+<table id="visitor">
+    <thead>
+        <tr>
+       <th ng-repeat="header in headElement" >
+         <span>{{tableHeaders[header]}}</span>
+        <input type="search" ng-if="searchHead.includes(header) && header!= 'officeLocation'  && header!='visitorType'"  
+              ng-keydown="$event.keyCode === 13 && filter(header,$event.target.value)">
+        <select ng-if="searchHead.includes(header) && header == 'officeLocation' "  
+                ng-change="filter(header,locsel)"
+                ng-model="locsel">
+            <option ng-repeat="loc in locOpt">{{locations[loc]}}</option>
+          </select>
+        
+        <select ng-if="searchHead.includes(header) &&  header =='visitorType' "
+              ng-change="filter(header,visiType)"
+              ng-model="visiType" >
+              <option ng-repeat="vis in visitorTypes">{{vis}}</option>
+            </select>    
+       
+       </th>
+       <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in lstClients| filter:Filter">
+          <td ng-repeat="inRow in headElement">{{row[inRow]}}</td>
+          <td>
+            <i ng-if="row['outTime'] == null" class="material-icons" ng-click="setExitTime(row.visitSummaryId)" style="cursor:default;color:green">exit_to_app</i>
+           <!-- <i class="material-icons" ng-click="editItem(row.id)" ng-if="editable" style="cursor:default;color: blue" >edit</i>
+            <i class="material-icons" ng-click="editItem(row.id)" ng-if="!editable"> done_outline</i>-->
+            <i class="material-icons" ng-click="deleteRec(row.visitSummaryId)" style="cursor:default;color: red">delete_forever</i>
+          </td>
+     <!--  <td>{{row.firstName}}</td>
+       <td>{{row.lastName}}</td>
+       <td>{{row.phoneNumber}}</td>
+       <td>{{row.emailId}}</td>
+       <td>{{row.comingFrom}}</td>
+       <td>{{row.idType}}</td>
+       <td>{{row.idNumber}}</td>
+       <td>{{row.inTime}}</td>
+       <td>{{row.outTime}}</td>
+       <td>{{row.contactPerson}}</td>
+       <td>{{row.purpose}}</td>
+       <td>{{row.visitorType}}</td>
+       <td>{{row.officeLocation}}</td>
+       <td>{{row.employeeId}}</td>-->
+       </tr>
+    </tbody>
+ </table>
+</div>

@@ -1,0 +1,148 @@
+/* app css stylesheet */
+/*
+.menu {
+  list-style: none;
+  border-bottom: 0.2em solid rgb(43, 90, 219);
+  margin-bottom: 2em;
+  padding: 0 0 2em;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row-reverse;
+  
+}
+
+
+.menu  a{
+  text-decoration: none;
+  color: white;
+  font-size: 2em;
+  padding-right: 5em;
+  
+}
+
+li a.active{
+  background-color: rgb(140, 143, 143);
+  text-decoration: underline;
+
+  color: rgb(177, 37, 37);
+
+}
+.menu a:hover{
+ background-color: brown;
+ color:black;
+}
+/*
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+*/
+
+
+/*
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  padding-right: 5em;
+}
+*/
+#logo{
+
+  display: inline-block; 
+/*box-shadow: 34px 1px 56px #1a8ad9;*/
+ -webkit-animation: mymove 5s infinite;
+  animation: mymove 5s infinite;
+
+}
+
+
+@-webkit-keyframes mymove {
+  from { box-shadow: 34px 1px 56px #1a8ad9;}
+  to { box-shadow: 15px 1px 56px #1a8ad9;}
+}
+
+@keyframes mymove {
+  from { box-shadow: 34px 1px 56px #1a8ad9;}
+  to { box-shadow: 15px 1px 56px #044574;}
+}
+
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+li {
+  float: left;
+  transition:   box-shadow 1s;
+}
+
+li a#url {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 28px 170px;
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+li a:hover:not(.active) {
+  background-color: rgb(52, 97, 182);
+}
+
+.active {
+  background-color: #4CAF50;
+}
+.topnav-right {
+  float: right;
+}
+
+
+#visitor {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#visitor td, #visitor th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#visitor tr:nth-child(even){background-color: #f2f2f2;}
+
+#visitor tr:hover {background-color: #ddd;}
+
+#visitor th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(69, 115, 175);
+  color: white;
+}
+
+input[type="search"] {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-appearance: searchfield;
+ }
+ 
+ input[type="search"]::-webkit-search-cancel-button {
+ -webkit-appearance: searchfield-cancel-button;
+ }
