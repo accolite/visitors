@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule, MatCheckboxModule, MatTableModule, MatFormFieldModule,
   MatInputModule, MatPaginatorModule, MatSortModule, MatCardModule, MatIconModule,
-  MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule
+  MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule, MatSnackBarModule
 } from '@angular/material';
 import { DataTableComponent } from '../components/ui-components/data-table/data-table.component';
 import { CardComponent } from '../components/ui-components/card/card.component';
@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 const componentDeclarations = [ DataTableComponent, CardComponent, DropdownComponent ];
 const moduleDeclarations = [ CommonModule, FormsModule, MatButtonModule, MatCheckboxModule, MatTableModule,
   MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule,
-  MatIconModule, MatCardModule, MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule ]
+  MatIconModule, MatCardModule, MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule, MatSnackBarModule ]
 
 @NgModule( {
   declarations: [ ...componentDeclarations ],
