@@ -72,7 +72,7 @@ export class VisitorFormComponent {
   }
   onSubmit() {
      this.service.createNewVisitor(this.form.value).subscribe(
-       (val)=>{
+       (val) => {
              console.log(val);
        }
      );
