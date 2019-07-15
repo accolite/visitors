@@ -4,16 +4,23 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './modules/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VisitorFormComponent } from './components/ui-components/visitor-form/visitor-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule( {
   declarations: [
-    AppComponent
+    AppComponent,
+    VisitorFormComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]
