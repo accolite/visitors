@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { urls } from '../../config/constants';
 
 @Injectable({
   providedIn: 'root'
