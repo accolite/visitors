@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class VisitorNotFoundException extends Exception {
+public class VisitorNotFoundException extends RuntimeException {
 
 	/**
 	 * 
