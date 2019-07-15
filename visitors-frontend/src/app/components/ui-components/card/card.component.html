@@ -1,5 +1,5 @@
 <mat-card [class.fullscreen]="enableFullScreen">
-  <mat-card-header>
+  <mat-card-header *ngIf="cardTitle">
     <div class="title">
       <mat-card-title *ngIf="cardTitle" class="card-title">{{cardTitle}}</mat-card-title>
       <mat-card-subtitle *ngIf="cardSubTitle">{{cardSubTitle}}</mat-card-subtitle>
