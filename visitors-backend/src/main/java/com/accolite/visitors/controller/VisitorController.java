@@ -33,7 +33,7 @@ import com.accolite.visitors.service.VisitorService;
  */
 @RestController
 @RequestMapping(value = "/api-dev/visitor")
-@CrossOrigin(origins = "http://visitors-dev.accolitelabs.com")
+@CrossOrigin(origins = "*")
 public class VisitorController {
 
 	@Autowired
@@ -59,12 +59,8 @@ public class VisitorController {
 	@PutMapping(value = "/exit/{id}")
 	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id,
 			@RequestParam(value = "exitTime", required = false) Long exitTime) {
-		try {
-			boolean exit = visitorService.exitVisitor(id, exitTime);
-			return new ResponseEntity<Boolean>(exit, HttpStatus.OK);
-		} catch (VisitorNotFoundException e) {
-			return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.NOT_FOUND);
-		}
+		boolean exit = visitorService.exitVisitor(id, exitTime);
+		return new ResponseEntity<Boolean>(exit, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/")
@@ -89,12 +85,8 @@ public class VisitorController {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Visitor> getVisitorById(@PathVariable("id") String id) {
 		Visitor visitor = null;
-		try {
-			visitor = visitorService.getVisitorById(id);
-			return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
-		} catch (VisitorNotFoundException e) {
-			return new ResponseEntity<Visitor>(visitor, HttpStatus.NOT_FOUND);
-		}
+		visitor = visitorService.getVisitorById(id);
+		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
 
 }
