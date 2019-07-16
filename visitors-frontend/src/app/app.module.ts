@@ -6,8 +6,10 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ReportModule } from './modules/report/report.module';
 import { HttpClientModule } from '@angular/common/http';
 import { VisitorsModule } from './modules/visitors.module';
+
 
 
 @NgModule( {
@@ -22,7 +24,9 @@ import { VisitorsModule } from './modules/visitors.module';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    VisitorsModule
+    VisitorsModule,
+    ReportModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]
