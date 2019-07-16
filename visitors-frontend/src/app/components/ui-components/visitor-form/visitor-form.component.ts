@@ -64,6 +64,8 @@ export class VisitorFormComponent {
 
     setTimeout(() => { this.now = new Date();
     }, 2000)
+
+
   }
 
   onClear() {
@@ -76,12 +78,25 @@ export class VisitorFormComponent {
              console.log(val);
        }
      );
+     this.form.reset();
+     this.initializeFormGroup();
+
+
   }
   onSubmitEmployeeData(){
+    this.service.createNewVisitor(this.form.value).subscribe(
+      (val) => {
+            console.log(val);
+      }
+    );
+    this.form.reset();
+
 
   }
 
   ngOnInit() {
+
+
   }
 
 }

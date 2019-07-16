@@ -5,13 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { VisitorFormComponent } from './components/ui-components/visitor-form/visitor-form.component';
+
 import { HttpClientModule } from '@angular/common/http';
+import { VisitorsModule } from './modules/visitors.module';
+
 
 @NgModule( {
   declarations: [
-    AppComponent,
-    VisitorFormComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    VisitorsModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]
