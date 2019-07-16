@@ -11,23 +11,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatTableModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatPaginatorModule,
-  MatSortModule,
-  MatCardModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatListModule,
-  MatSidenavModule,
-  MatSelectModule,
-  MatGridListModule,
-  MatDatepickerModule,
-  MatSnackBarModule,
-  MatNativeDateModule
+  MatButtonModule, MatCheckboxModule, MatTableModule, MatFormFieldModule,
+  MatInputModule, MatPaginatorModule, MatSortModule, MatCardModule,
+  MatIconModule, MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule,
+  MatGridListModule, MatDatepickerModule, MatSnackBarModule, MatNativeDateModule
 } from '@angular/material';
 import { DataTableComponent } from '../components/ui-components/data-table/data-table.component';
 import { CardComponent } from '../components/ui-components/card/card.component';

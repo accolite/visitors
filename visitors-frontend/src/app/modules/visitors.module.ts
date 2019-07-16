@@ -2,11 +2,7 @@ import { NgModule, Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "./material.module";
-import { RouterModule } from "@angular/router";
 import { VisitorFormComponent } from '../components/visitor-form/visitor-form.component';
-
-const routes = [
-];
 
 @NgModule( {
   declarations: [ VisitorFormComponent ],
@@ -14,9 +10,8 @@ const routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
-    RouterModule.forChild( routes )
+    MaterialModule
   ],
-  exports: [ VisitorFormComponent, RouterModule ]
+  exports: [ VisitorFormComponent ]
 } )
 export class VisitorsModule { }

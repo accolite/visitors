@@ -6,7 +6,7 @@ import { MaterialModule } from './material.module';
   imports: [
     MaterialModule
   ],
-  exports: [],
+  exports: [ ReportComponent ],
   declarations: [
     ReportComponent
   ],
