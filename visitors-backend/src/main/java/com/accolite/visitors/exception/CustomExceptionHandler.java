@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,12 +50,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler({ IllegalArgumentException.class, IllegalStateException.class })
+	@ExceptionHandler({ IllegalArgumentException.class, IllegalStateException.class, DuplicateKeyException.class })
 	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setTimestamp(LocalDateTime.now());
 		errorResponse.setStatus(HttpStatus.CONFLICT);
-		errorResponse.setMessage(ex.getMessage());
+		errorResponse.setMessage("Duplicate key found.");
+		//errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.CONFLICT);
 	}
 
@@ -71,14 +73,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
-
-	/*@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
-		ErrorResponse errorResponse = new ErrorResponse();
-		errorResponse.setTimestamp(LocalDateTime.now());
-		errorResponse.setStatus(HttpStatus.FORBIDDEN);
-		errorResponse.setMessage(ex.getMessage());
-		return new ResponseEntity<Object>(errorResponse, HttpStatus.FORBIDDEN);
-	}*/
 
 }
