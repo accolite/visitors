@@ -11,6 +11,15 @@
   margin-top: 9px;
 }
 
-img {
-  width: 12em;
+#img {
+  width: 10em !important;
+  margin: 0 1rem;
+}
+
+mat-toolbar-row{
+  margin: 0 !important;
+}
+
+.mat-drawer.mat-drawer-side{
+  z-index: 1 !important;
 }

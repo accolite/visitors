@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { VisitorComponent } from './components/ui-components/visitor/visitor.component';
-import { ReportComponent } from './components/ui-components/report/report.component';
+import { ReportComponent } from './modules/report/report.component';
+import { VisitorFormComponent } from './components/ui-components/visitor-form/visitor-form.component';
 
 
 const routes: Routes = [
-  { path: 'visitor', component: VisitorComponent, data: { title: 'Visitor Component' } },
-  { path: 'report', component: ReportComponent, data: { title: 'Report Component' } },
-  { path: '**', component: VisitorComponent, data: { title: 'Visitor Component' } }
+
+  { path: '', pathMatch: 'full', component: VisitorFormComponent },
+  { path: 'visitor', pathMatch: 'full', component: VisitorFormComponent },
+  { path: 'report', pathMatch: 'full', component: ReportComponent },
+  { path: '**', pathMatch: 'full', component: VisitorFormComponent }
+
 ];
 
 @NgModule( {
