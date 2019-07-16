@@ -19,14 +19,14 @@ export class VisitorService {
             this.restService.createSnackbar(
               "Successfully created Visitor details",
               "close",
-              5000
+              2000
             );
           },
           () => {
             this.restService.createSnackbar(
               "Failed to create Visitor details",
               "close",
-              5000
+              2000
             );
           }
         )

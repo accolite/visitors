@@ -10,7 +10,8 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule,
+import {
+  MatButtonModule,
   MatCheckboxModule,
   MatTableModule,
   MatFormFieldModule,
@@ -25,23 +26,29 @@ import { MatButtonModule,
   MatSelectModule,
   MatGridListModule,
   MatDatepickerModule,
-  MatNativeDateModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { DataTableComponent } from '../components/ui-components/data-table/data-table.component';
 import { CardComponent } from '../components/ui-components/card/card.component';
 import { DropdownComponent } from '../components/ui-components/drop-down/drop-down.component';
 import { FormsModule } from '@angular/forms';
 
-const componentDeclarations = [ DataTableComponent, CardComponent, DropdownComponent ];
+import { RouterModule, Routes } from "@angular/router";
+import { NavigationComponent } from '../components/ui-components/vertical-navbar/vartical-navbar.component'
+import { VisitorComponent } from '../components/ui-components/visitor/visitor.component';
+import { ReportComponent } from '../components/ui-components/report/report.component';
+import { from } from 'rxjs';
+
+const componentDeclarations = [ DataTableComponent, CardComponent, DropdownComponent, NavigationComponent, VisitorComponent, ReportComponent ];
 const moduleDeclarations = [ CommonModule, FormsModule, MatButtonModule, MatCheckboxModule, MatTableModule,
   MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule,
   MatIconModule, MatCardModule, MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule, MatSnackBarModule,
-  MatGridListModule, MatDatepickerModule, MatNativeDateModule];
+  MatGridListModule, MatDatepickerModule, MatNativeDateModule, RouterModule ];
 
-@NgModule({
-  declarations: [...componentDeclarations],
-  imports: [...moduleDeclarations],
-  exports: [...moduleDeclarations, ...componentDeclarations]
-})
-export class MaterialModule {}
+@NgModule( {
+  declarations: [ ...componentDeclarations ],
+  imports: [ ...moduleDeclarations ],
+  exports: [ ...moduleDeclarations, ...componentDeclarations ]
+} )
+export class MaterialModule { }

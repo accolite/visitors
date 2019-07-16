@@ -8,9 +8,8 @@ const routes: Routes = [
 
   { path: '', pathMatch: 'full', component: VisitorFormComponent },
   { path: 'visitor', pathMatch: 'full', component: VisitorFormComponent },
-  { path: 'report', pathMatch: 'full', component: ReportComponent }
-
-
+  { path: 'report', pathMatch: 'full', component: ReportComponent },
+  { path: '**', pathMatch: 'full', component: VisitorFormComponent }
 
 ];
 
