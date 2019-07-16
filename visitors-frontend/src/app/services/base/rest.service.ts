@@ -15,7 +15,7 @@ export class RestService {
 
   constructor( private http: HttpClient, private snackbarService: MatSnackBar ) { }
 
-  createSnackbar( message: string, action: string = "close", durationMS: 2000 ) {
+  createSnackbar( message: string, action: string = "close", durationMS: number = 2000 ) {
     this.snackbarService.open( message, action, { duration: durationMS } )
   }
 

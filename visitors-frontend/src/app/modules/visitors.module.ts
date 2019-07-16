@@ -1,9 +1,9 @@
 import { NgModule, Component } from "@angular/core";
-import { VisitorFormComponent } from "../components/ui-components/visitor-form/visitor-form.component";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "./material.module";
 import { RouterModule } from "@angular/router";
+import { VisitorFormComponent } from '../components/visitor-form/visitor-form.component';
 
 const routes = [
 ];
