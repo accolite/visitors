@@ -1,0 +1,16 @@
+.example-container {
+    height: 50%;
+    margin: 10px;
+  }
+.mat-sidenav-content{
+  height: 539px !important;
+}  
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 81px;
+  margin-top: 9px;
+}
+
+img {
+  width: 12em;
+}
