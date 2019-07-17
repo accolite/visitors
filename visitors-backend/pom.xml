@@ -13,7 +13,7 @@
 	<artifactId>visitors-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>visitors-backend</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,13 +53,13 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<warSourceDirectory>WebContent</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>

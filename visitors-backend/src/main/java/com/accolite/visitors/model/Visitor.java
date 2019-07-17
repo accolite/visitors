@@ -4,6 +4,8 @@
 package com.accolite.visitors.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -21,9 +23,6 @@ import com.accolite.visitors.enums.VisitorType;
 @Document(collection = "visitor")
 public class Visitor implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -56,11 +55,13 @@ public class Visitor implements Serializable {
 	private String idNumber;
 
 	// Employee or Guest
-	@NotEmpty(message = "Visitor Type is mandatory")
+	//@NotEmpty(message = "Visitor Type is mandatory")
 	private VisitorType visitorType;
 
 	@Indexed(sparse = true)
 	private long employeeId;
+
+	private List<VisitSummary> visitSummary;
 
 	public Visitor() {
 		super();
@@ -137,7 +138,15 @@ public class Visitor implements Serializable {
 	public void setEmployeeId(long employeeId) {
 		this.employeeId = employeeId;
 	}
+	
+	public List<VisitSummary> getVisitSummary() {
+		return visitSummary;
+	}
 
+	public void setVisitSummary(List<VisitSummary> visitSummary) {
+		this.visitSummary = visitSummary;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -208,5 +217,7 @@ public class Visitor implements Serializable {
 				+ phoneNumber + ", emailId=" + emailId + ", idType=" + idType + ", idNumber=" + idNumber
 				+ ", visitorType=" + visitorType + ", employeeId=" + employeeId + "]";
 	}
+
+	
 
 }

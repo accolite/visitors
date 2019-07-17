@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  *
  */
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = "com.accolite.visitors.dao")
+//@EnableMongoRepositories(basePackages = "com.accolite.visitors.repository")
 public class VisitorApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

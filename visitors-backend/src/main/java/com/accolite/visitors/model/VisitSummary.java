@@ -1,16 +1,12 @@
-/**
- * 
- */
 package com.accolite.visitors.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.querydsl.core.annotations.QueryEntity;
@@ -23,17 +19,10 @@ import com.querydsl.core.annotations.QueryEntity;
 @Document(collection = "visit_summary")
 public class VisitSummary implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String id;
-
-	@DBRef
-	private Visitor visitor;
-
+	private int visitNumber;
+	
 	@Size(max = 50)
 	private String comingFrom;
 
@@ -54,22 +43,6 @@ public class VisitSummary implements Serializable {
 
 	public VisitSummary() {
 		super();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public Visitor getVisitor() {
-		return visitor;
-	}
-
-	public void setVisitor(Visitor visitor) {
-		this.visitor = visitor;
 	}
 
 	public String getComingFrom() {
@@ -119,6 +92,14 @@ public class VisitSummary implements Serializable {
 	public void setOutTime(Date outTime) {
 		this.outTime = outTime;
 	}
+	
+	public int getVisitNumber() {
+		return visitNumber;
+	}
+
+	public void setVisitNumber(int visitNumber) {
+		this.visitNumber = visitNumber;
+	}
 
 	@Override
 	public int hashCode() {
@@ -126,12 +107,11 @@ public class VisitSummary implements Serializable {
 		int result = 1;
 		result = prime * result + ((comingFrom == null) ? 0 : comingFrom.hashCode());
 		result = prime * result + ((contactPerson == null) ? 0 : contactPerson.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((inTime == null) ? 0 : inTime.hashCode());
 		result = prime * result + ((officeLocation == null) ? 0 : officeLocation.hashCode());
 		result = prime * result + ((outTime == null) ? 0 : outTime.hashCode());
 		result = prime * result + ((purpose == null) ? 0 : purpose.hashCode());
-		result = prime * result + ((visitor == null) ? 0 : visitor.hashCode());
+		result = prime * result + visitNumber;
 		return result;
 	}
 
@@ -154,11 +134,6 @@ public class VisitSummary implements Serializable {
 				return false;
 		} else if (!contactPerson.equals(other.contactPerson))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (inTime == null) {
 			if (other.inTime != null)
 				return false;
@@ -179,19 +154,15 @@ public class VisitSummary implements Serializable {
 				return false;
 		} else if (!purpose.equals(other.purpose))
 			return false;
-		if (visitor == null) {
-			if (other.visitor != null)
-				return false;
-		} else if (!visitor.equals(other.visitor))
+		if (visitNumber != other.visitNumber)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "VisitSummary [id=" + id + ", visitor=" + visitor + ", comingFrom=" + comingFrom + ", contactPerson="
+		return "VisitSummary [visitNumber=" + visitNumber + ", comingFrom=" + comingFrom + ", contactPerson="
 				+ contactPerson + ", purpose=" + purpose + ", officeLocation=" + officeLocation + ", inTime=" + inTime
 				+ ", outTime=" + outTime + "]";
 	}
-
 }
