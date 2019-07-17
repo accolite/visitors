@@ -1,26 +1,18 @@
-/**
- * 
- */
 package com.accolite.visitors.service;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.accolite.visitors.bo.VisitorBO;
-import com.accolite.visitors.builder.VisitorBOBuilder;
-import com.accolite.visitors.dao.VisitSummaryDao;
-import com.accolite.visitors.dao.VisitorDao;
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
+import com.accolite.visitors.repository.VisitorRepository;
 import com.accolite.visitors.util.VisitorHelperUtil;
 
 /**
@@ -32,71 +24,78 @@ import com.accolite.visitors.util.VisitorHelperUtil;
 public class VisitorServiceImpl implements VisitorService {
 
 	@Autowired
-	private VisitorDao visitorDao;
-
-	@Autowired
-	private VisitSummaryDao visitSummaryDao;
+	private VisitorRepository visitorRepository;
 
 	@Autowired
 	private VisitorHelperUtil visitorHelperUtil;
 
+	/**
+	 * Create new Visitor
+	 */
 	@Override
-	public VisitorBO createVisitor(VisitorBO visitorBO) {
-
-		Visitor visitor = VisitorBOBuilder.buildVisitor(visitorBO);
-		VisitSummary visitSummary = VisitorBOBuilder.buildVisitSummary(visitorBO);
-		Visitor visitorObj = visitorDao.save(visitor);
-		visitSummary.setVisitor(visitorObj);
-		VisitSummary visitSummaryObj = visitSummaryDao.save(visitSummary);
-		return VisitorBOBuilder.buildVisitorBO(visitorObj, visitSummaryObj);
+	public Visitor createVisitor(Visitor visitor) {
+		if (visitor.getVisitSummary() != null && visitor.getVisitSummary().size() == 1) {
+			visitor.getVisitSummary().get(0).setInTime(new Date());
+			visitor.getVisitSummary().get(0).setVisitNumber(1);
+		}
+		return visitorRepository.save(visitor);
 	}
-
-	@SuppressWarnings("deprecation")
+	
+	/**
+	 * Get All the visitors
+	 * Need to Implement - Order By
+	 */
 	@Override
-	public List<VisitorBO> getVisitorsByInTime(String startDate, String endDate) {
-
-		Date start = new Date(startDate);
-		Date end = visitorHelperUtil.getEndDate(endDate, start);
-		Set<VisitSummary> visitSummaryList = visitSummaryDao.findByInTimeBetweenOrderByInTimeDesc(start, end);
-		return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
+	public List<Visitor> getVisitors() {
+		//return visitorDao.findAllByOrderByInTimeDesc();
+		return visitorRepository.findAll();
 	}
-
-	@Override
-	public boolean exitVisitor(String id, Long exitTime) throws VisitorNotFoundException {
-
-		VisitSummary visitSummary = visitSummaryDao.findById(id)
-				.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
-		visitSummary.setOutTime((exitTime != null) ? new Date(exitTime) : new Date());
-		visitSummaryDao.save(visitSummary);
-		return Boolean.TRUE;
-	}
-
-	@Override
-	public List<VisitorBO> getVisitors() {
-
-		List<VisitSummary> visitSummaryList = visitSummaryDao.findAllByOrderByInTimeDesc();
-		return VisitorBOBuilder
-				.buildVisitorBOBySummary(visitorHelperUtil.removeDuplicates(new HashSet<>(visitSummaryList)));
-	}
-
-	@Override
-	public boolean deleteVisitor(String id) {
-
-		visitSummaryDao.deleteById(id);
-		return Boolean.TRUE;
-	}
-
-	@Override
-	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams) {
-
-		Set<VisitSummary> visitSummaryList = visitorHelperUtil.searchVisitors(searchParams);
-		return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
-	}
-
+	
+	/**
+	 * Get Visitor by Id
+	 */
 	@Override
 	public Visitor getVisitorById(String id) throws VisitorNotFoundException {
-
-		return visitorDao.findById(id).orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
+		return visitorRepository.findById(id)
+					.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
 	}
+
+	
+	@Override
+	public boolean deleteVisitor(String id) {
+		visitorRepository.deleteById(id);
+		return Boolean.TRUE;
+	}
+
+	@Override
+	public List<Visitor> getVisitorsByInTime(Date startDate, Date endDate) {
+		return visitorRepository.findByVisitSummary_InTimeBetweenOrderByVisitSummary_InTimeDesc(startDate, endDate);
+	}
+
+	@Override
+	public boolean exitVisitor(String id, Date exitTime) throws VisitorNotFoundException {
+
+		long count = visitorRepository.updateEndTime(id);
+		System.out.println(count);
+
+		if (count != 1) {
+			throw new VisitorNotFoundException("Failed to update the exit time");
+		}
+		return true;
+	}
+
+	@Override
+	public void addVisit(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
+		visitSummary.setInTime(new Date());
+		visitorRepository.addVisit(id, visitSummary);
+	}
+	
+	/*@Override
+	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams) {
+		//Set<VisitSummary> visitSummaryList = visitorHelperUtil.searchVisitors(searchParams);
+		//return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
+		return null;
+	}*/
+	
 
 }

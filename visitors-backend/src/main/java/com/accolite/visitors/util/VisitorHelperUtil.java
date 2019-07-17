@@ -5,32 +5,29 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.accolite.visitors.dao.VisitSummaryDao;
-import com.accolite.visitors.dao.VisitorDao;
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.enums.VisitorType;
 import com.accolite.visitors.model.QVisitSummary;
 import com.accolite.visitors.model.QVisitor;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
+import com.accolite.visitors.repository.VisitorRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Component
 public class VisitorHelperUtil {
 
 	@Autowired
-	private VisitorDao visitorDao;
+	private VisitorRepository visitorRepository;
 
-	@Autowired
-	private VisitSummaryDao visitSummaryDao;
 
 	/**
 	 * @param searchParams
@@ -124,14 +121,14 @@ public class VisitorHelperUtil {
 		Set<VisitSummary> visitSummaryList = new HashSet<>();
 		List<Visitor> visitors = new ArrayList<>();
 		if (vFilter != null) {
-			visitors = (List<Visitor>) visitorDao.findAll(vFilter);
+			visitors = (List<Visitor>) visitorRepository.findAll(vFilter);
 		}
 		final Set<String> ids = visitors.stream().map(Visitor::getId).collect(Collectors.toSet());
 		if (ids != null && !ids.isEmpty()) {
-			visitSummaryList.addAll(visitSummaryDao.findByVisitorIn(ids));
+//			visitSummaryList.addAll(visitSummaryDao.findByVisitorIn(ids));
 		}
 		if (vsFilter != null) {
-			visitSummaryList.addAll((List<VisitSummary>) visitSummaryDao.findAll(vsFilter));
+			//visitSummaryList.addAll((List<VisitSummary>) visitSummaryDao.findAll(vsFilter));
 		}
 		return visitSummaryList;
 	}
@@ -140,11 +137,11 @@ public class VisitorHelperUtil {
 	 * @param visitSummaryList
 	 * @return
 	 */
-	public Set<VisitSummary> removeDuplicates(Set<VisitSummary> visitSummaryList) {
+	/*public Set<VisitSummary> removeDuplicates(Set<VisitSummary> visitSummaryList) {
 		Set<String> idsAlreadySeen = new HashSet<>();
 		visitSummaryList.removeIf(p -> !idsAlreadySeen.add(p.getVisitor().getId()));
 		return visitSummaryList;
-	}
+	}*/
 
 	/**
 	 * @param endDate
