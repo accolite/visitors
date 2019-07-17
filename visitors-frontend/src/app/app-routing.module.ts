@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ReportComponent } from './modules/report/report.component';
-import { VisitorFormComponent } from './components/ui-components/visitor-form/visitor-form.component';
+import { VisitorFormComponent } from './components/visitor-form/visitor-form.component';
+import { ReportComponent } from './components/report/report.component';
 
 
 const routes: Routes = [

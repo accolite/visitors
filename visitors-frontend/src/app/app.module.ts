@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ReportModule } from './modules/report/report.module';
+import { ReportModule } from './modules/report.module';
 import { HttpClientModule } from '@angular/common/http';
 import { VisitorsModule } from './modules/visitors.module';
 

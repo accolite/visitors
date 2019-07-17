@@ -57,6 +57,7 @@ export class VisitorFormComponent {
       employeeId: ""
     } );
   }
+
   ngDoCheck(): void {
     setTimeout( () => {
       this.now = new Date();
