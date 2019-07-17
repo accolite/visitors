@@ -16,7 +16,17 @@ import com.accolite.visitors.model.Visitor;
  *
  */
 public interface VisitorService {
+	
+	/**
+	 * Search for visitor by email Id
+	 * 
+	 * @param emailId
+	 * @return
+	 * @throws VisitorNotFoundException
+	 */
+	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException;
 
+	
 	/**
 	 * @param visitorBO
 	 * @return
@@ -37,10 +47,9 @@ public interface VisitorService {
 	 * 
 	 * @param id
 	 * @param exitTime
-	 * @return
 	 * @throws VisitorNotFoundException
 	 */
-	public boolean exitVisitor(String id, Date exitTime) throws VisitorNotFoundException;
+	public void exitVisitor(String id) throws VisitorNotFoundException;
 
 	/**
 	 * @return
@@ -74,5 +83,8 @@ public interface VisitorService {
 	 * @throws VisitorNotFoundException
 	 */
 	public void addVisit(String id, VisitSummary visitSummary) throws VisitorNotFoundException;
+
+	
+	
 
 }

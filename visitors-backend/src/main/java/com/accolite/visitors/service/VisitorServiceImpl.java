@@ -28,7 +28,19 @@ public class VisitorServiceImpl implements VisitorService {
 
 	@Autowired
 	private VisitorHelperUtil visitorHelperUtil;
-
+	
+	
+	@Override
+	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {		
+		return visitorRepository.findByEmailId(email)
+				.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Create new Visitor
 	 */
@@ -73,22 +85,25 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public boolean exitVisitor(String id, Date exitTime) throws VisitorNotFoundException {
-
+	public void exitVisitor(String id) throws VisitorNotFoundException {
+		
 		long count = visitorRepository.updateEndTime(id);
-		System.out.println(count);
 
-		if (count != 1) {
-			throw new VisitorNotFoundException("Failed to update the exit time");
+		if (count == 0) {
+			throw new VisitorNotFoundException("Visitor not found");
 		}
-		return true;
 	}
 
 	@Override
 	public void addVisit(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
 		visitSummary.setInTime(new Date());
-		visitorRepository.addVisit(id, visitSummary);
+		long count = visitorRepository.addVisit(id, visitSummary);
+		if(count == 0) {
+			throw new VisitorNotFoundException("Visitor not found");
+		}
 	}
+
+	
 	
 	/*@Override
 	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams) {

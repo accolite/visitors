@@ -16,11 +16,14 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.accolite.visitors.enums.VisitorType;
 
+import lombok.Data;
+
 /**
  * @author Lavanya
  *
  */
 @Document(collection = "visitor")
+@Data
 public class Visitor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -63,90 +66,6 @@ public class Visitor implements Serializable {
 
 	private List<VisitSummary> visitSummary;
 
-	public Visitor() {
-		super();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public long getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(long phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getIdType() {
-		return idType;
-	}
-
-	public void setIdType(String idType) {
-		this.idType = idType;
-	}
-
-	public String getIdNumber() {
-		return idNumber;
-	}
-
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
-	}
-
-	public VisitorType getVisitorType() {
-		return visitorType;
-	}
-
-	public void setVisitorType(VisitorType visitorType) {
-		this.visitorType = visitorType;
-	}
-
-	public long getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(long employeeId) {
-		this.employeeId = employeeId;
-	}
-	
-	public List<VisitSummary> getVisitSummary() {
-		return visitSummary;
-	}
-
-	public void setVisitSummary(List<VisitSummary> visitSummary) {
-		this.visitSummary = visitSummary;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
