@@ -13,24 +13,7 @@ export class VisitorService {
   createNewVisitor( visitorObj: any ) {
     return this.restService
       .jsonPost( urls.BASE_URL + urls.CREATE_NEW_VISITOR, visitorObj )
-      .pipe(
-        tap(
-          () => {
-            this.restService.createSnackbar(
-              "Successfully created Visitor details",
-              "close",
-              2000
-            );
-          },
-          () => {
-            this.restService.createSnackbar(
-              "Failed to create Visitor details",
-              "close",
-              2000
-            );
-          }
-        )
-      );
+      .pipe( tap( this.restService.createNotifySnackbar( 'create-visitors' ) ) )
   }
 
   fetchAllVisitors() {
