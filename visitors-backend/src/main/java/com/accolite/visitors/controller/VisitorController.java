@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.service.VisitorService;
@@ -39,12 +38,68 @@ public class VisitorController {
 	private VisitorService visitorService;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	/**
+	 * Fetch the visitors detail by email id
+	 * 
+	 ******* TODO : Restrict the visitSummary to last visit Item only - Update in the doc as well to use only 0th index for now
+	 * @param email
+	 * @return
+	 */
+	@GetMapping(value = "/email/{email}")
+	public ResponseEntity<?> getVisitorByEmail(@PathVariable("email") String email) {
 
+		Visitor visitor = visitorService.getVisitorByEmail(email);
+		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
+	}
+	
+	/**
+	 * Create new Visitor
+	 * 
+	 * @param requestData
+	 * @return
+	 */
 	@PostMapping(value = "/create")
 	public ResponseEntity<Visitor> createVisitor(@Valid @RequestBody Visitor requestData) {
 		Visitor visitor = visitorService.createVisitor(requestData);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
+	
+	/**
+	 * Adding another visit for the particular Visitor
+	 * 
+	 * TODO: Update the visitNumber - Get from UI
+	 * 
+	 * @param requestData
+	 * @param id
+	 * @return
+	 */
+	@PutMapping(value = "/addVisit/{id}")
+	public ResponseEntity<Visitor> addVisit(@Valid @RequestBody VisitSummary requestData,
+			@PathVariable("id") String id){
+
+		visitorService.addVisit(id, requestData);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	/**
+	 * Update the exit Time 
+	 * 
+	 * TODO: Update the visitNumber - Get from UI
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@PutMapping(value = "/exit/{id}")
+	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id) {
+		visitorService.exitVisitor(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
 
 	@GetMapping(value = "/")
 	public ResponseEntity<List<Visitor>> getVisitors() {
@@ -65,16 +120,7 @@ public class VisitorController {
 		return new ResponseEntity<Boolean>(status, HttpStatus.OK);
 	}
 	
-	// exitTime in milliseconds (eposch) format
-	@PutMapping(value = "/exit/{id}")
-	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id) {
-		try {
-			boolean exit = visitorService.exitVisitor(id, new Date());
-			return new ResponseEntity<Boolean>(exit, HttpStatus.OK);
-		} catch (VisitorNotFoundException e) {
-			return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.NOT_FOUND);
-		}
-	}
+	
 	
 	// date in MM/DD/YYYY format
 	@GetMapping(value = "/getVisitorsByInTime")
@@ -84,18 +130,7 @@ public class VisitorController {
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/addVisit/{id}")
-	public ResponseEntity<Visitor> addVisit(@Valid @RequestBody VisitSummary requestData,
-			@PathVariable("id") String id){
-		
-		try {
-			visitorService.addVisit(id, requestData);
-		} catch (VisitorNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+	
 	
 	
 	 
