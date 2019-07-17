@@ -32,7 +32,7 @@ import com.accolite.visitors.service.VisitorService;
  */
 @RestController
 @RequestMapping(value = "/api-dev/visitor")
-@CrossOrigin(origins = "http://visitors-dev.accolitelabs.com")
+@CrossOrigin(origins = "*")
 public class VisitorController {
 
 	@Autowired
@@ -45,7 +45,7 @@ public class VisitorController {
 		Visitor visitor = visitorService.createVisitor(requestData);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/")
 	public ResponseEntity<List<Visitor>> getVisitors() {
 		List<Visitor> visitors = visitorService.getVisitors();
@@ -55,12 +55,8 @@ public class VisitorController {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Visitor> getVisitorById(@PathVariable("id") String id) {
 		Visitor visitor = null;
-		try {
-			visitor = visitorService.getVisitorById(id);
-			return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
-		} catch (VisitorNotFoundException e) {
-			return new ResponseEntity<Visitor>(visitor, HttpStatus.NOT_FOUND);
-		}
+		visitor = visitorService.getVisitorById(id);
+		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{id}")
