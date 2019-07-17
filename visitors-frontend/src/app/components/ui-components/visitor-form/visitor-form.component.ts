@@ -27,7 +27,7 @@ export class VisitorFormComponent {
     employeeId: new FormControl("", Validators.required),
     inTime: new FormControl(),
     contactPerson: new FormControl(""),
-    emailId: new FormControl("", Validators.email),
+    emailId: new FormControl("", [Validators.email, Validators.required]),
     phoneNumber: new FormControl("", [
       Validators.required,
       Validators.pattern(this.mobnumPattern)
@@ -53,7 +53,7 @@ export class VisitorFormComponent {
       inTime: "",
       idNumber: "",
       officeLocation: "",
-      visitorType: ""
+      visitorType: " "
     });
   }
   ngDoCheck(): void {
@@ -64,20 +64,22 @@ export class VisitorFormComponent {
 
   onClear() {
     this.form.reset();
-    this.initializeFormGroup();
+    //this.form.controls["visitorType"].setValue("Guest");
+    // this.initializeFormGroup();
   }
   onSubmit() {
     this.service.createNewVisitor(this.form.value).subscribe(val => {
       console.log(val);
     });
     this.form.reset();
-    this.initializeFormGroup();
+    //this.form.controls["visitorType"].setValue("Guest");
   }
   onSubmitEmployeeData() {
     this.service.createNewVisitor(this.form.value).subscribe(val => {
       console.log(val);
     });
     this.form.reset();
+    //this.form.controls["visitorType"].setValue("Guest");
   }
 
   ngOnInit() {}

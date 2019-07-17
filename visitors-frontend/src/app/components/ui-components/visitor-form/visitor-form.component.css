@@ -1,17 +1,16 @@
 .visitorInput {
- width:31%;
- margin-left:-1%;
+  width: 31%;
+  margin-left: -1%;
 }
 
-.full-width{
+.full-width {
   width: 90%;
 }
 
-.button-size
-{
+.button-size {
   width: 20px;
-  height:50px;
+  height: 50px;
 }
-.table-div{
+.table-div {
   margin-top: 40px;
 }
