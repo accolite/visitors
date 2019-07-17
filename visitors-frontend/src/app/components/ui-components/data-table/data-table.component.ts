@@ -40,6 +40,10 @@ export class DataTableComponent {
   sort: MatSort;
 
   displayedColumns: string[] = [];
+
+  @Input()
+  displayColumns: string[] = [];
+
   ngOnChanges( changes: SimpleChanges ) {
     if ( changes.dataSource ) {
       this.dataSource = new MatTableDataSource( changes.dataSource.currentValue );
@@ -53,6 +57,7 @@ export class DataTableComponent {
   }
 
   getDisplayedColumns() {
+    //this.displayedColumns = this.displayColumns ? this.displayColumns : Object.keys( ArrayUtil.first( this.dataSource.data ) );
     this.displayedColumns = Object.keys( ArrayUtil.first( this.dataSource.data ) );
   }
 

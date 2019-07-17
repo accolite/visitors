@@ -4,15 +4,15 @@ import { RestService } from "./base/rest.service";
 import { urls } from "../../config/constants";
 import { tap } from "rxjs/operators";
 
-@Injectable({
+@Injectable( {
   providedIn: "root"
-})
+} )
 export class VisitorService {
-  constructor(private http: HttpClient, private restService: RestService) {}
+  constructor( private http: HttpClient, private restService: RestService ) { }
 
-  createNewVisitor(visitorObj: any) {
+  createNewVisitor( visitorObj: any ) {
     return this.restService
-      .jsonPost(urls.BASE_URL + urls.CREATE_NEW_VISITOR, visitorObj)
+      .jsonPost( urls.BASE_URL + urls.CREATE_NEW_VISITOR, visitorObj )
       .pipe(
         tap(
           () => {
@@ -34,31 +34,31 @@ export class VisitorService {
   }
 
   fetchAllVisitors() {
-    return this.restService.get(urls.BASE_URL);
+    return this.restService.get( urls.BASE_URL );
   }
 
-  fetchVisitorsByInTime(startDate: string, endDate: string) {
+  fetchVisitorsByInTime( startDate: string, endDate: string ) {
     let params = new HttpParams();
-    params.set("startDate", startDate);
-    params.set("endDate", endDate);
-    return this.restService.get(urls.BASE_URL + urls.GET_VISITORS_BY_IN_TIME, {
+    params.set( "startDate", startDate );
+    params.set( "endDate", endDate );
+    return this.restService.get( urls.BASE_URL + urls.GET_VISITORS_BY_IN_TIME, {
       params: params
-    });
+    } );
   }
 
-  updateExitTime(visitorSummaryId: string, exitTime: number) {
-    return this.restService.jsonPut(urls.BASE_URL + visitorSummaryId, exitTime);
+  updateExitTime( visitorSummaryId: string, exitTime: number ) {
+    return this.restService.jsonPut( urls.BASE_URL + visitorSummaryId, exitTime );
   }
 
-  fetchVisitor(id: string) {
-    return this.restService.get(urls.BASE_URL + id);
+  fetchVisitor( id: string ) {
+    return this.restService.get( urls.BASE_URL + id );
   }
 
-  searchVisitor(searchObj: any) {
-    return this.restService.jsonPost(urls.BASE_URL + urls.SEARCH, searchObj);
+  searchVisitor( searchObj: any ) {
+    return this.restService.jsonPost( urls.BASE_URL + urls.SEARCH, searchObj );
   }
 
-  deleteVisitorSummary(visitSummaryId: string) {
-    return this.restService.get(urls.BASE_URL + visitSummaryId);
+  deleteVisitorSummary( visitSummaryId: string ) {
+    return this.restService.get( urls.BASE_URL + visitSummaryId );
   }
 }
