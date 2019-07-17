@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ReportComponent } from '../components/report/report.component';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../material.module';
+import { ReportComponent } from './report.component';
 
 @NgModule( {
   imports: [
