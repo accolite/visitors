@@ -1,11 +1,13 @@
 package com.accolite.visitors.repository;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
-import static org.springframework.data.mongodb.core.query.Update.update;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 import org.bson.Document;
@@ -20,8 +22,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 public class VisitorDALImpl implements VisitorDAL {
 
@@ -39,7 +39,7 @@ public class VisitorDALImpl implements VisitorDAL {
 	}
 
 	@Override
-	public long addVisit(String id, VisitSummary visitSummary) {
+	public long addVisitSummary(String id, VisitSummary visitSummary) {
 		Update update = new Update();
 		update.addToSet("visitSummary", visitSummary);
 
@@ -58,10 +58,17 @@ public class VisitorDALImpl implements VisitorDAL {
 				return document;
 			}
 		});
-		
+
 		AggregationResults<Visitor> result = mongoTemplate.aggregate(aggregation, Visitor.class, Visitor.class);
 
 		return Optional.ofNullable(result.getUniqueMappedResult());
+	}
+
+	@Override
+	public long updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException {
+		Update update = new Update();
+		visitorMap.forEach((a,b)->update.set(a, b));
+		return mongoTemplate.updateFirst(query(where("id").is(id)), update, Visitor.class).getModifiedCount();
 	}
 
 }

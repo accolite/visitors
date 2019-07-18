@@ -2,6 +2,7 @@ package com.accolite.visitors.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,7 +44,6 @@ public class VisitorController {
 	/**
 	 * Fetch the visitors detail by email id
 	 * 
-	 ******* TODO : Restrict the visitSummary to last visit Item only - Update in the doc as well to use only 0th index for now
 	 * @param email
 	 * @return
 	 */
@@ -68,24 +69,20 @@ public class VisitorController {
 	/**
 	 * Adding another visit for the particular Visitor
 	 * 
-	 * TODO: Update the visitNumber - Get from UI
-	 * 
 	 * @param requestData
 	 * @param id
 	 * @return
 	 */
-	@PutMapping(value = "/addVisit/{id}")
-	public ResponseEntity<Visitor> addVisit(@Valid @RequestBody VisitSummary requestData,
+	@PutMapping(value = "/addVisitSummary/{id}")
+	public ResponseEntity<Visitor> addVisitSummary(@Valid @RequestBody VisitSummary requestData,
 			@PathVariable("id") String id){
 
-		visitorService.addVisit(id, requestData);
+		visitorService.addVisitSummary(id, requestData);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	/**
 	 * Update the exit Time 
-	 * 
-	 * TODO: Update the visitNumber - Get from UI
 	 * 
 	 * @param id
 	 * @return
@@ -96,31 +93,61 @@ public class VisitorController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	/**
+	 * Update visitor details.
+	 * 
+	 * @param id
+	 * @param visitorMap
+	 * @return
+	 * @throws IllegalAccessException
+	 */
+	@PatchMapping(value = "/updateVisitorDetails/{id}")
+	public ResponseEntity<Visitor> updateVisitorDetails(@PathVariable("id") String id, @RequestBody Map<String, Object> visitorMap) throws IllegalAccessException {
+		visitorService.updateVisitorDetails(id, visitorMap);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
-	
-	
-	
-
+	/**
+	 * @deprecated
+	 * @return
+	 */
 	@GetMapping(value = "/")
 	public ResponseEntity<List<Visitor>> getVisitors() {
 		List<Visitor> visitors = visitorService.getVisitors();
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
 	
+	/**
+	 * Get Visitor Details by ID.
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Visitor> getVisitorById(@PathVariable("id") String id) {
 		Visitor visitor = null;
 		visitor = visitorService.getVisitorById(id);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
-	
+	/**
+	 * 
+	 * TODO: To be removed. Visitors will never be deleted.
+	 * @deprecated
+	 * @param id
+	 * @return
+	 */
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteVisitor(@PathVariable("id") String id) {
 		boolean status = visitorService.deleteVisitor(id);
 		return new ResponseEntity<Boolean>(status, HttpStatus.OK);
 	}
 	
-	
+	/**
+	 * TODO: Implement it properly.
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	
 	// date in MM/DD/YYYY format
 	@GetMapping(value = "/getVisitorsByInTime")
@@ -130,10 +157,6 @@ public class VisitorController {
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
 	
-	
-	
-	
-	 
 	/*
 	@PostMapping(value = "/search")
 	public ResponseEntity<List<VisitorBO>> searchVisitor(

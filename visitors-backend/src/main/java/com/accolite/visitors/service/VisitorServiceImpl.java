@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.repository.VisitorRepository;
-import com.accolite.visitors.util.VisitorHelperUtil;
 
 /**
  * @author Lavanya
@@ -26,8 +24,8 @@ public class VisitorServiceImpl implements VisitorService {
 	@Autowired
 	private VisitorRepository visitorRepository;
 
-	@Autowired
-	private VisitorHelperUtil visitorHelperUtil;
+//	@Autowired
+//	private VisitorHelperUtil visitorHelperUtil;
 	
 	
 	@Override
@@ -35,11 +33,6 @@ public class VisitorServiceImpl implements VisitorService {
 		return visitorRepository.findByEmailId(email)
 				.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Create new Visitor
@@ -95,9 +88,18 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public void addVisit(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
+	public void addVisitSummary(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
 		visitSummary.setInTime(new Date());
-		long count = visitorRepository.addVisit(id, visitSummary);
+		long count = visitorRepository.addVisitSummary(id, visitSummary);
+		if(count == 0) {
+			throw new VisitorNotFoundException("Visitor not found");
+		}
+	}
+
+	@Override
+	public void updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException {
+
+		long count = visitorRepository.updateVisitorDetails(id, visitorMap);
 		if(count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
