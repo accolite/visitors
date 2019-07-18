@@ -70,7 +70,7 @@ export class VisitorFormComponent {
     this.form.reset();
   }
   onSubmit() {
-    this.form.controls["employeeId"].setValue(new Date().getSeconds());
+    this.form.controls["employeeId"].setValue(0);
     console.log(this.form.controls["employeeId"].invalid);
     this.service.createNewVisitor(this.form.value).subscribe(val => {
       console.log(val);
