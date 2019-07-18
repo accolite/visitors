@@ -71,14 +71,7 @@ export class VisitorFormComponent {
   }
   onSubmit() {
     this.form.controls["employeeId"].setValue(new Date().getSeconds());
-    console.log("print" + this.form.controls["firstName"].invalid);
-    console.log("print" + this.form.controls["lastName"].invalid);
-    console.log("print" + this.form.controls["emailId"].invalid);
-    console.log("print" + this.form.controls["phoneNumber"].invalid);
-    console.log("print" + this.form.controls["contactPerson"].invalid);
-    console.log("print" + this.form.controls["comingFrom"].invalid);
-    console.log("print" + this.form.controls["idType"].invalid);
-    console.log("print" + this.form.controls["employeeId"].invalid);
+
     this.service.createNewVisitor(this.form.value).subscribe(val => {
       console.log(val);
     });
