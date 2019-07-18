@@ -26,14 +26,13 @@ public class VisitorServiceImpl implements VisitorService {
 
 //	@Autowired
 //	private VisitorHelperUtil visitorHelperUtil;
-	
-	
+
 	@Override
-	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {		
+	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {
 		return visitorRepository.findByEmailId(email)
 				.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
 	}
-	
+
 	/**
 	 * Create new Visitor
 	 */
@@ -45,27 +44,21 @@ public class VisitorServiceImpl implements VisitorService {
 		}
 		return visitorRepository.save(visitor);
 	}
-	
+
 	/**
-	 * Get All the visitors
-	 * Need to Implement - Order By
+	 * Get All the visitors TODO: Need to Implement - Order By
 	 */
 	@Override
 	public List<Visitor> getVisitors() {
-		//return visitorDao.findAllByOrderByInTimeDesc();
+		// return visitorDao.findAllByOrderByInTimeDesc();
 		return visitorRepository.findAll();
 	}
-	
-	/**
-	 * Get Visitor by Id
-	 */
+
 	@Override
 	public Visitor getVisitorById(String id) throws VisitorNotFoundException {
-		return visitorRepository.findById(id)
-					.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
+		return visitorRepository.findById(id).orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
 	}
 
-	
 	@Override
 	public boolean deleteVisitor(String id) {
 		visitorRepository.deleteById(id);
@@ -78,10 +71,9 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public void exitVisitor(String id) throws VisitorNotFoundException {
-		
-		long count = visitorRepository.updateEndTime(id);
+	public void exitVisitor(String id, Map<String, String> requestData) throws VisitorNotFoundException {
 
+		long count = visitorRepository.updateEndTime(id, requestData);
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
@@ -91,7 +83,7 @@ public class VisitorServiceImpl implements VisitorService {
 	public void addVisitSummary(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
 		visitSummary.setInTime(new Date());
 		long count = visitorRepository.addVisitSummary(id, visitSummary);
-		if(count == 0) {
+		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
 	}
@@ -100,19 +92,16 @@ public class VisitorServiceImpl implements VisitorService {
 	public void updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException {
 
 		long count = visitorRepository.updateVisitorDetails(id, visitorMap);
-		if(count == 0) {
+		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
 	}
 
-	
-	
-	/*@Override
-	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams) {
-		//Set<VisitSummary> visitSummaryList = visitorHelperUtil.searchVisitors(searchParams);
-		//return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
-		return null;
-	}*/
-	
+	/*
+	 * @Override public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria,
+	 * Object> searchParams) { //Set<VisitSummary> visitSummaryList =
+	 * visitorHelperUtil.searchVisitors(searchParams); //return
+	 * VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList); return null; }
+	 */
 
 }

@@ -2,10 +2,7 @@
  *
  * @author M.Shashikant(shashikant.mittapelli@accoliteindia.com)
  *
- * Gives the flexibility to add all Material elements inside this module
- */
-
-/* Gives the flexibility to add all Material declarations and imports inside this module
+ * Gives the flexibility to add all Material declarations and imports inside this module
  */
 
 import { CommonModule } from '@angular/common';

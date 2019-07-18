@@ -25,17 +25,17 @@ public class VisitSummary implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int visitNumber;
-	
+
 	private String badgeNo;
-	
+
 	@Size(max = 50)
 	private String comingFrom;
 
 	@Size(max = 50)
 	private String contactPerson;
-	
+
 	private String contactPersonEmailId;
-	
+
 	private Long contactPersonPhone;
 
 	@Size(max = 100)
@@ -50,10 +50,9 @@ public class VisitSummary implements Serializable {
 	private Date outTime;
 
 	private VisitorStatus status;
-	
+
 	private Date scheduledTime;
-	
+
 	private String remarks;
-	
-	
+
 }

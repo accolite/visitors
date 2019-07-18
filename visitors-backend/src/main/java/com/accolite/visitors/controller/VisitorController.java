@@ -40,7 +40,7 @@ public class VisitorController {
 	private VisitorService visitorService;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	/**
 	 * Fetch the visitors detail by email id
 	 * 
@@ -53,7 +53,7 @@ public class VisitorController {
 		Visitor visitor = visitorService.getVisitorByEmail(email);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Create new Visitor
 	 * 
@@ -62,10 +62,11 @@ public class VisitorController {
 	 */
 	@PostMapping(value = "/create")
 	public ResponseEntity<Visitor> createVisitor(@Valid @RequestBody Visitor requestData) {
+
 		Visitor visitor = visitorService.createVisitor(requestData);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Adding another visit for the particular Visitor
 	 * 
@@ -75,24 +76,25 @@ public class VisitorController {
 	 */
 	@PutMapping(value = "/addVisitSummary/{id}")
 	public ResponseEntity<Visitor> addVisitSummary(@Valid @RequestBody VisitSummary requestData,
-			@PathVariable("id") String id){
-
+			@PathVariable("id") String id) {
 		visitorService.addVisitSummary(id, requestData);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	/**
-	 * Update the exit Time 
+	 * Update the exit Time
 	 * 
 	 * @param id
 	 * @return
 	 */
 	@PutMapping(value = "/exit/{id}")
-	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id) {
-		visitorService.exitVisitor(id);
+	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id,
+			@Valid @RequestBody Map<String, String> requestData) {
+
+		visitorService.exitVisitor(id, requestData);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Update visitor details.
 	 * 
@@ -102,21 +104,23 @@ public class VisitorController {
 	 * @throws IllegalAccessException
 	 */
 	@PatchMapping(value = "/updateVisitorDetails/{id}")
-	public ResponseEntity<Visitor> updateVisitorDetails(@PathVariable("id") String id, @RequestBody Map<String, Object> visitorMap) throws IllegalAccessException {
+	public ResponseEntity<Visitor> updateVisitorDetails(@PathVariable("id") String id,
+			@RequestBody Map<String, Object> visitorMap) throws IllegalAccessException {
 		visitorService.updateVisitorDetails(id, visitorMap);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * @deprecated
 	 * @return
 	 */
 	@GetMapping(value = "/")
 	public ResponseEntity<List<Visitor>> getVisitors() {
+
 		List<Visitor> visitors = visitorService.getVisitors();
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Get Visitor Details by ID.
 	 * 
@@ -125,30 +129,33 @@ public class VisitorController {
 	 */
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Visitor> getVisitorById(@PathVariable("id") String id) {
-		Visitor visitor = null;
-		visitor = visitorService.getVisitorById(id);
+
+		Visitor visitor = visitorService.getVisitorById(id);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
+
 	/**
 	 * 
 	 * TODO: To be removed. Visitors will never be deleted.
+	 * 
 	 * @deprecated
 	 * @param id
 	 * @return
 	 */
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteVisitor(@PathVariable("id") String id) {
+
 		boolean status = visitorService.deleteVisitor(id);
 		return new ResponseEntity<Boolean>(status, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * TODO: Implement it properly.
+	 * 
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 */
-	
 	// date in MM/DD/YYYY format
 	@GetMapping(value = "/getVisitorsByInTime")
 	public ResponseEntity<List<Visitor>> getVisitorsByInTime(@RequestParam("startDate") Date startDate,
@@ -156,13 +163,14 @@ public class VisitorController {
 		List<Visitor> visitors = visitorService.getVisitorsByInTime(startDate, endDate);
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
-	
+
 	/*
-	@PostMapping(value = "/search")
-	public ResponseEntity<List<VisitorBO>> searchVisitor(
-			@Valid @RequestBody Map<VisitorSearchCriteria, Object> searchParams) {
-		List<VisitorBO> visitors = visitorService.searchVisitor(searchParams);
-		return new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK);
-	}*/
+	 * @PostMapping(value = "/search") public ResponseEntity<List<VisitorBO>>
+	 * searchVisitor(
+	 * 
+	 * @Valid @RequestBody Map<VisitorSearchCriteria, Object> searchParams) {
+	 * List<VisitorBO> visitors = visitorService.searchVisitor(searchParams); return
+	 * new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK); }
+	 */
 
 }

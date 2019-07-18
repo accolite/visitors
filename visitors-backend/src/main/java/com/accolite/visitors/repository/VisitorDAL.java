@@ -8,7 +8,7 @@ import com.accolite.visitors.model.Visitor;
 
 public interface VisitorDAL {
 
-	long updateEndTime(String id);
+	long updateEndTime(String id, Map<String, String> requestData);
 	
 	long addVisitSummary(String id, VisitSummary visitor);
 	

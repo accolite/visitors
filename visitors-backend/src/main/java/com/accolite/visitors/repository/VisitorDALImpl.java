@@ -4,7 +4,6 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.matc
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
-
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -29,13 +28,18 @@ public class VisitorDALImpl implements VisitorDAL {
 	private MongoTemplate mongoTemplate;
 
 	@Override
-	public long updateEndTime(String id) {
+	public long updateEndTime(String id, Map<String, String> requestData) {
 		Update update = new Update();
 		update.set("visitSummary.$.outTime", new Date());
 		update.set("visitSummary.$.status", VisitorStatus.COMPLETED);
-		return mongoTemplate.updateFirst(query(where("id").is(id).andOperator(where("visitSummary.outTime").is(null))),
-				update, Visitor.class).getModifiedCount();
-
+		update.set("visitSummary.$.remarks", requestData.get("remarks"));
+		long visitNumber = Long.parseLong(requestData.get("visitNumber"));
+		return mongoTemplate.updateFirst(query(where("id").is(id)/*
+																	 * .andOperator(where("visitSummary.outTime").is(
+																	 * null))
+																	 */
+				.andOperator(where("visitSummary.visitNumber").is(visitNumber))), update, Visitor.class)
+				.getModifiedCount();
 	}
 
 	@Override
@@ -67,7 +71,7 @@ public class VisitorDALImpl implements VisitorDAL {
 	@Override
 	public long updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException {
 		Update update = new Update();
-		visitorMap.forEach((a,b)->update.set(a, b));
+		visitorMap.forEach((a, b) -> update.set(a, b));
 		return mongoTemplate.updateFirst(query(where("id").is(id)), update, Visitor.class).getModifiedCount();
 	}
 
