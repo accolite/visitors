@@ -46,10 +46,11 @@ public interface VisitorService {
 	 * update exit/out time of the visitor
 	 * 
 	 * @param id
+	 * @param requestData 
 	 * @param exitTime
 	 * @throws VisitorNotFoundException
 	 */
-	public void exitVisitor(String id) throws VisitorNotFoundException;
+	public void exitVisitor(String id, Map<String, String> requestData) throws VisitorNotFoundException;
 
 	/**
 	 * @return

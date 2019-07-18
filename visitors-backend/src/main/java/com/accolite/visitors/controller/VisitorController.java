@@ -2,6 +2,7 @@ package com.accolite.visitors.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -38,7 +39,7 @@ public class VisitorController {
 	private VisitorService visitorService;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	/**
 	 * Fetch the visitors detail by email id
 	 * 
@@ -52,7 +53,7 @@ public class VisitorController {
 		Visitor visitor = visitorService.getVisitorByEmail(email);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Create new Visitor
 	 * 
@@ -61,10 +62,11 @@ public class VisitorController {
 	 */
 	@PostMapping(value = "/create")
 	public ResponseEntity<Visitor> createVisitor(@Valid @RequestBody Visitor requestData) {
+
 		Visitor visitor = visitorService.createVisitor(requestData);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Adding another visit for the particular Visitor
 	 * 
@@ -76,12 +78,12 @@ public class VisitorController {
 	 */
 	@PutMapping(value = "/addVisit/{id}")
 	public ResponseEntity<Visitor> addVisit(@Valid @RequestBody VisitSummary requestData,
-			@PathVariable("id") String id){
+			@PathVariable("id") String id) {
 
 		visitorService.addVisit(id, requestData);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Update the exit Time 
 	 * 
@@ -91,37 +93,37 @@ public class VisitorController {
 	 * @return
 	 */
 	@PutMapping(value = "/exit/{id}")
-	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id) {
-		visitorService.exitVisitor(id);
+	public ResponseEntity<Boolean> exitVisitor(@PathVariable("id") String id,
+			@Valid @RequestBody Map<String, String> requestData) {
+
+		visitorService.exitVisitor(id, requestData);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
-	
+
 	
 	
 
 	@GetMapping(value = "/")
 	public ResponseEntity<List<Visitor>> getVisitors() {
+
 		List<Visitor> visitors = visitorService.getVisitors();
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Visitor> getVisitorById(@PathVariable("id") String id) {
-		Visitor visitor = null;
-		visitor = visitorService.getVisitorById(id);
+
+		Visitor visitor = visitorService.getVisitorById(id);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteVisitor(@PathVariable("id") String id) {
+
 		boolean status = visitorService.deleteVisitor(id);
 		return new ResponseEntity<Boolean>(status, HttpStatus.OK);
 	}
-	
-	
-	
+
 	// date in MM/DD/YYYY format
 	@GetMapping(value = "/getVisitorsByInTime")
 	public ResponseEntity<List<Visitor>> getVisitorsByInTime(@RequestParam("startDate") Date startDate,
