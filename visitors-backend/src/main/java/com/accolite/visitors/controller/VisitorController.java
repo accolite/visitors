@@ -41,7 +41,7 @@ public class VisitorController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
-	 * Fetch the visitors detail by email id
+	 * Fetch the visitors detail by emaiIid 
 	 * 
 	 ******* TODO : Restrict the visitSummary to last visit Item only - Update in the doc as well to use only 0th index for now
 	 * @param email
