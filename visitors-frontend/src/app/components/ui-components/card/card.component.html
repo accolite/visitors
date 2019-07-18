@@ -11,8 +11,12 @@
       <mat-icon *ngIf="expandCard" (click)="expandCard = !expandCard" class="icon action ng-star-inserted" title="Show">expand_more</mat-icon>
     </div>
   </mat-card-header>
+
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     
   <mat-card-content class="mat-content" *ngIf="expandCard">
+    <!-- Add Css to get exact spinner -->
+    <!-- <mat-spinner *ngIf="loading"></mat-spinner> -->
     <ng-content></ng-content>
   </mat-card-content>
   <!-- This tag is for images  -->
