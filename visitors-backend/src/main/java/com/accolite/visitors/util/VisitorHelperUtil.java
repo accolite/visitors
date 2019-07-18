@@ -65,16 +65,6 @@ public class VisitorHelperUtil {
 				vFilter = (vFilter != null) ? vFilter.and(qVisitor.phoneNumber.eq(phoneNum))
 						: qVisitor.phoneNumber.eq(phoneNum);
 				break;
-			case employeeId:
-				long emplId;
-				try {
-					emplId = Long.parseLong(value);
-				} catch (NumberFormatException e) {
-					break;
-				}
-				vFilter = (vFilter != null) ? vFilter.and(qVisitor.employeeId.eq(emplId))
-						: qVisitor.employeeId.eq(emplId);
-				break;
 			case idType:
 				vFilter = (vFilter != null) ? (vFilter.and(qVisitor.idType.startsWithIgnoreCase(value)))
 						: (qVisitor.idType.startsWithIgnoreCase(value));
