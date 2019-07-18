@@ -26,7 +26,7 @@ export class VisitorFormComponent {
   form: FormGroup = new FormGroup({
     firstName: new FormControl("", Validators.required),
     lastName: new FormControl("", Validators.required),
-    employeeId: new FormControl(new Date().getSeconds(), Validators.required),
+    employeeId: new FormControl("", Validators.required),
     inTime: new FormControl(),
     contactPerson: new FormControl(""),
     emailId: new FormControl("", [Validators.email, Validators.required]),
@@ -71,12 +71,12 @@ export class VisitorFormComponent {
   }
   onSubmit() {
     this.form.controls["employeeId"].setValue(new Date().getSeconds());
-
+    console.log(this.form.controls["employeeId"].invalid);
     this.service.createNewVisitor(this.form.value).subscribe(val => {
       console.log(val);
     });
     this.form.reset();
-    this.initializeFormGroup();
+    //  this.initializeFormGroup();
   }
   onSubmitEmployeeData() {
     this.service.createNewVisitor(this.form.value).subscribe(val => {
