@@ -18,7 +18,7 @@
           else second
         "
       >
-        <table width="700" class="table-div">
+        <table width="700" height="230" class="table-div">
           <tr>
             <td>
               <mat-form-field class="full-width">
@@ -52,6 +52,9 @@
                     <mat-option value="{{ type }}">{{ type }}</mat-option>
                   </ng-container>
                 </mat-select>
+                <mat-error *ngIf="form.controls['idType'].errors?.required"
+                  >This field is mendatory</mat-error
+                >
               </mat-form-field>
             </td>
             <td>
@@ -154,6 +157,7 @@
                   mat-raised-button
                   color="primary"
                   type="button"
+                  [disabled]="form.invalid"
                   (click)="onSubmit()"
                 >
                   Submit
@@ -167,67 +171,10 @@
             </td>
           </tr>
         </table>
-
-        <!-- <mat-grid-tile>
-                <div class="controles-container secondGrid">
-                  <mat-form-field>
-                    <input
-                      autocomplete="off"
-                      formControlName="lastName"
-                      matInput
-                      placeholder="lastname"
-                    />
-                    <mat-error>This field is mandatory.</mat-error>
-                  </mat-form-field>
-                  <mat-form-field>
-                    <input
-                      autocomplete="off"
-                      formControlName="idNumber"
-                      matInput
-                      placeholder="ID Number"
-                    />
-                  </mat-form-field>
-                  <mat-form-field>
-                    <input
-                      autocomplete="off"
-                      formControlName="phoneNumber"
-                      matInput
-                      placeholder="Mobile*"
-                    />
-                    <mat-error
-                      *ngIf="form.controls['phoneNumber'].errors?.required"
-                      >This field is mandatory.</mat-error
-                    >
-                    <mat-error
-                      *ngIf="form.controls['phoneNumber'].errors?.pattern"
-                    >
-                      Invalid mobile number
-                    </mat-error>
-                    <mat-error *ngIf="service.form.controls['mobile'].errors?.maxlength">Max 10 digit required</mat-error>
-                  </mat-form-field>
-
-                  <mat-form-field>
-                    <input
-                      autocomplete="off"
-                      formControlName="contactPerson"
-                      matInput
-                      placeholder="Contact person"
-                    />
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-select formControlName="purpose" placeholder="Purpose">
-                      <mat-option>None</mat-option>
-                      <ng-container *ngFor="let pur of purposes">
-                        <mat-option value="{{ pur.value }}">{{ pur.value }}</mat-option>
-                      </ng-container>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </mat-grid-tile> -->
       </div>
 
       <ng-template #second>
-        <table width="700" class="table-div">
+        <table width="700" height="230" class="table-div">
           <tr>
             <td>
               <mat-form-field class="full-width">

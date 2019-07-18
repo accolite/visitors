@@ -1,6 +1,6 @@
 .visitorInput {
-  width: 31%;
-  margin-left: -1%;
+  width: 25.5%;
+  margin-left: 0;
 }
 
 .full-width {
@@ -12,5 +12,9 @@
   height: 50px;
 }
 .table-div {
-  margin-top: 40px;
+  margin-top: 20px;
+}
+.container {
+  margin-left: 20%;
+  margin-bottom: 0%;
 }

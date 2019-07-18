@@ -2,24 +2,25 @@
   height: 50%;
   margin: 10px;
 }
-.mat-sidenav-content{
-height: 539px !important;
-}  
+.mat-sidenav-content {
+  height: 539px !important;
+}
 
-.mat-toolbar-row, .mat-toolbar-single-row {
-height: 81px;
-margin-top: 9px;
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  height: 81px;
+  margin-top: 9px;
 }
 
 #img {
-width: 10em !important;
-margin: 0 1rem;
+  width: 10em !important;
+  margin: 0 1rem;
 }
 
-mat-toolbar-row{
-margin: 0 !important;
+mat-toolbar-row {
+  margin: 0 !important;
 }
 
-.mat-drawer.mat-drawer-side{
-z-index: 1 !important;
+.mat-drawer.mat-drawer-side {
+  z-index: 1 !important;
 }
