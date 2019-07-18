@@ -38,7 +38,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler(VisitorNotFoundException.class)
+	@ExceptionHandler({ VisitorNotFoundException.class, VisitSummaryNotFoundException.class })
 	public final ResponseEntity<Object> handleVisitorNotFoundException(VisitorNotFoundException ex,
 			WebRequest request) {
 		List<String> details = new ArrayList<>();
@@ -56,7 +56,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		errorResponse.setTimestamp(LocalDateTime.now());
 		errorResponse.setStatus(HttpStatus.CONFLICT);
 		errorResponse.setMessage("Duplicate key found.");
-		//errorResponse.setMessage(ex.getMessage());
+		// errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.CONFLICT);
 	}
 

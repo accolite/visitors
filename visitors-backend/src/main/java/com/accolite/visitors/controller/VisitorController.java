@@ -75,9 +75,24 @@ public class VisitorController {
 	 * @return
 	 */
 	@PutMapping(value = "/addVisitSummary/{id}")
-	public ResponseEntity<Visitor> addVisitSummary(@Valid @RequestBody VisitSummary requestData,
+	public ResponseEntity<Visitor> addVisitSummary(@Valid @RequestBody VisitSummary visitSummary,
 			@PathVariable("id") String id) {
-		visitorService.addVisitSummary(id, requestData);
+		visitorService.addVisitSummary(id, visitSummary);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	/**
+	 * update visit based on visit number for the particular visitor
+	 * 
+	 * @param requestData
+	 * @param id
+	 * @return
+	 */
+	@PutMapping(value = "/updateVisitSummary/{id}")
+	public ResponseEntity<Visitor> updateVisitSummary(@Valid @RequestBody VisitSummary visitSummary,
+			@PathVariable("id") String id) {
+
+		visitorService.updateVisitSummary(id, visitSummary);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -106,6 +121,7 @@ public class VisitorController {
 	@PatchMapping(value = "/updateVisitorDetails/{id}")
 	public ResponseEntity<Visitor> updateVisitorDetails(@PathVariable("id") String id,
 			@RequestBody Map<String, Object> visitorMap) throws IllegalAccessException {
+
 		visitorService.updateVisitorDetails(id, visitorMap);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -45,7 +45,7 @@ public interface VisitorService {
 	 * @param id
 	 * @param requestData 
 	 * @param exitTime
-	 * @throws VisitorNotFoundException
+	 * @throws VisitorNotFoundException 
 	 */
 	public void exitVisitor(String id, Map<String, String> requestData) throws VisitorNotFoundException;
 
@@ -89,6 +89,13 @@ public interface VisitorService {
 	 * @throws IllegalAccessException 
 	 */
 	public void updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException;
+
+
+	/**
+	 * @param id
+	 * @param visitSummary
+	 */
+	public void updateVisitSummary(String id, VisitSummary visitSummary);
 	
 
 }

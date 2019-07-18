@@ -23,4 +23,11 @@ public interface VisitorDAL {
 	 */
 	public long updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException;
 
+	/**
+	 * @param id
+	 * @param visitSummary
+	 * @return
+	 */
+	public long updateVisitSummary(String id, VisitSummary visitSummary);
+
 }

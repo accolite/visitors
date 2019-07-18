@@ -8,6 +8,7 @@ public enum VisitorStatus {
 	APPROVED,
 	COMPLETED,
 	DECLINED,
-	CANCELLED
+	CANCELLED,
+	FAILED
 	
 }

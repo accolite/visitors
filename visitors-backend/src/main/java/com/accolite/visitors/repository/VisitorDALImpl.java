@@ -29,21 +29,22 @@ public class VisitorDALImpl implements VisitorDAL {
 
 	@Override
 	public long updateEndTime(String id, Map<String, String> requestData) {
+
 		Update update = new Update();
 		update.set("visitSummary.$.outTime", new Date());
 		update.set("visitSummary.$.status", VisitorStatus.COMPLETED);
 		update.set("visitSummary.$.remarks", requestData.get("remarks"));
 		long visitNumber = Long.parseLong(requestData.get("visitNumber"));
-		return mongoTemplate.updateFirst(query(where("id").is(id)/*
-																	 * .andOperator(where("visitSummary.outTime").is(
-																	 * null))
-																	 */
-				.andOperator(where("visitSummary.visitNumber").is(visitNumber))), update, Visitor.class)
+
+		return mongoTemplate
+				.updateFirst(query(where("id").is(id).andOperator(where("visitSummary.visitNumber").is(visitNumber))),
+						update, Visitor.class)
 				.getModifiedCount();
 	}
 
 	@Override
 	public long addVisitSummary(String id, VisitSummary visitSummary) {
+
 		Update update = new Update();
 		update.addToSet("visitSummary", visitSummary);
 
@@ -70,9 +71,23 @@ public class VisitorDALImpl implements VisitorDAL {
 
 	@Override
 	public long updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException {
+
 		Update update = new Update();
 		visitorMap.forEach((a, b) -> update.set(a, b));
+
 		return mongoTemplate.updateFirst(query(where("id").is(id)), update, Visitor.class).getModifiedCount();
+	}
+
+	@Override
+	public long updateVisitSummary(String id, VisitSummary visitSummary) {
+
+		Update update = new Update();
+		update.set("visitSummary.$", visitSummary);
+
+		return mongoTemplate.updateFirst(
+				query(where("id").is(id)
+						.andOperator(where("visitSummary.visitNumber").is(visitSummary.getVisitNumber()))),
+				update, Visitor.class).getModifiedCount();
 	}
 
 }

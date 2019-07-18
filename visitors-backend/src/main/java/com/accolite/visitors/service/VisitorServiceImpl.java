@@ -89,6 +89,16 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
+	public void updateVisitSummary(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
+
+		visitSummary.setInTime(new Date());
+		long count = visitorRepository.updateVisitSummary(id, visitSummary);
+		if (count == 0) {
+			throw new VisitorNotFoundException("Visitor not found");
+		}
+	}
+
+	@Override
 	public void updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException {
 
 		long count = visitorRepository.updateVisitorDetails(id, visitorMap);
