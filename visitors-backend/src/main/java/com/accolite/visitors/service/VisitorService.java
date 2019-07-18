@@ -4,9 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
-import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
@@ -83,9 +80,15 @@ public interface VisitorService {
 	 * @return
 	 * @throws VisitorNotFoundException
 	 */
-	public void addVisit(String id, VisitSummary visitSummary) throws VisitorNotFoundException;
+	public void addVisitSummary(String id, VisitSummary visitSummary) throws VisitorNotFoundException;
 
-	
+	/**
+	 * 
+	 * @param id
+	 * @param visitorMap
+	 * @throws IllegalAccessException 
+	 */
+	public void updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException;
 	
 
 }
