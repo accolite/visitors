@@ -19,7 +19,7 @@ import com.accolite.visitors.model.Visitor;
 public interface VisitorRepository extends MongoRepository<Visitor, String>, VisitorDAL, QuerydslPredicateExecutor<Visitor>{
 
 	//@Query(fields = "{'visitSummary':0}")
-	public Optional<Visitor> findByEmailId(String email);
+	//public Optional<Visitor> findByEmailId(String email);
 	
 	@Query(fields = "{'visitSummary.$':1}")
 	public List<Visitor> findByVisitSummary_InTimeBetweenOrderByVisitSummary_InTimeDesc(Date startDate, Date endDate);
