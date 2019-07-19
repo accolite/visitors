@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
 import { VisitorService } from 'src/app/services/visitor.service';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { DataObtainer } from 'src/app/components/base/data-obtainer.component';
+import { ServiceSearchParamsInputModel } from 'src/app/helpers/models/service-search-params-input.model';
 
 @Component( {
   selector: 'app-report',
@@ -8,7 +10,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
   templateUrl: 'report.component.html'
 } )
 
-export class ReportComponent implements OnInit {
+export class ReportComponent extends DataObtainer<any> {
   visitors: any;
   pagination = false;
 
@@ -26,18 +28,19 @@ export class ReportComponent implements OnInit {
     'contactPerson', 'inTime', 'idType', 'idNumber', 'actions'
   ];
 
-  constructor( private visitorService: VisitorService ) { }
+  constructor( private visitorService: VisitorService, private zone: NgZone ) {
+    super( zone )
+  }
 
-  ngOnInit() {
+  getDataObservable( params: ServiceSearchParamsInputModel ) {
+    return this.visitorService.fetchAllVisitors()
+  }
 
-    this.visitorService.fetchAllVisitors().subscribe(
-      ( res: any ) => {
-        this.visitors = res;
-        this.dataSource = new MatTableDataSource( this.visitors );
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-    );
+  onAfterUpdateData( data: any ) {
+    this.visitors = data;
+    this.dataSource = new MatTableDataSource( this.visitors );
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter( filterValue: string ) {
