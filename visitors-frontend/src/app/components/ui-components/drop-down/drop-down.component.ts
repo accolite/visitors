@@ -14,6 +14,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angu
 
 
 export class DropdownComponent {
+
   @Input()
   data: Array<any>;
 
