@@ -24,6 +24,9 @@ export class CardComponent {
   @Input()
   cardContent: TemplateRef<any>;
 
+  @Input()
+  loading: boolean = false;
+
   enableFullScreen: boolean = false;
 
   expandCard: boolean = true;

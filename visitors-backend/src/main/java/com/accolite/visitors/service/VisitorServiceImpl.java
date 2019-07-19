@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.repository.VisitorRepository;
-import com.accolite.visitors.util.VisitorHelperUtil;
 
 /**
  * @author Lavanya
@@ -26,8 +24,8 @@ public class VisitorServiceImpl implements VisitorService {
 	@Autowired
 	private VisitorRepository visitorRepository;
 
-	@Autowired
-	private VisitorHelperUtil visitorHelperUtil;
+//	@Autowired
+//	private VisitorHelperUtil visitorHelperUtil;
 
 	@Override
 	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {
@@ -35,6 +33,9 @@ public class VisitorServiceImpl implements VisitorService {
 				.orElseThrow(() -> new VisitorNotFoundException("Visitor not found."));
 	}
 
+	/**
+	 * Create new Visitor
+	 */
 	@Override
 	public Visitor createVisitor(Visitor visitor) {
 		if (visitor.getVisitSummary() != null && visitor.getVisitSummary().size() == 1) {
@@ -45,8 +46,7 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	/**
-	 * Get All the visitors 
-	 * TODO: Need to Implement - Order By
+	 * Get All the visitors TODO: Need to Implement - Order By
 	 */
 	@Override
 	public List<Visitor> getVisitors() {
@@ -80,21 +80,38 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public void addVisit(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
-
+	public void addVisitSummary(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
 		visitSummary.setInTime(new Date());
-		long count = visitorRepository.addVisit(id, visitSummary);
+		long count = visitorRepository.addVisitSummary(id, visitSummary);
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
 	}
 
+	@Override
+	public void updateVisitSummary(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
 
-	/*@Override
-	public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams) {
-		//Set<VisitSummary> visitSummaryList = visitorHelperUtil.searchVisitors(searchParams);
-		//return VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList);
-		return null;
-	}*/
+		visitSummary.setInTime(new Date());
+		long count = visitorRepository.updateVisitSummary(id, visitSummary);
+		if (count == 0) {
+			throw new VisitorNotFoundException("Visitor not found");
+		}
+	}
+
+	@Override
+	public void updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException {
+
+		long count = visitorRepository.updateVisitorDetails(id, visitorMap);
+		if (count == 0) {
+			throw new VisitorNotFoundException("Visitor not found");
+		}
+	}
+
+	/*
+	 * @Override public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria,
+	 * Object> searchParams) { //Set<VisitSummary> visitSummaryList =
+	 * visitorHelperUtil.searchVisitors(searchParams); //return
+	 * VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList); return null; }
+	 */
 
 }

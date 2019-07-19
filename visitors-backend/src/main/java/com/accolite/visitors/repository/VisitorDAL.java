@@ -10,8 +10,24 @@ public interface VisitorDAL {
 
 	long updateEndTime(String id, Map<String, String> requestData);
 	
-	long addVisit(String id, VisitSummary visitor);
+	long addVisitSummary(String id, VisitSummary visitor);
 	
 	public Optional<Visitor> findByEmailId(String email);
+	
+	/**
+	 * 
+	 * @param id
+	 * @param visitorMap
+	 * @return
+	 * @throws IllegalAccessException 
+	 */
+	public long updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException;
+
+	/**
+	 * @param id
+	 * @param visitSummary
+	 * @return
+	 */
+	public long updateVisitSummary(String id, VisitSummary visitSummary);
 
 }

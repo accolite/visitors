@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.accolite.visitors.exception;
+package com.accolite.visitors.advice;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.accolite.visitors.util.ErrorResponse;
+import com.accolite.visitors.exception.VisitSummaryNotFoundException;
+import com.accolite.visitors.exception.VisitorNotFoundException;
+import com.accolite.visitors.model.ErrorResponse;
 
 /**
  * @author Lavanya
@@ -38,7 +40,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler(VisitorNotFoundException.class)
+	@ExceptionHandler({ VisitorNotFoundException.class, VisitSummaryNotFoundException.class })
 	public final ResponseEntity<Object> handleVisitorNotFoundException(VisitorNotFoundException ex,
 			WebRequest request) {
 		List<String> details = new ArrayList<>();
@@ -56,7 +58,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		errorResponse.setTimestamp(LocalDateTime.now());
 		errorResponse.setStatus(HttpStatus.CONFLICT);
 		errorResponse.setMessage("Duplicate key found.");
-		//errorResponse.setMessage(ex.getMessage());
+		// errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.CONFLICT);
 	}
 
