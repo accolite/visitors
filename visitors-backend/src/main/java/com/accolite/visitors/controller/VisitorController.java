@@ -6,11 +6,13 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +22,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.service.VisitorService;
+import com.accolite.visitors.model.VisitorMail;
 
 /**
  * @author Lavanya
@@ -180,13 +185,54 @@ public class VisitorController {
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
 
-	/*
-	 * @PostMapping(value = "/search") public ResponseEntity<List<VisitorBO>>
-	 * searchVisitor(
-	 * 
-	 * @Valid @RequestBody Map<VisitorSearchCriteria, Object> searchParams) {
-	 * List<VisitorBO> visitors = visitorService.searchVisitor(searchParams); return
-	 * new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK); }
-	 */
+	@PostMapping(value = "/sendApprovalMail")
+	public ResponseEntity<String> sendApprovalMail(@RequestBody Visitor visitor) {
+		JSONObject approval = visitorService.sendApprovalMail(visitor);
+		if (approval.has("fail")) {
+			approval.remove("fail");
+			return new ResponseEntity<String>(approval.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(approval.toString(), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/sendNotifyMail")
+	public ResponseEntity<String> sendNotifyMail(@RequestBody Visitor visitor) {
+		JSONObject notification = visitorService.sendNotifyMail(visitor);
+		if (notification.has("fail")) {
+			notification.remove("fail");
+			return new ResponseEntity<String>(notification.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(notification.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/approvalResponse", params = { "visitorId", "visitNumber", "approval" })
+	public ResponseEntity<String> approvalResponse(
+													@RequestParam("visitorId") String visitorId,
+													@RequestParam("visitNumber") String visitNumber, 
+													@RequestParam("approval") String approval) {
+		logger.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:" + approval);
+		
+		JSONObject approvalResponse=visitorService.approvalResponse(visitorId, visitNumber, approval);
+		if (approvalResponse.has("fail")) {
+			approvalResponse.remove("fail");
+			return new ResponseEntity<String>(approvalResponse.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(approvalResponse.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/notifyResponse", params = { "visitorId", "visitNumber", "niticed" })
+	public ResponseEntity<String> notifyResponse(
+			@RequestParam("visitorId") String visitorId,
+			@RequestParam("visitNumber") String visitNumber,
+			@RequestParam("niticed") String niticed) {
+		logger.debug("notifyResponse::: visitorId:" + visitorId + " visitNumber:" + visitNumber + " niticed:" + niticed);
+		
+		JSONObject notifyResponse= visitorService.notifyResponse(visitorId, visitNumber, niticed);
+		if (notifyResponse.has("fail")) {
+			notifyResponse.remove("fail");
+			return new ResponseEntity<String>(notifyResponse.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(notifyResponse.toString(), HttpStatus.OK);
+	}
 
 }
