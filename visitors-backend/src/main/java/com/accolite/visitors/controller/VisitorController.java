@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
@@ -47,7 +49,7 @@ public class VisitorController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
-	 * Fetch the visitors detail by emaiIid 
+	 * Fetch the visitors detail by emaiIid
 	 * 
 	 * @param email
 	 * @return
@@ -185,6 +187,20 @@ public class VisitorController {
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
 
+	/**
+	 * Gets all the visitors without visitor summary.
+	 * 
+	 * TODO:Add search parameters.
+	 * 
+	 * @param pageable
+	 * @return
+	 */
+	@GetMapping(value = "/search-visitors")
+	public ResponseEntity<Page<Visitor>> visitorsWithoutSummary(Pageable pageable) {
+		Page<Visitor> visitorPage = visitorService.visitorsWithoutSummary(pageable);
+		return new ResponseEntity<>(visitorPage, HttpStatus.OK);
+	}
+
 	@PostMapping(value = "/sendApprovalMail")
 	public ResponseEntity<String> sendApprovalMail(@RequestBody Visitor visitor) {
 		JSONObject approval = visitorService.sendApprovalMail(visitor);
@@ -206,13 +222,12 @@ public class VisitorController {
 	}
 
 	@GetMapping(value = "/approvalResponse", params = { "visitorId", "visitNumber", "approval" })
-	public ResponseEntity<String> approvalResponse(
-													@RequestParam("visitorId") String visitorId,
-													@RequestParam("visitNumber") String visitNumber, 
-													@RequestParam("approval") String approval) {
-		logger.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:" + approval);
-		
-		JSONObject approvalResponse=visitorService.approvalResponse(visitorId, visitNumber, approval);
+	public ResponseEntity<String> approvalResponse(@RequestParam("visitorId") String visitorId,
+			@RequestParam("visitNumber") String visitNumber, @RequestParam("approval") String approval) {
+		logger.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:"
+				+ approval);
+
+		JSONObject approvalResponse = visitorService.approvalResponse(visitorId, visitNumber, approval);
 		if (approvalResponse.has("fail")) {
 			approvalResponse.remove("fail");
 			return new ResponseEntity<String>(approvalResponse.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -221,13 +236,12 @@ public class VisitorController {
 	}
 
 	@GetMapping(value = "/notifyResponse", params = { "visitorId", "visitNumber", "niticed" })
-	public ResponseEntity<String> notifyResponse(
-			@RequestParam("visitorId") String visitorId,
-			@RequestParam("visitNumber") String visitNumber,
-			@RequestParam("niticed") String niticed) {
-		logger.debug("notifyResponse::: visitorId:" + visitorId + " visitNumber:" + visitNumber + " niticed:" + niticed);
-		
-		JSONObject notifyResponse= visitorService.notifyResponse(visitorId, visitNumber, niticed);
+	public ResponseEntity<String> notifyResponse(@RequestParam("visitorId") String visitorId,
+			@RequestParam("visitNumber") String visitNumber, @RequestParam("niticed") String niticed) {
+		logger.debug(
+				"notifyResponse::: visitorId:" + visitorId + " visitNumber:" + visitNumber + " niticed:" + niticed);
+
+		JSONObject notifyResponse = visitorService.notifyResponse(visitorId, visitNumber, niticed);
 		if (notifyResponse.has("fail")) {
 			notifyResponse.remove("fail");
 			return new ResponseEntity<String>(notifyResponse.toString(), HttpStatus.INTERNAL_SERVER_ERROR);

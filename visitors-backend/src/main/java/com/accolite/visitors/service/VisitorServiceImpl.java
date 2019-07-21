@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +15,7 @@ import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.mail.CustomMailService;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
-import com.accolite.visitors.model.VisitorMail;
 import com.accolite.visitors.repository.VisitorRepository;
-import com.accolite.visitors.util.VisitorHelperUtil;
 
 /**
  * @author Lavanya
@@ -28,7 +28,6 @@ public class VisitorServiceImpl implements VisitorService {
 	@Autowired
 	private VisitorRepository visitorRepository;
 
-	@Autowired
 	private CustomMailService customMailService;
 
 //	@Autowired
@@ -118,6 +117,11 @@ public class VisitorServiceImpl implements VisitorService {
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
+	}
+
+	@Override
+	public Page<Visitor> visitorsWithoutSummary(Pageable pageable) {
+		return visitorRepository.findAllWithoutSummary(pageable);
 	}
 
 	/*
