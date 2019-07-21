@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
@@ -13,7 +16,7 @@ import com.accolite.visitors.model.Visitor;
  *
  */
 public interface VisitorService {
-	
+
 	/**
 	 * Search for visitor by email Id
 	 * 
@@ -23,7 +26,6 @@ public interface VisitorService {
 	 */
 	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException;
 
-	
 	/**
 	 * @param visitorBO
 	 * @return
@@ -43,9 +45,9 @@ public interface VisitorService {
 	 * update exit/out time of the visitor
 	 * 
 	 * @param id
-	 * @param requestData 
+	 * @param requestData
 	 * @param exitTime
-	 * @throws VisitorNotFoundException 
+	 * @throws VisitorNotFoundException
 	 */
 	public void exitVisitor(String id, Map<String, String> requestData) throws VisitorNotFoundException;
 
@@ -66,7 +68,8 @@ public interface VisitorService {
 	 * @param searchParams
 	 * @return
 	 */
-	//public List<Visitor> searchVisitor(Map<VisitorSearchCriteria, Object> searchParams);
+	// public List<Visitor> searchVisitor(Map<VisitorSearchCriteria, Object>
+	// searchParams);
 
 	/**
 	 * @param id
@@ -86,16 +89,21 @@ public interface VisitorService {
 	 * 
 	 * @param id
 	 * @param visitorMap
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	public void updateVisitorDetails(String id, Map<String, Object> visitorMap) throws IllegalAccessException;
-
 
 	/**
 	 * @param id
 	 * @param visitSummary
 	 */
 	public void updateVisitSummary(String id, VisitSummary visitSummary);
-	
+
+	/**
+	 * 
+	 * @param pageable
+	 * @return
+	 */
+	public Page<Visitor> visitorsWithoutSummary(Pageable pageable);
 
 }

@@ -3,12 +3,13 @@ package com.accolite.visitors.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
-import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 
 /**
@@ -30,5 +31,8 @@ public interface VisitorRepository extends MongoRepository<Visitor, String>, Vis
 	// public List<VisitSummary> findByVisitorIn(Set<String> ids);
 
 	public void deleteById(String id);
+	
+	@Query(value= "{}",fields ="{visitSummary:0}")
+	public Page<Visitor> findAllWithoutSummary(Pageable page);
 
 }

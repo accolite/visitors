@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -180,13 +182,18 @@ public class VisitorController {
 		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
 	}
 
-	/*
-	 * @PostMapping(value = "/search") public ResponseEntity<List<VisitorBO>>
-	 * searchVisitor(
+	/**
+	 * Gets all the visitors without visitor summary.
 	 * 
-	 * @Valid @RequestBody Map<VisitorSearchCriteria, Object> searchParams) {
-	 * List<VisitorBO> visitors = visitorService.searchVisitor(searchParams); return
-	 * new ResponseEntity<List<VisitorBO>>(visitors, HttpStatus.OK); }
+	 * TODO:Add search parameters.
+	 * 
+	 * @param pageable
+	 * @return
 	 */
+	@GetMapping(value = "/search-visitors")
+	public ResponseEntity<Page<Visitor>> visitorsWithoutSummary(Pageable pageable) {
+		Page<Visitor> visitorPage = visitorService.visitorsWithoutSummary(pageable);
+		return new ResponseEntity<>(visitorPage, HttpStatus.OK);
+	}
 
 }
