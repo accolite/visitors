@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.json.JSONObject;
 
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.VisitSummary;
@@ -105,5 +106,35 @@ public interface VisitorService {
 	 * @return
 	 */
 	public Page<Visitor> visitorsWithoutSummary(Pageable pageable);
+	
+/**
+	 * 
+	 * @param visitorApprovalData
+	 * @return
+	 */
+	public JSONObject sendApprovalMail(Visitor visitorApprovalData);
+
+	/**
+	 * 
+	 * @param visitorApprovalData
+	 * @return
+	 */
+	public JSONObject sendNotifyMail(Visitor visitorApprovalData);
+
+	/**
+	 * 
+	 * @param visitorId
+	 * @param visitNumber
+	 * @param approval
+	 */
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval);
+
+	/**
+	 * 
+	 * @param visitorId
+	 * @param visitNumber
+	 * @param niticed
+	 */
+	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed);
 
 }
