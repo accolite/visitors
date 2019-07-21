@@ -32,14 +32,14 @@ import { DataTableComponent } from "../components/ui-components/data-table/data-
 import { CardComponent } from "../components/ui-components/card/card.component";
 import { DropdownComponent } from "../components/ui-components/drop-down/drop-down.component";
 import { FormsModule } from "@angular/forms";
-
 import { RouterModule, Routes } from "@angular/router";
-import { HomeComponent } from "./home/home.component";
+import { SnackbarComponent } from "../components/ui-components/snack-bar/snack-bar.component";
 
 const componentDeclarations = [
   DataTableComponent,
   CardComponent,
-  DropdownComponent
+  DropdownComponent,
+  SnackbarComponent
 ];
 const moduleDeclarations = [
   CommonModule,
@@ -51,7 +51,6 @@ const moduleDeclarations = [
   MatInputModule,
   MatPaginatorModule,
   MatSortModule,
-
   MatIconModule,
   MatCardModule,
   MatToolbarModule,
@@ -68,8 +67,9 @@ const moduleDeclarations = [
 ];
 
 @NgModule({
-  declarations: [...componentDeclarations, HomeComponent],
+  declarations: [...componentDeclarations],
   imports: [...moduleDeclarations],
-  exports: [...moduleDeclarations, ...componentDeclarations]
+  exports: [...moduleDeclarations, ...componentDeclarations],
+  entryComponents: [SnackbarComponent]
 })
 export class MaterialModule {}

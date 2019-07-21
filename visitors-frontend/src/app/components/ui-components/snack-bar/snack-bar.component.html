@@ -1,0 +1,11 @@
+<div class="snack-bar">
+  <div class="message">
+    <span class="{{data?.class}} message-text"><mat-icon>{{data?.icon}}</mat-icon> {{data?.message}}</span>
+  </div>
+  <div class="dismiss">
+    <button mat-icon-button (click)="snackBarRef.dismiss()">
+      <mat-icon class="button-icon">{{data?.action}}</mat-icon>
+    </button>
+  </div>
+</div>
+  
