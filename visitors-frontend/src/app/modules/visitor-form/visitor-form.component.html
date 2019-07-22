@@ -12,14 +12,7 @@
           </div>
 
 
-          <div
-            *ngIf="
-              form.get('visitorType').value == 'Guest' ||
-                form.get('visitorType').value == '';
-              else second
-            "
-
-          >
+          <div *ngIf=" form.get('visitorType').value == 'Guest' || form.get('visitorType').value == ''; else second">
             <table width="700" class="table-div">
               <tr>
                 <td>

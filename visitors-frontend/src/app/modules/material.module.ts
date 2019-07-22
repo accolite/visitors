@@ -26,7 +26,9 @@ import {
   MatSnackBarModule,
   MatNativeDateModule,
   MatProgressSpinnerModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatTabsModule,
+  MatStepperModule
 } from "@angular/material";
 import { DataTableComponent } from "../components/ui-components/data-table/data-table.component";
 import { CardComponent } from "../components/ui-components/card/card.component";
@@ -63,7 +65,9 @@ const moduleDeclarations = [
   MatNativeDateModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  RouterModule
+  RouterModule,
+  MatTabsModule,
+  MatStepperModule
 ];
 
 @NgModule({

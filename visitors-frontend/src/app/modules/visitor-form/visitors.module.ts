@@ -3,15 +3,16 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "../material.module";
 import { VisitorFormComponent } from './visitor-form.component';
+import { VisitorComponent } from './visitor-home/visitor-home.component';
 
 @NgModule( {
-  declarations: [ VisitorFormComponent ],
+  declarations: [ VisitorFormComponent,VisitorComponent ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule
   ],
-  exports: [ VisitorFormComponent ]
+  exports: [ VisitorFormComponent,VisitorComponent ]
 } )
 export class VisitorsModule { }
