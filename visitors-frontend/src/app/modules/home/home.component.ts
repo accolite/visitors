@@ -22,15 +22,12 @@ export class HomeComponent extends DataObtainer<any> {
   dataSource: MatTableDataSource<any>;
 
   displayedColumns = [
+    "badgeNo",
     "firstName",
     "lastName",
-    "phoneNumber",
-    "purpose",
-    "contactPerson",
     "inTime",
-    "idType",
-    "idNumber",
-    "actions"
+    "actions",
+    "remarks"
   ];
 
   constructor(private visitorService: VisitorService, private zone: NgZone) {
