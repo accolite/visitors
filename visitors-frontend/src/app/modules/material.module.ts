@@ -11,7 +11,7 @@ import {
   MatButtonModule, MatCheckboxModule, MatTableModule, MatFormFieldModule,
   MatInputModule, MatPaginatorModule, MatSortModule, MatCardModule,
   MatIconModule, MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule,
-  MatGridListModule, MatDatepickerModule, MatSnackBarModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule
+  MatGridListModule, MatDatepickerModule, MatSnackBarModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, MatTabsModule, MatStepperModule
 } from '@angular/material';
 import { DataTableComponent } from '../components/ui-components/data-table/data-table.component';
 import { CardComponent } from '../components/ui-components/card/card.component';
@@ -24,7 +24,7 @@ const componentDeclarations = [ DataTableComponent, CardComponent, DropdownCompo
 const moduleDeclarations = [ CommonModule, FormsModule, MatButtonModule, MatCheckboxModule, MatTableModule,
   MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule,
   MatIconModule, MatCardModule, MatToolbarModule, MatListModule, MatSidenavModule, MatSelectModule, MatSnackBarModule,
-  MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, RouterModule ];
+  MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, RouterModule,MatTabsModule, MatStepperModule ];
 
 @NgModule( {
   declarations: [ ...componentDeclarations ],
