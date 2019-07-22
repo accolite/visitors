@@ -28,7 +28,6 @@ public class VisitorServiceImpl implements VisitorService {
 	@Autowired
 	private VisitorRepository visitorRepository;
 
-	@Autowired
 	private CustomMailService customMailService;
 
 //	@Autowired
