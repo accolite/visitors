@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,7 @@ import com.accolite.visitors.service.UploadService;
 
 @RestController
 @RequestMapping(value = "/api-dev/visitor")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class UploadController {
 	
 	@Autowired
