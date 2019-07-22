@@ -75,5 +75,4 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
-
 }
