@@ -227,13 +227,16 @@ public class VisitorController {
 		return new ResponseEntity<String>(notification.toString(), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/approvalResponse", params = { "visitorId", "visitNumber", "approval" })
-	public ResponseEntity<String> approvalResponse(@RequestParam("visitorId") String visitorId,
-			@RequestParam("visitNumber") String visitNumber, @RequestParam("approval") String approval) {
-		logger.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:"
-				+ approval);
-
-		JSONObject approvalResponse = visitorService.approvalResponse(visitorId, visitNumber, approval);
+	@GetMapping(value = "/approvalResponse", params = { "visitorId", "visitNumber","visitorEmail", "approval","remarks" })
+	public ResponseEntity<String> approvalResponse(
+													@RequestParam("visitorId") String visitorId,
+													@RequestParam("visitNumber") String visitNumber,
+													@RequestParam("visitorEmail") String visitorEmail,						
+													@RequestParam("approval") String approval,
+													@RequestParam("remarks") String remarks) {
+		logger.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:" + approval + " remarks:" + remarks+ " visitorMail:" + visitorEmail );
+		
+		JSONObject approvalResponse=visitorService.approvalResponse(visitorId, visitNumber, approval,remarks,visitorEmail);
 		if (approvalResponse.has("fail")) {
 			approvalResponse.remove("fail");
 			return new ResponseEntity<String>(approvalResponse.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -241,13 +244,16 @@ public class VisitorController {
 		return new ResponseEntity<String>(approvalResponse.toString(), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/notifyResponse", params = { "visitorId", "visitNumber", "niticed" })
-	public ResponseEntity<String> notifyResponse(@RequestParam("visitorId") String visitorId,
-			@RequestParam("visitNumber") String visitNumber, @RequestParam("niticed") String niticed) {
-		logger.debug(
-				"notifyResponse::: visitorId:" + visitorId + " visitNumber:" + visitNumber + " niticed:" + niticed);
-
-		JSONObject notifyResponse = visitorService.notifyResponse(visitorId, visitNumber, niticed);
+	@GetMapping(value = "/notifyResponse", params = { "visitorId", "visitNumber","visitorEmail", "approval","remarks" })
+	public ResponseEntity<String> notifyResponse(
+			@RequestParam("visitorId") String visitorId,
+			@RequestParam("visitNumber") String visitNumber,
+			@RequestParam("visitorEmail") String visitorEmail,
+			@RequestParam("approval") String approval,
+			@RequestParam("remarks") String remarks) {
+		logger.debug("notifyResponse::: visitorId:" + visitorId + " visitNumber:" + visitNumber + " niticed:" + approval+" remarks: "+ remarks+ "visitorMail: "+visitorEmail);
+		
+		JSONObject notifyResponse= visitorService.notifyResponse(visitorId, visitNumber, approval, remarks, visitorEmail);
 		if (notifyResponse.has("fail")) {
 			notifyResponse.remove("fail");
 			return new ResponseEntity<String>(notifyResponse.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
