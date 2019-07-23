@@ -198,7 +198,7 @@ public class VisitorController {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping(value = "/search-visitors")
+	@GetMapping(value = "/search")
 	public ResponseEntity<CustomPage> searchVisitors(@RequestBody Map<VisitorSearchCriteria, Object> searchParams,
 			@PageableDefault(page = DEFAULT_PAGE_NUMBER, size = DEFAULT_PAGE_SIZE) @SortDefault(sort = "visitSummary.inTime", direction = Sort.Direction.DESC) Pageable pageable) {
 		CustomPage visitorPage = visitorService.searchVisitors(searchParams, pageable);
