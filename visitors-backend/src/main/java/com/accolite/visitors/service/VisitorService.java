@@ -131,7 +131,7 @@ public interface VisitorService {
 	 * @param visitNumber
 	 * @param approval
 	 */
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval);
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval,String remarks, String visitorMail);
 
 	/**
 	 * 
@@ -139,6 +139,6 @@ public interface VisitorService {
 	 * @param visitNumber
 	 * @param niticed
 	 */
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed);
+	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,String visitorMail);
 
 }
