@@ -6,13 +6,14 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.mail.CustomMailService;
+import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.repository.VisitorRepository;
@@ -121,16 +122,10 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public Page<Visitor> visitorsWithoutSummary(Pageable pageable) {
-		return visitorRepository.findAllWithoutSummary(pageable);
-	}
+	public CustomPage searchVisitors(Map<VisitorSearchCriteria, Object> searchParams, Pageable pageable) {
 
-	/*
-	 * @Override public List<VisitorBO> searchVisitor(Map<VisitorSearchCriteria,
-	 * Object> searchParams) { //Set<VisitSummary> visitSummaryList =
-	 * visitorHelperUtil.searchVisitors(searchParams); //return
-	 * VisitorBOBuilder.buildVisitorBOBySummary(visitSummaryList); return null; }
-	 */
+		return visitorRepository.searchVisitors(searchParams, pageable);
+	}
 
 	@Override
 	public JSONObject sendApprovalMail(Visitor visitor) {
@@ -145,14 +140,16 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval) {
-		JSONObject approvalResponse = customMailService.approvalResponse(visitorId, visitNumber, approval);
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remaarks,String visitorEmail) {
+		JSONObject approvalResponse = customMailService.approvalResponse(visitorId, visitNumber, approval, remaarks,visitorEmail);
 		return approvalResponse;
 	}
 
 	@Override
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed) {
-		JSONObject notifyResponse = customMailService.notifyResponse(visitorId, visitNumber, niticed);
+	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks, String visitorEmail) {
+	//	JSONObject notifyResponse = customMailService.notifyResponse(visitorId, visitNumber, niticed, remarks);
+		JSONObject notifyResponse = customMailService.approvalResponse(visitorId, visitNumber, niticed, remarks, visitorEmail);
+
 		return notifyResponse;
 	}
 

@@ -2,6 +2,7 @@ package com.accolite.visitors.db;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -17,15 +18,43 @@ public class VisitorsMongoData {
 	public static final String COLLECTION_NAME = "visitor";
 
 	public boolean updateVisitSummaryStatus(String visitorId, int visitNumber, String status) {
+
 		Update update = new Update();
 		update.set("visitSummary.$.status", status);
-
 		Query query = new Query(
 				where("id").is(visitorId).andOperator(where("visitSummary.visitNumber").is(visitNumber)));
 		long modifiedCount = mongoTemplate.updateFirst(query, update, Visitor.class).getModifiedCount();
-		if (modifiedCount>0) 
+		if (modifiedCount > 0)
 			return true;
+		return false;
+	}
+
+	public boolean updateVisitSummaryRemarksAndStatus(String visitorId, int visitNumber, String approval,
+			String remarks) {
+		Query whereQuery = new Query();
+		ObjectId id = new ObjectId(visitorId);
+	//	whereQuery.addCriteria(where("_id").is(id));
+		whereQuery.addCriteria(where("_id").is(id)).addCriteria(where("visitSummary.visitNumber").is(visitNumber));
+
+
+		Visitor findOne = mongoTemplate.findOne(whereQuery, Visitor.class, COLLECTION_NAME);
+
+		Update update = new Update();
+		if (findOne.getVisitSummary().get(visitNumber - 1).getRemarks() != null) {
+			update.set("visitSummary.$.remarks",
+					findOne.getVisitSummary().get(visitNumber - 1).getRemarks() + " | " + remarks);
+		} else {
+			update.set("visitSummary.$.remarks", remarks);
+		}
+		update.set("visitSummary.$.status", approval);
 		
+		Query query = new Query(
+				where("id").is(visitorId).andOperator(where("visitSummary.visitNumber").is(visitNumber)));
+
+		long modifiedCount = mongoTemplate.updateFirst(whereQuery, update, Visitor.class).getModifiedCount();
+		if (modifiedCount > 0)
+			return true;
+
 		return false;
 	}
 }
