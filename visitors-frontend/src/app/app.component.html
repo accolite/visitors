@@ -14,18 +14,10 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #drawer mode="side" opened role="navigation">
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/visitor']" [queryParams]="{ loc: val }"
-        >Visitor</a
-      >
-      <a mat-list-item [routerLink]="['/report']" [queryParams]="{ loc: val }"
-        >Report</a
-      >
+      <a mat-list-item [routerLink]="['/visitor']" [queryParams]="{ loc: val }">Visitor</a>
+      <a mat-list-item [routerLink]="['/report']" [queryParams]="{ loc: val }">Report</a>
     </mat-nav-list>
-    <drop-down
-      [data]="location"
-      label="Location"
-      (selectedValueChange)="selectedValue($event)"
-    ></drop-down>
+    <drop-down [data]="location" label="Location" (selectedValueChange)="selectedValue($event)"></drop-down>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
