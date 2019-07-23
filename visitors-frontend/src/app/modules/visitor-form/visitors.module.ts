@@ -5,9 +5,10 @@ import { MaterialModule } from "../material.module";
 import { VisitorFormComponent } from "./visitor-form.component";
 import { VisitorComponent } from "./visitor-home/visitor-home.component";
 import { HomeModule } from "../home/home.module";
+import { VisitorSearchOrCreateComponent } from './visitor-search-or-create/visitor-search-or-create.component';
 
-@NgModule({
-  declarations: [VisitorFormComponent, VisitorComponent],
+@NgModule( {
+  declarations: [ VisitorFormComponent, VisitorComponent, VisitorSearchOrCreateComponent ],
   imports: [
     CommonModule,
     FormsModule,
@@ -15,6 +16,6 @@ import { HomeModule } from "../home/home.module";
     ReactiveFormsModule,
     MaterialModule
   ],
-  exports: [VisitorFormComponent, VisitorComponent]
-})
-export class VisitorsModule {}
+  exports: [ VisitorFormComponent, VisitorComponent, VisitorSearchOrCreateComponent ]
+} )
+export class VisitorsModule { }

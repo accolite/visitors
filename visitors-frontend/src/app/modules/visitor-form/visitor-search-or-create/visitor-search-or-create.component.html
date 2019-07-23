@@ -1,0 +1,90 @@
+<mat-vertical-stepper [linear]="false" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <ng-template matStepLabel>Visitor search or create</ng-template>
+
+        <div class="example-container">
+              
+          <mat-form-field class="set-width">
+            <span class="span" matPrefix><mat-icon class="span-maticon">mail</mat-icon>&nbsp;</span>
+            <input matInput type="email" placeholder="Email" [(ngModel)]="user.emailId" (keyup)="searchValues($event.target.value,'email');" class="example-right-align">
+          </mat-form-field>
+
+          <h3 class="setMiddle"> OR </h3>
+          
+          <mat-form-field class="set-width">
+            <input matInput type="number" placeholder="Mobile number" [(ngModel)]="user.phoneNumber" (keyup)="searchValues($event.target.value,'phoneNumber');" #phoneNumber>
+            <span class="span" matPrefix><mat-icon class="span-maticon">smartphone</mat-icon>&nbsp;</span>
+          </mat-form-field>
+        </div> 
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+        <ng-template matStepLabel>Create Visitor</ng-template>
+        <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+        <div class="flex-container-wrapper">
+
+          <div class="flex-container">
+              <mat-form-field>
+                <input id="input" name="firstName" [(ngModel)]="user.firstName" matInput placeholder="First Name">
+              </mat-form-field>
+              <mat-form-field>
+                  <input id="input" name="lastName" [(ngModel)]="user.lastName" matInput placeholder="Last Name">
+              </mat-form-field>
+          </div>
+
+          <div class="flex-container">
+              <mat-form-field>
+                <input id="input" name="purpose" [(ngModel)]="user.visitSummary[0].purpose"  matInput placeholder="Purpose">
+              </mat-form-field>
+              <mat-form-field> 
+                  <input id="input"  name="comingFrom" [(ngModel)]="user.visitSummary[0].comingFrom" matInput placeholder="Coming From">
+              </mat-form-field>
+          </div>
+
+          <div class="flex-container">
+              <mat-form-field>
+                <mat-select [(ngModel)]="user.idType" name="idType" placeholder="Govt Id Type">
+                  <mat-option value="{{id}}" *ngFor="let id of idTypes">{{id}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input id="input"  name="idNumber" [(ngModel)]="user.idNumber" matInput placeholder="Id number">
+              </mat-form-field>
+          </div>
+
+          <div class="flex-container">
+              <mat-form-field>
+                  <input id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary batch number">
+              </mat-form-field>
+          </div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </div>
+      </form>  
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Approval</ng-template>
+      <div class="flex-container-wrapper">
+        <div class="flex-container">
+          <mat-form-field>
+            <input id="input" name="contactPerson" [(ngModel)]="user.visitSummary[0].contactPerson"
+             matInput placeholder="Contact Person">
+          </mat-form-field>
+          <button mat-button>Add Contact Person</button>
+        </div>
+      <div>
+        <button mat-button matStepperPrevious>Request Approval</button>
+        <button mat-button (click)="stepper.reset()">Notify</button>
+      </div>
+      </div>  
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
