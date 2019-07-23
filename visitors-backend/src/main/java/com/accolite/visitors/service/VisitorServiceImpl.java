@@ -32,9 +32,6 @@ public class VisitorServiceImpl implements VisitorService {
 	@Autowired
 	private CustomMailService customMailService;
 
-//	@Autowired
-//	private VisitorHelperUtil visitorHelperUtil;
-
 	@Override
 	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {
 		return visitorRepository.findByEmailId(email)
@@ -140,15 +137,20 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remaarks,String visitorEmail) {
-		JSONObject approvalResponse = customMailService.approvalResponse(visitorId, visitNumber, approval, remaarks,visitorEmail);
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remaarks,
+			String visitorEmail) {
+		JSONObject approvalResponse = customMailService.approvalResponse(visitorId, visitNumber, approval, remaarks,
+				visitorEmail);
 		return approvalResponse;
 	}
 
 	@Override
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks, String visitorEmail) {
-	//	JSONObject notifyResponse = customMailService.notifyResponse(visitorId, visitNumber, niticed, remarks);
-		JSONObject notifyResponse = customMailService.approvalResponse(visitorId, visitNumber, niticed, remarks, visitorEmail);
+	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,
+			String visitorEmail) {
+		// JSONObject notifyResponse = customMailService.notifyResponse(visitorId,
+		// visitNumber, niticed, remarks);
+		JSONObject notifyResponse = customMailService.approvalResponse(visitorId, visitNumber, niticed, remarks,
+				visitorEmail);
 
 		return notifyResponse;
 	}

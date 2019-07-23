@@ -6,8 +6,8 @@ import java.util.Date;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.mongodb.core.index.Indexed;
+
 import com.accolite.visitors.enums.VisitorStatus;
-import com.querydsl.core.annotations.QueryEntity;
 
 import lombok.Data;
 
@@ -15,7 +15,6 @@ import lombok.Data;
  * @author Lavanya
  *
  */
-@QueryEntity
 @Data
 public class VisitSummary implements Serializable {
 
