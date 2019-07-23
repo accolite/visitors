@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild, Input, NgZone } from "@angular/core";
 import { DataObtainer } from "src/app/components/base/data-obtainer.component";
+import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { VisitorService } from "src/app/services/visitor.service";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
-import { MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
+
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"]
+  selector: "app-pending-request",
+  templateUrl: "./pending-request.component.html",
+  styleUrls: ["./pending-request.component.css"]
 })
-export class HomeComponent extends DataObtainer<any> {
+export class PendingRequestComponent extends DataObtainer<any> {
   visitors: any;
   pagination = false;
 
@@ -21,7 +22,14 @@ export class HomeComponent extends DataObtainer<any> {
   @Input()
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns = ["badgeNo", "Name", "inTime", "actions", "remarks"];
+  displayedColumns = [
+    "badgeNo",
+    "Name",
+    "inTime",
+    "outTime",
+    "actions",
+    "remarks"
+  ];
 
   constructor(private visitorService: VisitorService, private zone: NgZone) {
     super(zone);

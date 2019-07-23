@@ -1,25 +1,42 @@
 <mat-tab-group>
-  <mat-tab label="Home"> Content 1 </mat-tab>
-  <mat-tab label="Create"> 
+  <mat-tab label="Home"> </mat-tab>
+
+  <mat-tab label="Create">
     <mat-vertical-stepper [linear]="false" #stepper>
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Visitor search or create</ng-template>
 
           <div class="example-container">
-                
             <mat-form-field class="set-width">
-              <span class="span" matPrefix><mat-icon class="span-maticon">mail</mat-icon>&nbsp;</span>
-              <input matInput placeholder="Email"  formControlName="email" class="example-right-align" #email>
+              <span class="span" matPrefix
+                ><mat-icon class="span-maticon">mail</mat-icon>&nbsp;</span
+              >
+              <input
+                matInput
+                placeholder="Email"
+                formControlName="email"
+                class="example-right-align"
+                #email
+              />
             </mat-form-field>
 
-            <h2 class="setMiddle"> OR </h2>
-            
-              <mat-form-field class="set-width">
-                <input matInput type="number" placeholder="Mobile number" formControlName="phoneNumber" #phoneNumber>
-                <span class="span" matPrefix><mat-icon class="span-maticon">smartphone</mat-icon>&nbsp;</span>
-              </mat-form-field>
-            </div>
+            <h2 class="setMiddle">OR</h2>
+
+            <mat-form-field class="set-width">
+              <input
+                matInput
+                type="number"
+                placeholder="Mobile number"
+                formControlName="phoneNumber"
+                #phoneNumber
+              />
+              <span class="span" matPrefix
+                ><mat-icon class="span-maticon">smartphone</mat-icon
+                >&nbsp;</span
+              >
+            </mat-form-field>
+          </div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -27,71 +44,67 @@
       </mat-step>
 
       <mat-step [stepControl]="secondFormGroup">
-          <ng-template matStepLabel>Create Visitor</ng-template>
+        <ng-template matStepLabel>Create Visitor</ng-template>
 
-          <div class="flex-container-wrapper">
+        <div class="flex-container-wrapper">
+          <div class="flex-container">
+            <mat-form-field>
+              <input id="input" matInput placeholder="First Name" />
+            </mat-form-field>
+            <mat-form-field>
+              <input id="input" matInput placeholder="Last Name" />
+            </mat-form-field>
+          </div>
 
-            <div class="flex-container">
-                <mat-form-field>
-                  <input id="input" matInput placeholder="First Name">
-                </mat-form-field>
-                <mat-form-field>
-                    <input id="input" matInput placeholder="Last Name">
-                </mat-form-field>
-            </div>
+          <div class="flex-container">
+            <mat-form-field>
+              <input id="input" matInput placeholder="Purpose" />
+            </mat-form-field>
+            <mat-form-field>
+              <input id="input" matInput placeholder="Coming From" />
+            </mat-form-field>
+          </div>
 
-            <div class="flex-container">
-                <mat-form-field>
-                  <input id="input" matInput placeholder="Purpose">
-                </mat-form-field>
-                <mat-form-field>
-                    <input id="input" matInput placeholder="Coming From">
-                </mat-form-field>
-            </div>
+          <div class="flex-container">
+            <mat-form-field>
+              <mat-select placeholder="Select">
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Select">
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-            <div class="flex-container">
-                <mat-form-field>
-                  <mat-select placeholder="Select">
-                    <mat-option value="option">Option</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-select placeholder="Select">
-                    <mat-option value="option">Option</mat-option>
-                  </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="flex-container">
-                <mat-form-field>
-                  <input id="input" matInput placeholder="Temporary batch number">
-                </mat-form-field>
-                <!-- <mat-form-field>
+          <div class="flex-container">
+            <mat-form-field>
+              <input id="input" matInput placeholder="Temporary batch number" />
+            </mat-form-field>
+            <!-- <mat-form-field>
                     <input id="input" matInput placeholder="Input">
                 </mat-form-field> -->
-            </div>
+          </div>
 
-            <div>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-              
-            
-              
-            
-              <!-- <mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+
+          <!-- <mat-form-field>
                 <mat-select placeholder="Select">
                   <mat-option value="option">Option</mat-option>
                 </mat-select>
               </mat-form-field> -->
-          </div>
+        </div>
 
-          <!-- <div class="container">
+        <!-- <div class="container">
               <div [hidden]="submitted">
                 <h1>Hero Form</h1>
                 <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
                   <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" 
+                    <input type="text" class="form-control"
                            required
                            [ngModel]="model?.name" name="name">
                     <div [hidden]="name?.valid || name?.pristine"
@@ -99,13 +112,13 @@
                       Name is required
                     </div>
                   </div>
-            
+
                   <div class="form-group">
                     <label for="alterEgo">Alter Ego</label>
                     <input type="text" class="form-control" id="alterEgo"
                            [ngModel]="model?.alterEgo" name="alterEgo">
                   </div>
-            
+
                   <div class="form-group">
                     <label for="power">Hero Power</label>
                     <select class="form-control" id="power"
@@ -118,12 +131,12 @@
                       Power is required
                     </div>
                   </div>
-            
+
                   <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
                   <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
                 </form>
               </div>
-            
+
               <div [hidden]="!submitted">
                 <h2>You submitted the following:</h2>
                 <div class="row">
@@ -146,7 +159,6 @@
       <mat-step>
         <ng-template matStepLabel>Approval</ng-template>
         <div class="flex-container-wrapper">
-
           <!-- <div class="flex-container">
               <mat-form-field>
                 <input id="input" matInput placeholder="First Name">
@@ -167,8 +179,8 @@
                 <mat-option value="option">Option</mat-option>
               </mat-select>
             </mat-form-field>
+          </div>
         </div>
-        </div>  
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button (click)="stepper.reset()">Reset</button>
