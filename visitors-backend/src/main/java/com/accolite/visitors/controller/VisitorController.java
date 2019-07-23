@@ -10,8 +10,10 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accolite.visitors.enums.VisitorSearchCriteria;
+import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.service.VisitorService;
@@ -42,6 +46,9 @@ public class VisitorController {
 	private VisitorService visitorService;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	private static final int DEFAULT_PAGE_NUMBER = 0;
+	private static final int DEFAULT_PAGE_SIZE = 10;
 
 	/**
 	 * Fetch the visitors detail by emaiIid
@@ -187,12 +194,14 @@ public class VisitorController {
 	 * 
 	 * TODO:Add search parameters.
 	 * 
+	 * @param searchParams
 	 * @param pageable
 	 * @return
 	 */
 	@GetMapping(value = "/search-visitors")
-	public ResponseEntity<Page<Visitor>> visitorsWithoutSummary(Pageable pageable) {
-		Page<Visitor> visitorPage = visitorService.visitorsWithoutSummary(pageable);
+	public ResponseEntity<CustomPage> searchVisitors(@RequestBody Map<VisitorSearchCriteria, Object> searchParams,
+			@PageableDefault(page = DEFAULT_PAGE_NUMBER, size = DEFAULT_PAGE_SIZE) @SortDefault(sort = "visitSummary.inTime", direction = Sort.Direction.DESC) Pageable pageable) {
+		CustomPage visitorPage = visitorService.searchVisitors(searchParams, pageable);
 		return new ResponseEntity<>(visitorPage, HttpStatus.OK);
 	}
 
