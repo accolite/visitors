@@ -61,5 +61,7 @@ public class Visitor implements Serializable {
 	private VisitorType visitorType;
 
 	private List<VisitSummary> visitSummary;
+	
+	private String imageId;
 
 }
