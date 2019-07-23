@@ -22,7 +22,7 @@ mat-card-content {
   padding: 1rem;
 }
 mat-card-header {
-  background-color: gray;
+  background-color: gainsboro;
 }
 
 .mat-card-title {

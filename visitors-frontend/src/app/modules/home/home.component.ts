@@ -8,7 +8,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"]
 })
-export class HomeComponent extends DataObtainer<any> {
+export class HomeComponent {
   visitors: any;
   pagination = false;
 
@@ -23,23 +23,5 @@ export class HomeComponent extends DataObtainer<any> {
 
   displayedColumns = ["badgeNo", "Name", "inTime", "actions", "remarks"];
 
-  constructor(private visitorService: VisitorService, private zone: NgZone) {
-    super(zone);
-  }
-
-  getDataObservable(params: ServiceSearchParamsInputModel) {
-    console.log(this.visitorService.fetchAllVisitors());
-    return this.visitorService.fetchAllVisitors();
-  }
-
-  onAfterUpdateData(data: any) {
-    this.visitors = data;
-    this.dataSource = new MatTableDataSource(this.visitors);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  constructor(private visitorService: VisitorService, private zone: NgZone) {}
 }

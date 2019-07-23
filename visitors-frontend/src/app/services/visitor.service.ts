@@ -8,36 +8,53 @@ import { RestService } from "./base/rest.service";
   providedIn: "root"
 })
 export class VisitorService {
-  constructor(private restService: RestService) { }
+  constructor(private restService: RestService) {}
 
   getVisitorByEmailId(emailId: string) {
-    return this.restService.get(urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId);
+    return this.restService.get(
+      urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId
+    );
   }
 
   createNewVisitor(visitorObj: any) {
     return this.restService
       .jsonPost(urls.BASE_URL + urls.CREATE_NEW_VISITOR, visitorObj)
-      .pipe(tap(this.restService.createNotifySnackbar('create-visitors')))
+      .pipe(tap(this.restService.createNotifySnackbar("create-visitors")));
   }
 
   addVisitorSummary(visitorId: string, visitorSummaryObj: any) {
-    return this.restService.jsonPost(urls.BASE_URL + urls.ADD_VISIT_SUMMARY + visitorId, visitorSummaryObj);
+    return this.restService.jsonPost(
+      urls.BASE_URL + urls.ADD_VISIT_SUMMARY + visitorId,
+      visitorSummaryObj
+    );
   }
 
   updateVisitorDetails(visitorId: string, visitorObj: any) {
-    return this.restService.jsonPost(urls.BASE_URL + urls.UPDATE_VISITOR_DETAILS + visitorId, visitorObj);
+    return this.restService.jsonPost(
+      urls.BASE_URL + urls.UPDATE_VISITOR_DETAILS + visitorId,
+      visitorObj
+    );
   }
 
   updateVisitSummary(visitorId: string, visitSummaryObj: any) {
-    return this.restService.jsonPut(urls.BASE_URL + urls.UPDATE_VISITOR_SUMMARY + visitorId, visitSummaryObj);
+    return this.restService.jsonPut(
+      urls.BASE_URL + urls.UPDATE_VISITOR_SUMMARY + visitorId,
+      visitSummaryObj
+    );
   }
 
   sendApprovalMail(reqObj: any) {
-    return this.restService.jsonPost(urls.BASE_URL + urls.SEND_APPROVAL_MAIL, reqObj);
+    return this.restService.jsonPost(
+      urls.BASE_URL + urls.SEND_APPROVAL_MAIL,
+      reqObj
+    );
   }
 
   sendNotifyMail(reqObj: any) {
-    return this.restService.jsonPost(urls.BASE_URL + urls.SEND_NOTIFY_MAIL, reqObj);
+    return this.restService.jsonPost(
+      urls.BASE_URL + urls.SEND_NOTIFY_MAIL,
+      reqObj
+    );
   }
 
   fetchAllVisitors() {
@@ -55,10 +72,13 @@ export class VisitorService {
 
   updateExitTime(visitorId: string, visitNumber: number, remarks: string) {
     const reqObj = {
-      'visitNumber': visitNumber,
-      'remarks': remarks
+      visitNumber: visitNumber,
+      remarks: remarks
     };
-    return this.restService.jsonPut(urls.BASE_URL + urls.EXIT_TIME + visitorId, reqObj);
+    return this.restService.jsonPut(
+      urls.BASE_URL + urls.EXIT_TIME + visitorId,
+      reqObj
+    );
   }
 
   fetchVisitor(id: string) {
