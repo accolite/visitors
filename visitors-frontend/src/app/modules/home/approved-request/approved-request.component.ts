@@ -12,6 +12,7 @@ import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-se
 export class ApprovedRequestComponent extends DataObtainer<any> {
   visitors: any;
   pagination = false;
+  searchObj: any;
 
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
@@ -36,8 +37,10 @@ export class ApprovedRequestComponent extends DataObtainer<any> {
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
-    console.log(this.visitorService.fetchAllVisitors());
-    return this.visitorService.fetchAllVisitors();
+    this.searchObj = {
+      status: "APPROVED"
+    };
+    return this.visitorService.searchVisitor(this.searchObj);
   }
 
   onAfterUpdateData(data: any) {

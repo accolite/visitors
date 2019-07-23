@@ -29,7 +29,6 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
-    console.log(this.visitorService.fetchAllVisitors());
     return this.visitorService.fetchAllVisitors();
   }
 

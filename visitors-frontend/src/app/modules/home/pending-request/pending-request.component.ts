@@ -12,6 +12,7 @@ import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-se
 export class PendingRequestComponent extends DataObtainer<any> {
   visitors: any;
   pagination = false;
+  searchObj: any;
 
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
@@ -36,8 +37,10 @@ export class PendingRequestComponent extends DataObtainer<any> {
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
-    console.log(this.visitorService.fetchAllVisitors());
-    return this.visitorService.fetchAllVisitors();
+    this.searchObj = {
+      status: "PENDING"
+    };
+    return this.visitorService.searchVisitor(this.searchObj);
   }
 
   onAfterUpdateData(data: any) {
@@ -45,6 +48,7 @@ export class PendingRequestComponent extends DataObtainer<any> {
     this.dataSource = new MatTableDataSource(this.visitors);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.connect().value;
   }
 
   applyFilter(filterValue: string) {
