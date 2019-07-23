@@ -139,6 +139,7 @@ public class VisitorController {
 	 * @deprecated
 	 * @return
 	 */
+	@Deprecated
 	@GetMapping(value = "/")
 	public ResponseEntity<List<Visitor>> getVisitors() {
 
@@ -167,6 +168,7 @@ public class VisitorController {
 	 * @param id
 	 * @return
 	 */
+	@Deprecated
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteVisitor(@PathVariable("id") String id) {
 
@@ -198,7 +200,7 @@ public class VisitorController {
 	 * @param pageable
 	 * @return
 	 */
-	@GetMapping(value = "/search")
+	@PostMapping(value = "/search")
 	public ResponseEntity<CustomPage> searchVisitors(@RequestBody Map<VisitorSearchCriteria, Object> searchParams,
 			@PageableDefault(page = DEFAULT_PAGE_NUMBER, size = DEFAULT_PAGE_SIZE) @SortDefault(sort = "visitSummary.inTime", direction = Sort.Direction.DESC) Pageable pageable) {
 		CustomPage visitorPage = visitorService.searchVisitors(searchParams, pageable);
