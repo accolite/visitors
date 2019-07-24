@@ -1,6 +1,5 @@
 package com.accolite.visitors.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -130,18 +128,6 @@ public class VisitorController {
 	}
 
 	/**
-	 * @deprecated
-	 * @return
-	 */
-	@Deprecated
-	@GetMapping(value = "/")
-	public ResponseEntity<List<Visitor>> getVisitors() {
-
-		List<Visitor> visitors = visitorService.getVisitors();
-		return new ResponseEntity<List<Visitor>>(visitors, HttpStatus.OK);
-	}
-
-	/**
 	 * Get Visitor Details by ID.
 	 * 
 	 * @param id
@@ -155,23 +141,7 @@ public class VisitorController {
 	}
 
 	/**
-	 * 
-	 * TODO: To be removed. Visitors will never be deleted.
-	 * 
-	 * @deprecated
-	 * @param id
-	 * @return
-	 */
-	@Deprecated
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Boolean> deleteVisitor(@PathVariable("id") String id) {
-
-		boolean status = visitorService.deleteVisitor(id);
-		return new ResponseEntity<Boolean>(status, HttpStatus.OK);
-	}
-
-	/**
-	 * Gets all the visitors without visitor summary.
+	 * Gets the visitors based on search filter.
 	 * 
 	 * @param searchParams
 	 * @param pageable
@@ -181,10 +151,15 @@ public class VisitorController {
 	public ResponseEntity<CustomPage> searchVisitors(
 			@RequestBody(required = false) Map<VisitorSearchCriteria, Object> searchParams,
 			@SortDefault(sort = "visitSummary.inTime", direction = Direction.DESC) Pageable pageable) {
+
 		CustomPage visitorPage = visitorService.searchVisitors(searchParams, pageable);
 		return new ResponseEntity<>(visitorPage, HttpStatus.OK);
 	}
 
+	/**
+	 * @param visitor
+	 * @return
+	 */
 	@PostMapping(value = "/sendApprovalMail")
 	public ResponseEntity<String> sendApprovalMail(@RequestBody Visitor visitor) {
 
@@ -196,6 +171,10 @@ public class VisitorController {
 		return new ResponseEntity<String>(approval.toString(), HttpStatus.OK);
 	}
 
+	/**
+	 * @param visitor
+	 * @return
+	 */
 	@PostMapping(value = "/sendNotifyMail")
 	public ResponseEntity<String> sendNotifyMail(@RequestBody Visitor visitor) {
 
@@ -207,6 +186,14 @@ public class VisitorController {
 		return new ResponseEntity<String>(notification.toString(), HttpStatus.OK);
 	}
 
+	/**
+	 * @param visitorId
+	 * @param visitNumber
+	 * @param visitorEmail
+	 * @param approval
+	 * @param remarks
+	 * @return
+	 */
 	@GetMapping(value = "/approvalResponse", params = { "visitorId", "visitNumber", "visitorEmail", "approval",
 			"remarks" })
 	public ResponseEntity<String> approvalResponse(@RequestParam("visitorId") String visitorId,
@@ -225,6 +212,14 @@ public class VisitorController {
 		return new ResponseEntity<String>(approvalResponse.toString(), HttpStatus.OK);
 	}
 
+	/**
+	 * @param visitorId
+	 * @param visitNumber
+	 * @param visitorEmail
+	 * @param approval
+	 * @param remarks
+	 * @return
+	 */
 	@GetMapping(value = "/notifyResponse", params = { "visitorId", "visitNumber", "visitorEmail", "approval",
 			"remarks" })
 	public ResponseEntity<String> notifyResponse(@RequestParam("visitorId") String visitorId,
