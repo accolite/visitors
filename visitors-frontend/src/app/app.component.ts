@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { accoliteLocation } from '../app/helpers/static-data'
+import { BlockScrollStrategy } from '@angular/cdk/overlay';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 @Component( {
   selector: 'app-root',
@@ -10,11 +13,33 @@ import { accoliteLocation } from '../app/helpers/static-data'
 
 
 export class AppComponent {
-  activatedRoute: ActivatedRoute;
+  // activatedRoute: ActivatedRoute;
+  active: any;
+  constructor( private router: Router, private activatedRoute: ActivatedRoute
+    , private auth: AuthService ) {
+    if ( window.location.href.indexOf( 'loc' ) > -1 )
+      this.val = window.location.href.split( "=" )[ 1 ];
 
-  constructor( private router: Router
-  ) {
+  }
+  ngOnInit() {
+    // this.activatedRoute.paramMap.subscribe( params => {
+    //   console.log( params.get( 'login' ) )
+    // } )
 
+    this.auth.subject$.subscribe( ( data ) => this.active = data )
+    console.log( window.location.href );
+    if ( window.location.href.indexOf( 'login' ) > -1 ) {
+      console.log( "login route" )
+      this.auth.subject$.next( false );
+    }
+    else {
+      this.auth.subject$.next( true );
+    }
+    // console.log( this.router.url );
+    // if ( this.router.url.indexOf( 'login' ) > -1 ) {
+    //   this.active = 0;
+    //   console.log( "Active " + this.active )
+    // }
   }
   title = 'visitor-frontend';
   location: any = accoliteLocation;
@@ -27,7 +52,8 @@ export class AppComponent {
       {
         relativeTo: this.activatedRoute,
         queryParams: { loc: this.val },
-        queryParamsHandling: 'merge'
+        queryParamsHandling: 'merge',
+
       } )
   }
 }
