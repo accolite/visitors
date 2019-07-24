@@ -49,9 +49,6 @@ public class VisitorsMongoData {
 		}
 		update.set("visitSummary.$.status", approval);
 
-		Query query = new Query(
-				where("id").is(visitorId).andOperator(where("visitSummary.visitNumber").is(visitNumber)));
-
 		long modifiedCount = mongoTemplate.updateFirst(whereQuery, update, Visitor.class).getModifiedCount();
 		if (modifiedCount > 0)
 			return true;
