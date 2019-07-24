@@ -52,7 +52,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>visitors-dev</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
