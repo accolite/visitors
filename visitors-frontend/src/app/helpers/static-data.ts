@@ -15,7 +15,8 @@ export const accoliteSnackbarMessages = {
   rest: {
     success: {
       "create-visitors": "Successfully created Visitor details",
-      "successfully-approved": "Successfully approved visitor"
+      "successfully-approved": "Successfully approved visitor",
+      "successfully-cancelled": "Scheduled meeting is cancelled"
     },
     error: {
       "create-visitors": "Failed to create Visitor details",

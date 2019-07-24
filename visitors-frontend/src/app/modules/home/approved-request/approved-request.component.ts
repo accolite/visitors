@@ -62,14 +62,21 @@ export class ApprovedRequestComponent extends DataObtainer<any> {
     this.dataSource.sort = this.sort;
   }
   exit(data) {
-    this.clicked = true;
     this.visitorService
       .updateExitTime(
         data.id,
         data.visitSummary.visitNumber,
         data.visitSummary.remarks
       )
-      .subscribe(val => console.log(val));
+      .subscribe(val => {
+        this.refreshData();
+        if (this.pending) {
+          this.pending.refreshData();
+        }
+        if (this.preApproved) {
+          this.preApproved.refreshData();
+        }
+      });
   }
 
   applyFilter(filterValue: string) {

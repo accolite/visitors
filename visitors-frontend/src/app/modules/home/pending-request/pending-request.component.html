@@ -24,7 +24,7 @@
       <ng-container matColumnDef="inTime">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>In Time</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.visitSummary.inTime | date: "short" }}
+          {{ element.visitSummary.inTime | date: "medium" }}
         </td>
       </ng-container>
       <ng-container matColumnDef="outTime">
