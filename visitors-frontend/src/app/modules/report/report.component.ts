@@ -51,7 +51,7 @@ export class ReportComponent extends DataObtainer<any> {
   openDialog(row) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = row;
-    dialogConfig.height = '500px';
+    dialogConfig.height = '600px';
     dialogConfig.width = '1000px';
 
     const matDialogRef = this.dialog.open(VisitorComponent, dialogConfig);
