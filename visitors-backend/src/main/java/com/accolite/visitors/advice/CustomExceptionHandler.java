@@ -4,6 +4,7 @@
 package com.accolite.visitors.advice;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +61,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		errorResponse.setMessage("Duplicate key found.");
 		// errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler(DateTimeParseException.class)
+	protected ResponseEntity<Object> handleInvalidDateTime(RuntimeException ex, WebRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setTimestamp(LocalDateTime.now());
+		errorResponse.setStatus(HttpStatus.BAD_REQUEST);
+		errorResponse.setMessage(ex.getMessage());
+		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	@Override

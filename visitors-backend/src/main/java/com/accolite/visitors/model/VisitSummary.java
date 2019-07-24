@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.validation.constraints.Size;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-
 import com.accolite.visitors.enums.VisitorStatus;
 
 import lombok.Data;
@@ -37,7 +35,6 @@ public class VisitSummary implements Serializable {
 	@Size(max = 100)
 	private String purpose;
 
-	@Indexed
 	@Size(max = 100)
 	private String officeLocation;
 

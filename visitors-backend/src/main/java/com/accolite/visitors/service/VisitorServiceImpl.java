@@ -77,11 +77,6 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public List<Visitor> getVisitorsByInTime(Date startDate, Date endDate) {
-		return visitorRepository.findByVisitSummary_InTimeBetweenOrderByVisitSummary_InTimeDesc(startDate, endDate);
-	}
-
-	@Override
 	public void exitVisitor(String id, Map<String, String> requestData) throws VisitorNotFoundException {
 
 		long count = visitorRepository.updateEndTime(id, requestData);

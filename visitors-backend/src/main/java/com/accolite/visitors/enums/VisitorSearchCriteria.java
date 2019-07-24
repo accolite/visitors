@@ -60,7 +60,7 @@ public enum VisitorSearchCriteria {
 	contactPerson,
 
 	/**
-	 * Equals on date
+	 * Equals on date in YYYY-MM-DD format
 	 */
 	inTime,
 
