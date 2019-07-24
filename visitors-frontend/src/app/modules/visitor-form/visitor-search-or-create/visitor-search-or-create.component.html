@@ -69,16 +69,16 @@
                   <input [readonly]="data" id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary batch number">
               </mat-form-field>
               <mat-form-field>
-                <input  [readonly]="data" matInput type="number" placeholder="Mobile number" [(ngModel)]="user.phoneNumber" name="phoneNumber" #phoneNumber required>
+                <input  [readonly]="data" matInput type="number" placeholder="Mobile number" minlength="8" maxlength="10" [(ngModel)]="user.phoneNumber" name="phoneNumber" #phoneNumber required>
               </mat-form-field>
           </div>
             <div class="flex-container">
               <mat-form-field>
-                <input [readonly]="data" type="email" id="contactPerson" name="contactPerson" [(ngModel)]="user.visitSummary[0].contactPerson"
+                <input [readonly]="data" name="contactPerson" [(ngModel)]="user.visitSummary[0].contactPerson"
                  matInput placeholder="Contact Person" required>
               </mat-form-field>
               <mat-form-field>
-                <input [readonly]="data" type="email" id="contactPerson" name="contactPersonEmailId" [(ngModel)]="user.visitSummary[0].contactPersonEmailId"
+                <input [readonly]="data" type="email" pattern="[^@]+@[^\.]+\..+" name="contactPersonEmailId" [(ngModel)]="user.visitSummary[0].contactPersonEmailId"
                 matInput placeholder="Contact Person Email Id" required>
               </mat-form-field>
 
@@ -86,7 +86,7 @@
             </div>
             <div class="flex-container">
               <mat-form-field>
-                <input [readonly]="data" type="email" id="contactPerson" name="contactPersonPhone" [(ngModel)]="user.visitSummary[0].contactPersonPhone"
+                <input [readonly]="data" name="contactPersonPhone" minlength="8" maxlength="10" [(ngModel)]="user.visitSummary[0].contactPersonPhone"
                 matInput placeholder="Contact Person Phone Number" required>
               </mat-form-field>
 
