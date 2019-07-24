@@ -3,6 +3,8 @@ import { DataObtainer } from "src/app/components/base/data-obtainer.component";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { VisitorService } from "src/app/services/visitor.service";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
+import { ApprovedRequestComponent } from "../approved-request/approved-request.component";
+import { PendingRequestComponent } from "../pending-request/pending-request.component";
 
 @Component({
   selector: "app-pre-approved-request",
@@ -12,6 +14,13 @@ import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-se
 export class PreApprovedRequestComponent extends DataObtainer<any> {
   visitors: any;
   pagination = false;
+  searchObj: any;
+
+  @Input()
+  approved: ApprovedRequestComponent;
+
+  @Input()
+  pending: PendingRequestComponent;
 
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
@@ -29,12 +38,18 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
-    return this.visitorService.fetchAllVisitors();
+    this.searchObj = {
+      status: "SCHEDULED"
+    };
+    return this.visitorService.searchVisitor(this.searchObj);
   }
 
   onAfterUpdateData(data: any) {
-    this.visitors = data;
-    this.dataSource = new MatTableDataSource(this.visitors);
+    this.visitors = data && data.data ? data.data : null;
+    this.dataSource = new MatTableDataSource(
+      this.visitors ? this.visitors : []
+    );
+    console.log(this.dataSource);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
