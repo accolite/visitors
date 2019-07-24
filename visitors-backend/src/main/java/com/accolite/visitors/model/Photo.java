@@ -5,15 +5,14 @@ import org.springframework.data.annotation.Id;
 
 import lombok.Data;
 
-//@Document(collection = "photos")
 @Data
 public class Photo {
 
 	@Id
 	private int id;
-	
+
 	private String title;
-	
+
 	private Binary image;
-	
+
 }

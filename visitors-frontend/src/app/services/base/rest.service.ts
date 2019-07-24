@@ -6,7 +6,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { Observer } from 'rxjs';
+import { Observer, Observable } from 'rxjs';
 import { accoliteSnackbarMessages } from '../../helpers/static-data';
 import { SnackbarComponent } from 'src/app/components/ui-components/snack-bar/snack-bar.component';
 
@@ -59,6 +59,12 @@ export class RestService {
       }
     }
     return observer
+  }
+
+  catchError( obs: Observable<any> ) {
+    obs.subscribe( ( error ) => {
+      console.warn( error )
+    } )
   }
 
 }

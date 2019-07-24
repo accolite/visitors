@@ -9,26 +9,69 @@ package com.accolite.visitors.enums;
  */
 public enum VisitorSearchCriteria {
 
+	/**
+	 * Starts with ignore case
+	 */
 	firstName,
 
+	/**
+	 * Starts with ignore case
+	 */
 	lastName,
 
+	/**
+	 * Starts with ignore case
+	 */
 	emailId,
 
+	/**
+	 * Equals
+	 */
 	phoneNumber,
 
-	employeeId,
-
+	/**
+	 * Equals
+	 */
 	idType,
 
+	/**
+	 * Starts with ignore case
+	 */
 	idNumber,
 
+	/**
+	 * Equals
+	 */
 	visitorType,
 
+	/**
+	 * Starts with ignore case
+	 */
 	comingFrom,
 
+	/**
+	 * Equals
+	 */
 	officeLocation,
-	
-	contactPerson;
+
+	/**
+	 * Starts with ignore case
+	 */
+	contactPerson,
+
+	/**
+	 * Equals on date
+	 */
+	inTime,
+
+	/**
+	 * Equals
+	 */
+	status,
+
+	/**
+	 * Starts with ignore case
+	 */
+	purpose;
 
 }

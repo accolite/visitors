@@ -4,11 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.json.JSONObject;
+import org.springframework.data.domain.Pageable;
 
+import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
+import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 
@@ -102,12 +103,15 @@ public interface VisitorService {
 
 	/**
 	 * 
+	 * Search Visitors based on search filters.
+	 * 
+	 * @param searchParams
 	 * @param pageable
 	 * @return
 	 */
-	public Page<Visitor> visitorsWithoutSummary(Pageable pageable);
-	
-/**
+	public CustomPage searchVisitors(Map<VisitorSearchCriteria, Object> searchParams, Pageable pageable);
+
+	/**
 	 * 
 	 * @param visitorApprovalData
 	 * @return
@@ -127,7 +131,7 @@ public interface VisitorService {
 	 * @param visitNumber
 	 * @param approval
 	 */
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval);
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval,String remarks, String visitorMail);
 
 	/**
 	 * 
@@ -135,6 +139,6 @@ public interface VisitorService {
 	 * @param visitNumber
 	 * @param niticed
 	 */
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed);
+	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,String visitorMail);
 
 }

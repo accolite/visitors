@@ -3,6 +3,10 @@ package com.accolite.visitors.repository;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
+
+import com.accolite.visitors.enums.VisitorSearchCriteria;
+import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 
@@ -29,5 +33,7 @@ public interface VisitorDAL {
 	 * @return
 	 */
 	public long updateVisitSummary(String id, VisitSummary visitSummary);
+	
+	public CustomPage searchVisitors(Map<VisitorSearchCriteria,Object> searchParams, Pageable pageable);
 
 }
