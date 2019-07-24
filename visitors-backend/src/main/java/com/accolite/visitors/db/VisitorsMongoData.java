@@ -13,8 +13,10 @@ import com.accolite.visitors.model.Visitor;
 
 @Component
 public class VisitorsMongoData {
+
 	@Autowired
 	private MongoTemplate mongoTemplate;
+
 	public static final String COLLECTION_NAME = "visitor";
 
 	public boolean updateVisitSummaryStatus(String visitorId, int visitNumber, String status) {
@@ -31,11 +33,10 @@ public class VisitorsMongoData {
 
 	public boolean updateVisitSummaryRemarksAndStatus(String visitorId, int visitNumber, String approval,
 			String remarks) {
+
 		Query whereQuery = new Query();
 		ObjectId id = new ObjectId(visitorId);
-	//	whereQuery.addCriteria(where("_id").is(id));
 		whereQuery.addCriteria(where("_id").is(id)).addCriteria(where("visitSummary.visitNumber").is(visitNumber));
-
 
 		Visitor findOne = mongoTemplate.findOne(whereQuery, Visitor.class, COLLECTION_NAME);
 
@@ -47,7 +48,7 @@ public class VisitorsMongoData {
 			update.set("visitSummary.$.remarks", remarks);
 		}
 		update.set("visitSummary.$.status", approval);
-		
+
 		Query query = new Query(
 				where("id").is(visitorId).andOperator(where("visitSummary.visitNumber").is(visitNumber)));
 
@@ -57,4 +58,5 @@ public class VisitorsMongoData {
 
 		return false;
 	}
+
 }

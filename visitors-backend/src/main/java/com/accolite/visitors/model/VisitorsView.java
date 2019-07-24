@@ -12,6 +12,7 @@ import lombok.Data;
 
 @Data
 public class VisitorsView {
+
 	private String id;
 
 	private String firstName;
@@ -27,8 +28,7 @@ public class VisitorsView {
 	private String idNumber;
 
 	private VisitorType visitorType;
-	
+
 	private VisitSummary visitSummary;
 
 }
-
