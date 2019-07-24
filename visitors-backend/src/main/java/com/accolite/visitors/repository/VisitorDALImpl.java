@@ -1,12 +1,15 @@
 package com.accolite.visitors.repository;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.unwind;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,6 +65,7 @@ public class VisitorDALImpl implements VisitorDAL {
 		return mongoTemplate.updateFirst(query(where("id").is(id)), update, Visitor.class).getModifiedCount();
 	}
 
+	@Override
 	public Optional<Visitor> findByEmailId(String email) {
 
 		Aggregation aggregation = newAggregation(match(where("emailId").is(email)), new AggregationOperation() {
@@ -85,7 +89,6 @@ public class VisitorDALImpl implements VisitorDAL {
 
 		Update update = new Update();
 		visitorMap.forEach((a, b) -> update.set(a, b));
-
 		return mongoTemplate.updateFirst(query(where("id").is(id)), update, Visitor.class).getModifiedCount();
 	}
 
@@ -103,143 +106,62 @@ public class VisitorDALImpl implements VisitorDAL {
 
 	@Override
 	public CustomPage searchVisitors(Map<VisitorSearchCriteria, Object> searchParams, Pageable pageable) {
-		Criteria criteria = null;
-		Criteria criteriaArray = null;
-		for (Entry<VisitorSearchCriteria, Object> entry : searchParams.entrySet()) {
-
-			String value = String.valueOf(entry.getValue());
-			switch (entry.getKey()) {
-			case firstName:
-				if (criteria == null)
-					criteria = where("firstName").regex("^" + value + ".*", "i");
-				else {
-					criteria = criteria.and("firstName").regex("^" + value + ".*", "i");
+		Criteria visitorCriteria = new Criteria();
+		Criteria visitSummaryCriteria = new Criteria();
+		if (searchParams != null) {
+			for (Entry<VisitorSearchCriteria, Object> entry : searchParams.entrySet()) {
+				Object value = entry.getValue();
+				String key = entry.getKey().toString();
+				switch (entry.getKey()) {
+				case firstName:
+				case lastName:
+				case emailId:
+				case idNumber:
+					visitorCriteria = visitorCriteria.and(key).regex("^" + value, "i");
+					break;
+				case phoneNumber:
+				case idType:
+				case visitorType:
+					visitorCriteria.and(key).is(value);
+					break;
+				case comingFrom:
+				case contactPerson:
+				case purpose:
+					visitSummaryCriteria.and("visitSummary." + key).regex("^" + value, "i");
+					break;
+				case status:
+				case officeLocation:
+					visitSummaryCriteria.and("visitSummary." + key).is(value);
+					break;
+				case inTime:
+					LocalDate inTime = LocalDate.parse(value.toString());
+					visitSummaryCriteria.andOperator(where("visitSummary.inTime").gte(inTime),
+							where("visitSummary.inTime").lt(inTime.plusDays(1)));
+					break;
+				default:
+					break;
 				}
-				break;
-			case lastName:
-				if (criteria == null)
-					criteria = where("lastName").regex("^" + value + ".*", "i");
-				else {
-					criteria = criteria.and("lastName").regex("^" + value + ".*", "i");
-				}
-				break;
-			case emailId:
-				if (criteria == null)
-					criteria = where("emailId").regex("^" + value + ".*", "i");
-				else {
-					criteria = criteria.and("emailId").regex("^" + value + ".*", "i");
-				}
-				break;
-			case phoneNumber:
-				if (criteria == null) {
-					criteria = where("phoneNumber").is(Long.parseLong(value));
-				} else {
-					criteria.and("phoneNumber").is(Long.parseLong(value));
-				}
-				break;
-			case idType:
-				if (criteria == null) {
-					criteria = where("idType").is(value);
-				} else {
-					criteria.and("idType").is(value);
-				}
-				break;
-			case idNumber:
-				if (criteria == null) {
-					criteria = where("idNumber").regex("^" + value + ".*", "i");
-				} else {
-					criteria.and("idNumber").regex("^" + value + ".*", "i");
-				}
-				break;
-			case visitorType:
-				if (criteria == null) {
-					criteria = where("visitorType").is(value);
-				} else {
-					criteria.and("visitorType").is(value);
-				}
-				break;
-			case comingFrom:
-				if (criteria == null) {
-					criteria = where("visitSummary.comingFrom").regex("^" + value + ".*", "i");
-				} else {
-					criteria.and("visitSummary.comingFrom").regex("^" + value + ".*", "i");
-				}
-				if (criteriaArray == null)
-					criteriaArray = where("visitSummary.comingFrom").regex("^" + value + ".*", "i");
-				else
-					criteriaArray.and("visitSummary.comingFrom").regex("^" + value + ".*", "i");
-
-				break;
-			case officeLocation:
-				if (criteria == null) {
-					criteria = where("visitSummary.officeLocation").is(value);
-				} else {
-					criteria.and("visitSummary.officeLocation").is(value);
-				}
-				if (criteriaArray == null)
-					criteriaArray = where("visitSummary.officeLocation").is(value);
-				else
-					criteriaArray.and("visitSummary.officeLocation").is(value);
-
-				break;
-			case contactPerson:
-				if (criteria == null) {
-					criteria = where("visitSummary.contactPerson").regex("^" + value + ".*", "i");
-				} else {
-					criteria.and("visitSummary.contactPerson").regex("^" + value + ".*", "i");
-				}
-				if (criteriaArray == null)
-					criteriaArray = where("visitSummary.contactPerson").regex("^" + value + ".*", "i");
-				else
-					criteriaArray.and("visitSummary.contactPerson").regex("^" + value + ".*", "i");
-
-				break;
-			case status:
-				if (criteria == null) {
-					criteria = where("visitSummary.status").is(value);
-				} else {
-					criteria.and("visitSummary.status").is(value);
-				}
-				if (criteriaArray == null)
-					criteriaArray = where("visitSummary.status").is(value);
-				else
-					criteriaArray.and("visitSummary.status").is(value);
-
-				break;
-			case purpose:
-				if (criteria == null) {
-					criteria = where("visitSummary.purpose").regex("^" + value + ".*", "i");
-				} else {
-					criteria.and("visitSummary.purpose").regex("^" + value + ".*", "i");
-				}
-				if (criteriaArray == null)
-					criteriaArray = where("visitSummary.purpose").regex("^" + value + ".*", "i");
-				else
-					criteriaArray.and("visitSummary.purpose").regex("^" + value + ".*", "i");
-
-				break;
-			// TODO:To implement search with date
-			case inTime:
-				break;
-			default:
-				break;
 			}
 		}
 		List<AggregationOperation> aggregationList = new ArrayList<>();
-		if (criteria != null)
-			aggregationList.add(match(criteria));
+		aggregationList.add(match(visitorCriteria.andOperator(visitSummaryCriteria)));
 		aggregationList.add(unwind("visitSummary"));
-		if (criteriaArray != null)
-			aggregationList.add(match(criteriaArray));
+		aggregationList.add(match(visitSummaryCriteria));
 		if (pageable.getSort().isSorted())
 			aggregationList.add(sort(pageable.getSort()));
-		aggregationList.add(Aggregation.group().count().as("total").addToSet(pageable.getPageNumber()).as("pageNumber")
+		aggregationList.add(group().count().as("total").addToSet(pageable.getPageNumber()).as("pageNumber")
 				.addToSet(pageable.getPageSize()).as("pageSize").push("$$ROOT").as("data"));
-		aggregationList.add(Aggregation.project().andInclude("pageSize", "pageNumber", "total").and(ArrayOperators.Slice
+		aggregationList.add(project().andInclude("pageSize", "pageNumber", "total").and(ArrayOperators.Slice
 				.sliceArrayOf("data").offset((int) pageable.getOffset()).itemCount(pageable.getPageSize())).as("data"));
-		Aggregation aggregation = newAggregation(aggregationList);
-
-		return mongoTemplate.aggregate(aggregation, Visitor.class, CustomPage.class).getUniqueMappedResult();
+		CustomPage page = mongoTemplate.aggregate(newAggregation(aggregationList), Visitor.class, CustomPage.class)
+				.getUniqueMappedResult();
+		if (page == null) {
+			page = new CustomPage();
+			page.setTotal(0);
+			page.setPageNumber(pageable.getPageNumber());
+			page.setPageSize(pageable.getPageSize());
+		}
+		return page;
 	}
 
 }
