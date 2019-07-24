@@ -3,7 +3,7 @@ import { VisitorService } from 'src/app/services/visitor.service';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog } from '@angular/material';
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { FormControl } from '@angular/forms';
-import { merge, Observable, of as observableOf } from 'rxjs';
+import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError, debounceTime } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
