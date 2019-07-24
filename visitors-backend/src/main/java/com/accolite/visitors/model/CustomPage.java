@@ -13,14 +13,12 @@ import lombok.Data;
 @Data
 public class CustomPage {
 
-	private String id;
-
 	private long pageSize;
-	
+
 	private long pageNumber;
 
 	private long total;
-	
+
 	private List<VisitorsView> data;
-	
+
 }

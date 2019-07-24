@@ -1,3 +1,30 @@
 table {
   width: 100%;
 }
+
+table tr[mat-row]:hover {
+  cursor: pointer;
+}
+.filter {
+  display: block;
+  width: auto;
+  width: 100px;
+}
+.header {
+  padding: 5px;
+}
+.first-header-row th {
+  border-bottom: none;
+}
+.report-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

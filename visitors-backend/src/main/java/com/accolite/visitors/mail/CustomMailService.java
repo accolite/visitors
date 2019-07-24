@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.accolite.visitors.db.VisitorsMongoData;
@@ -25,17 +24,6 @@ import com.accolite.visitors.model.Visitor;
 
 @Service
 public class CustomMailService {
-	private JavaMailSender javaMailSender;
-
-	/**
-	 * 
-	 * @param javaMailSender
-	 * @return
-	 */
-	@Autowired
-	public void MailService(JavaMailSender javaMailSender) {
-		this.javaMailSender = javaMailSender;
-	}
 
 	@Autowired
 	private Environment env;

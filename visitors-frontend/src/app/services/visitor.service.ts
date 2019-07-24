@@ -1,9 +1,10 @@
-import { HttpParams } from "@angular/common/http";
+import { HttpParams, HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { tap, catchError } from "rxjs/operators";
 import { urls } from "../../config/constants";
 import { RestService } from "./base/rest.service";
 import { of } from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -12,14 +13,9 @@ export class VisitorService {
   constructor(private restService: RestService) {}
 
   getVisitorByEmailId(emailId: string) {
-    return this.restService
-      .get(urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId)
-      .pipe(
-        catchError(err => {
-          this.restService.catchError(of(err));
-          return of(null);
-        })
-      );
+    return this.restService.get(
+      urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId
+    );
   }
 
   createNewVisitor(visitorObj: any) {
@@ -91,8 +87,10 @@ export class VisitorService {
     return this.restService.get(urls.BASE_URL + id);
   }
 
-  searchVisitor(searchObj: any) {
-    return this.restService.jsonPost(urls.BASE_URL + urls.SEARCH, searchObj);
+  searchVisitor(searchObj: any, page: number = 0, pageSize: number = 10) {
+    let searchURL =
+      urls.BASE_URL + urls.SEARCH + `?page=${page}&size=${pageSize}`;
+    return this.restService.jsonPost(searchURL, searchObj);
   }
 
   deleteVisitorSummary(visitSummaryId: string) {
