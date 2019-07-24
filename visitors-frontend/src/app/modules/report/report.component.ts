@@ -5,6 +5,7 @@ import { VisitorComponent } from './components/visitor/visitor.component';
 import { FormControl } from '@angular/forms';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError, debounceTime } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component( {
   selector: 'app-report',
@@ -41,12 +42,16 @@ export class ReportComponent implements AfterViewInit {
     'contactPerson-search', 'inTime-search', 'idType-search'
   ]; //'phoneNumber-search',
 
-  constructor( private visitorService: VisitorService, private dialog: MatDialog ) { }
+  constructor( private visitorService: VisitorService,
+    private dialog: MatDialog,
+    private route: ActivatedRoute ) { }
 
   ngAfterViewInit() {
-    /*  this.paginator.page.subscribe( () => {
-       //this.paginator.pageIndex = 0;
-     } ); */
+    this.route.queryParams.subscribe( params => {
+      this.filterValues[ 'officeLocation' ] = params.loc;
+      this.paginator.pageIndex = 0;
+    } );
+
     this.firstNameFilter.valueChanges.subscribe(
       firstName => {
         this.filterValues[ 'firstName' ] = firstName;
@@ -96,13 +101,12 @@ export class ReportComponent implements AfterViewInit {
       this.contactPersonFilter.valueChanges,
       this.inTimeFilter.valueChanges,
       this.idTypeFilter.valueChanges,
+      this.route.queryParams,
       this.paginator.page )
       .pipe(
         startWith( {} ),
         switchMap( () => {
           this.isLoadingResults = true;
-          console.log( this.filterValues );
-          console.log( this.paginator.pageIndex );
           return this.visitorService.searchVisitor( this.filterValues, this.paginator.pageIndex, this.paginator.pageSize );
         } ),
         map( data => {
