@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, Input, NgZone } from '@angular/core';
 import { VisitorService } from 'src/app/services/visitor.service';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog } from '@angular/material';
 import { DataObtainer } from 'src/app/components/base/data-obtainer.component';
 import { ServiceSearchParamsInputModel } from 'src/app/helpers/models/service-search-params-input.model';
+import { VisitorComponent } from './components/visitor/visitor.component';
 
 @Component( {
   selector: 'app-report',
@@ -28,7 +29,7 @@ export class ReportComponent extends DataObtainer<any> {
     'contactPerson', 'inTime', 'idType', 'idNumber', 'actions'
   ];
 
-  constructor( private visitorService: VisitorService, private zone: NgZone ) {
+  constructor( private visitorService: VisitorService, private zone: NgZone, private dialog: MatDialog ) {
     super( zone )
   }
 
@@ -45,6 +46,15 @@ export class ReportComponent extends DataObtainer<any> {
 
   applyFilter( filterValue: string ) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openDialog(row) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = row;
+    dialogConfig.height = '500px';
+    dialogConfig.width = '1000px';
+
+    const matDialogRef = this.dialog.open(VisitorComponent, dialogConfig);
   }
 
 }

@@ -1,0 +1,42 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="badgeNo">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Badge # </th>
+        <td mat-cell *matCellDef="let element"> {{element.badgeNo}} </td>
+    </ng-container>
+    <ng-container matColumnDef="contactPerson">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Contact Person </th>
+        <td mat-cell *matCellDef="let element"> {{element.contactPerson}} </td>
+    </ng-container>
+    <ng-container matColumnDef="inTime">
+        <th mat-header-cell *matHeaderCellDef class="width150"> In Time </th>
+        <td mat-cell *matCellDef="let element"> {{element.inTime | date:'short'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="outTime">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Out Time </th>
+        <td mat-cell *matCellDef="let element"> {{element.outTime }} </td>
+    </ng-container>
+    <ng-container matColumnDef="officeLocation">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Office Location </th>
+        <td mat-cell *matCellDef="let element"> {{element.officeLocation }} </td>
+    </ng-container>
+    <ng-container matColumnDef="purpose">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Purpose </th>
+        <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
+    </ng-container>
+    <ng-container matColumnDef="scheduledTime">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Scheduled Time </th>
+        <td mat-cell *matCellDef="let element"> {{element.scheduledTime }} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+    <ng-container matColumnDef="visitNumber">
+        <th mat-header-cell *matHeaderCellDef class="width150"> Visit Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.visitNumber}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
