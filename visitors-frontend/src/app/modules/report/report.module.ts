@@ -4,10 +4,13 @@ import { ReportComponent } from './report.component';
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { VisitorProfileComponent } from './components/visitor-profile/visitor-profile.component';
 import { VisitSummaryComponent } from './components/visit-summary/visit-summary.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule( {
   imports: [
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [ ReportComponent ],
   declarations: [
@@ -16,8 +19,6 @@ import { VisitSummaryComponent } from './components/visit-summary/visit-summary.
     VisitorProfileComponent,
     VisitSummaryComponent
   ],
-  entryComponents: [VisitorComponent]
+  entryComponents: [ VisitorComponent ]
 } )
-export class ReportModule {
-
-}
+export class ReportModule { }
