@@ -3,6 +3,8 @@ import { DataObtainer } from "src/app/components/base/data-obtainer.component";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { VisitorService } from "src/app/services/visitor.service";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
+import { PendingRequestComponent } from "../pending-request/pending-request.component";
+import { PreApprovedRequestComponent } from "../pre-approved-request/pre-approved-request.component";
 
 @Component({
   selector: "app-approved-request",
@@ -12,6 +14,14 @@ import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-se
 export class ApprovedRequestComponent extends DataObtainer<any> {
   visitors: any;
   pagination = false;
+  searchObj: any;
+  clicked = false;
+
+  @Input()
+  pending: PendingRequestComponent;
+
+  @Input()
+  preApproved: PreApprovedRequestComponent;
 
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
@@ -36,15 +46,37 @@ export class ApprovedRequestComponent extends DataObtainer<any> {
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
-    console.log(this.visitorService.fetchAllVisitors());
-    return this.visitorService.fetchAllVisitors();
+    this.searchObj = {
+      status: "APPROVED"
+    };
+    return this.visitorService.searchVisitor(this.searchObj);
   }
 
   onAfterUpdateData(data: any) {
-    this.visitors = data;
-    this.dataSource = new MatTableDataSource(this.visitors);
+    this.visitors = data && data.data ? data.data : null;
+    this.dataSource = new MatTableDataSource(
+      this.visitors ? this.visitors : []
+    );
+    console.log(this.visitors);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+  exit(data) {
+    this.visitorService
+      .updateExitTime(
+        data.id,
+        data.visitSummary.visitNumber,
+        data.visitSummary.remarks
+      )
+      .subscribe(val => {
+        this.refreshData();
+        if (this.pending) {
+          this.pending.refreshData();
+        }
+        if (this.preApproved) {
+          this.preApproved.refreshData();
+        }
+      });
   }
 
   applyFilter(filterValue: string) {

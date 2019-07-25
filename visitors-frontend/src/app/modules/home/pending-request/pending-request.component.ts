@@ -3,6 +3,10 @@ import { DataObtainer } from "src/app/components/base/data-obtainer.component";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { VisitorService } from "src/app/services/visitor.service";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
+import { PreApprovedRequestComponent } from "../pre-approved-request/pre-approved-request.component";
+import { ApprovedRequestComponent } from "../approved-request/approved-request.component";
+import { tap } from "rxjs/operators";
+import { RestService } from "src/app/services/base/rest.service";
 
 @Component({
   selector: "app-pending-request",
@@ -12,6 +16,14 @@ import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-se
 export class PendingRequestComponent extends DataObtainer<any> {
   visitors: any;
   pagination = false;
+  searchObj: any;
+  visitorSummaryObj: any;
+
+  @Input()
+  approved: ApprovedRequestComponent;
+
+  @Input()
+  preApproved: PreApprovedRequestComponent;
 
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
@@ -31,20 +43,60 @@ export class PendingRequestComponent extends DataObtainer<any> {
     "remarks"
   ];
 
-  constructor(private visitorService: VisitorService, private zone: NgZone) {
+  constructor(
+    private visitorService: VisitorService,
+    private zone: NgZone,
+    private rest: RestService
+  ) {
     super(zone);
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
-    console.log(this.visitorService.fetchAllVisitors());
-    return this.visitorService.fetchAllVisitors();
+    this.searchObj = {
+      status: "PENDING"
+    };
+    return this.visitorService.searchVisitor(this.searchObj);
   }
 
   onAfterUpdateData(data: any) {
-    this.visitors = data;
+    this.visitors = data.data;
+    console.log(this.visitors);
     this.dataSource = new MatTableDataSource(this.visitors);
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  approveVisitor(event) {
+    this.visitorSummaryObj = {
+      visitNumber: event["visitSummary"].visitNumber, // Existing one no need to change
+      badgeNo: event["visitSummary"].badgeNo,
+      comingFrom: event["visitSummary"].comingFrom,
+      contactPerson: event["visitSummary"].contactPerson,
+      contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
+      contactPersonPhone: event["visitSummary"].contactPersonPhone,
+      purpose: event["visitSummary"].purpose,
+      officeLocation: event["visitSummary"].officeLocation,
+      inTime: event["visitSummary"].inTime,
+      outTime: event["visitSummary"].outTime,
+      status: "APPROVED",
+      scheduledTime: event["visitSummary"].scheduledTime,
+      remarks: event["visitSummary"].remarks
+    };
+    console.log(this.visitorSummaryObj);
+
+    this.visitorService
+      .updateVisitSummary(event.id, this.visitorSummaryObj)
+      .pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
+      .subscribe(() => {
+        this.refreshData();
+        if (this.approved) {
+          this.approved.refreshData();
+        }
+        if (this.preApproved) {
+          this.preApproved.refreshData();
+        }
+      });
   }
 
   applyFilter(filterValue: string) {
