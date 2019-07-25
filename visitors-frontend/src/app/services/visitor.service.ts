@@ -3,8 +3,7 @@ import { Injectable } from "@angular/core";
 import { tap, catchError } from "rxjs/operators";
 import { urls } from "../../config/constants";
 import { RestService } from "./base/rest.service";
-import { of } from "rxjs";
-import { Observable } from "rxjs";
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -12,10 +11,12 @@ import { Observable } from "rxjs";
 export class VisitorService {
   constructor(private restService: RestService) {}
 
-  getVisitorByEmailId(emailId: string) {
-    return this.restService.get(
-      urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId
-    );
+
+  getVisitorByEmailId( emailId: string ) {
+    return this.restService.get( urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId ).pipe( catchError( ( err ) => {
+      console.log( err );
+      return of( null )
+    } ) );
   }
 
   createNewVisitor(visitorObj: any) {

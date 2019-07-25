@@ -43,3 +43,7 @@ mat-card-header div.actions {
   display: inline-block;
   text-align: right;
 }
+
+div.actions mat-icon:hover {
+  cursor: pointer;
+}

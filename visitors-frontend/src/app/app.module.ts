@@ -10,9 +10,11 @@ import { ReportModule } from "./modules/report/report.module";
 import { VisitorsModule } from "./modules/visitor-form/visitors.module";
 import { HomeModule } from "./modules/home/home.module";
 import { DialogOverviewComponent } from "./modules/home/dialog-overview/dialog-overview.component";
+import { loginComponent } from './components/login.component';
 
-@NgModule({
-  declarations: [AppComponent],
+
+@NgModule( {
+  declarations: [ AppComponent, loginComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
