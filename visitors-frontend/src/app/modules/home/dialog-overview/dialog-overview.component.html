@@ -4,7 +4,6 @@
       <td>
         <mat-form-field>
           <input
-            id="input"
             name="firstName"
             [(ngModel)]="data.firstName"
             matInput
@@ -15,9 +14,8 @@
       <td>
         <mat-form-field class="column">
           <input
-            id="input"
             name="lastName"
-            [(ngModel)]="data[1]"
+            [(ngModel)]="data.lastName"
             matInput
             placeholder="Last Name"
           />

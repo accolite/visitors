@@ -13,6 +13,8 @@ import { PendingRequestComponent } from "../pending-request/pending-request.comp
 import { RestService } from "src/app/services/base/rest.service";
 import { tap } from "rxjs/operators";
 import { DialogOverviewComponent } from "../dialog-overview/dialog-overview.component";
+import { DialogDataService } from "../dialog-overview/dialog-data.service";
+import { dataModel } from "../dialog-overview/dataModel";
 
 @Component({
   selector: "app-pre-approved-request",
@@ -52,6 +54,10 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
     public dialog: MatDialog
   ) {
     super(zone);
+  }
+
+  ngOnInit() {
+    this.refreshData();
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
@@ -115,10 +121,17 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("fuhghr" + result);
-      // this.visitorService
-      //   .updateVisitSummary(result.id, this.visitorSummaryObj2)
-      //   .subscribe();
+      let dialogRefModel = new dataModel(result.data);
+      // console.log(lll);
+
+      let putVisitor = this.visitors.filter(
+        (data: any) => dialogRefModel.phoneNumber == data.phoneNumber
+      )[0];
+
+      putVisitor.visitSummary.badgeNo = dialogRefModel.badgeNo;
+      this.visitorService
+        .updateVisitSummary(putVisitor.id, putVisitor.visitSummary)
+        .subscribe();
     });
   }
   applyFilter(filterValue: string) {

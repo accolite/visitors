@@ -70,12 +70,6 @@ export class ApprovedRequestComponent extends DataObtainer<any> {
       )
       .subscribe(val => {
         this.refreshData();
-        if (this.pending) {
-          this.pending.refreshData();
-        }
-        if (this.preApproved) {
-          this.preApproved.refreshData();
-        }
       });
   }
 
