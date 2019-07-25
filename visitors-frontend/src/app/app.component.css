@@ -23,3 +23,11 @@ margin: 0 !important;
 .mat-drawer.mat-drawer-side{
 z-index: 1 !important;
 }
+
+.matNavList{
+  height: 86%;
+}
+
+.locSelect{
+  margin-top: 5px !important;
+}

@@ -1,66 +1,102 @@
-<mat-vertical-stepper [linear]="false" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
+<mat-vertical-stepper [linear]="true" #stepper>
+    <mat-step>
         <ng-template matStepLabel>Visitor search or create</ng-template>
 
         <div class="example-container">
               
           <mat-form-field class="set-width">
             <span class="span" matPrefix><mat-icon class="span-maticon">mail</mat-icon>&nbsp;</span>
-            <input matInput type="email" placeholder="Email" [(ngModel)]="user.emailId" (keyup)="searchValues($event.target.value,'email');" class="example-right-align">
+            <input matInput type="string" placeholder="Email" [(ngModel)]="user.emailId" (keyup)="searchValues($event.target.value,'email');" class="example-right-align">
           </mat-form-field>
 
-          <h3 class="setMiddle"> OR </h3>
+          <!-- <h3 class="setMiddle"> OR </h3>
           
           <mat-form-field class="set-width">
             <input matInput type="number" placeholder="Mobile number" [(ngModel)]="user.phoneNumber" (keyup)="searchValues($event.target.value,'phoneNumber');" #phoneNumber>
             <span class="span" matPrefix><mat-icon class="span-maticon">smartphone</mat-icon>&nbsp;</span>
-          </mat-form-field>
+          </mat-form-field> -->
+
+          <mat-list role="list" *ngIf="data && data.idNumber">
+            <mat-list-item class="list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase()}}" role="listitem">
+                <span *ngIf="data && data.idNumber && data.visitSummary[0]?.status">Status -</span>
+                 {{data?.visitSummary[data?.visitSummary?.length - 1]?.status}}
+            </mat-list-item>
+          </mat-list>
         </div> 
         <div>
-          <button mat-button matStepperNext>Next</button>
+            <button *ngIf="data" mat-button matStepperNext>Next</button>
+            <button *ngIf="!data" mat-button matStepperNext>Create</button>
         </div>
     </mat-step>
 
-    <mat-step [stepControl]="secondFormGroup">
-        <ng-template matStepLabel>Create Visitor</ng-template>
-        <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+    <mat-step [stepControl]="heroForm">
+        <ng-template [ngIf]="data" matStepLabel>{{ !data ? 'Create Visitor': 'View Visitor' }}</ng-template>
+        <form #heroForm="ngForm">
         <div class="flex-container-wrapper">
 
           <div class="flex-container">
               <mat-form-field>
-                <input id="input" name="firstName" [(ngModel)]="user.firstName" matInput placeholder="First Name">
+                <input [readonly]="data" id="input" name="firstName" [(ngModel)]="user.firstName" matInput placeholder="First Name" required>
               </mat-form-field>
               <mat-form-field>
-                  <input id="input" name="lastName" [(ngModel)]="user.lastName" matInput placeholder="Last Name">
+                  <input [readonly]="data" id="input" name="lastName" [(ngModel)]="user.lastName" matInput placeholder="Last Name" required>
               </mat-form-field>
           </div>
 
           <div class="flex-container">
               <mat-form-field>
-                <input id="input" name="purpose" [(ngModel)]="user.visitSummary[0].purpose"  matInput placeholder="Purpose">
+                <input [readonly]="data" id="input" name="purpose" [(ngModel)]="user.visitSummary[0].purpose"  matInput placeholder="Purpose" required>
               </mat-form-field>
               <mat-form-field> 
-                  <input id="input"  name="comingFrom" [(ngModel)]="user.visitSummary[0].comingFrom" matInput placeholder="Coming From">
+                  <input [readonly]="data" id="input"  name="comingFrom" [(ngModel)]="user.visitSummary[0].comingFrom" matInput placeholder="Coming From" required>
               </mat-form-field>
           </div>
 
           <div class="flex-container">
               <mat-form-field>
-                <mat-select [(ngModel)]="user.idType" name="idType" placeholder="Govt Id Type">
+                <mat-select [(ngModel)]="user.idType" name="idType" placeholder="Govt Id Type" required>
                   <mat-option value="{{id}}" *ngFor="let id of idTypes">{{id}}</mat-option>
                 </mat-select>
               </mat-form-field>
 
               <mat-form-field>
-                <input id="input"  name="idNumber" [(ngModel)]="user.idNumber" matInput placeholder="Id number">
+                <input [readonly]="data" id="input"  name="idNumber" [(ngModel)]="user.idNumber" matInput placeholder="Id number" required>
               </mat-form-field>
           </div>
 
           <div class="flex-container">
               <mat-form-field>
-                  <input id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary batch number">
+                  <input [readonly]="data" id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary batch number">
+              </mat-form-field>
+              <mat-form-field>
+                <input  [readonly]="data" matInput type="number" placeholder="Mobile number" minlength="8" maxlength="10" [(ngModel)]="user.phoneNumber" name="phoneNumber" #phoneNumber required>
               </mat-form-field>
           </div>
+            <div class="flex-container">
+              <mat-form-field>
+                <input [readonly]="data" name="contactPerson" [(ngModel)]="user.visitSummary[0].contactPerson"
+                 matInput placeholder="Contact Person" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input [readonly]="data" type="email" pattern="[^@]+@[^\.]+\..+" name="contactPersonEmailId" [(ngModel)]="user.visitSummary[0].contactPersonEmailId"
+                matInput placeholder="Contact Person Email Id" required>
+              </mat-form-field>
+
+              <!-- <button mat-button>Add Contact Person</button> -->
+            </div>
+            <div class="flex-container">
+              <mat-form-field>
+                <input [readonly]="data" name="contactPersonPhone" minlength="8" maxlength="10" [(ngModel)]="user.visitSummary[0].contactPersonPhone"
+                matInput placeholder="Contact Person Phone Number" required>
+              </mat-form-field>
+
+              <!-- <button mat-button>Add Contact Person</button> -->
+            </div>
+            
+          <!-- <div>
+            <button mat-button matStepperPrevious>Request Approval</button>
+            <button mat-button (click)="stepper.reset()">Notify</button>
+          </div> -->
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -69,22 +105,22 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Approval</ng-template>
-      <div class="flex-container-wrapper">
-        <div class="flex-container">
-          <mat-form-field>
-            <input id="input" name="contactPerson" [(ngModel)]="user.visitSummary[0].contactPerson"
-             matInput placeholder="Contact Person">
-          </mat-form-field>
-          <button mat-button>Add Contact Person</button>
-        </div>
-      <div>
-        <button mat-button matStepperPrevious>Request Approval</button>
-        <button mat-button (click)="stepper.reset()">Notify</button>
-      </div>
-      </div>  
+      <h6 *ngIf="user && user?.firstName ">Name - {{user?.firstName +' '+ user?.lastName }} </h6>
+      <h6 *ngIf="user && user?.visitSummary[user?.visitSummary?.length - 1]?.purpose">Purpose - {{user?.visitSummary[user?.visitSummary?.length - 1]?.purpose }} </h6>
+      <h6 *ngIf="user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPerson">Contact Person Name - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPerson }} </h6>
+      <h6 *ngIf="user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonEmailId">Contact Person Email - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonEmailId }} </h6>
+      <h6 *ngIf="user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonPhone">Contact Person Contact - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonPhone }} </h6>
+      <mat-list role="list" *ngIf="data && data.idNumber">
+        <mat-list-item class="list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status ? data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase(): data?.idNumber ? 'pending': null}}" role="listitem">
+          <span *ngIf="data && data.idNumber">Status -</span>
+               {{ data?.visitSummary[data?.visitSummary?.length - 1]?.status ? data?.visitSummary[data?.visitSummary?.length - 1]?.status : data?.idNumber ? 'PENDING' : null}}
+        </mat-list-item>
+      </mat-list>
+
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button *ngIf="!data" mat-button (click)="stepper.reset()">Reset</button>
+        <button *ngIf="!data" mat-button (click)="onSubmit()">Finish</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>

@@ -8,6 +8,7 @@
 import { Component, NgZone } from "@angular/core";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
 import { Observable } from "rxjs";
+import { ArrayUtil } from "src/app/helpers/array.util";
 
 @Component({
   selector: "data-obtainer",
@@ -36,7 +37,6 @@ export abstract class DataObtainer<T> {
         this.onAfterUpdateData(data);
         this.onNextStage(data);
         this.loading = false;
-        console.log(this.data);
       },
       (error: any) => {
         this.onErrorStage(error);

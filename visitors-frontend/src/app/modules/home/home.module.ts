@@ -5,9 +5,11 @@ import { ApprovedRequestComponent } from "./approved-request/approved-request.co
 import { PendingRequestComponent } from "./pending-request/pending-request.component";
 import { PreApprovedRequestComponent } from "./pre-approved-request/pre-approved-request.component";
 import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { DialogOverviewComponent } from './dialog-overview/dialog-overview.component';
 
 @NgModule({
-  imports: [MaterialModule, CommonModule],
+  imports: [MaterialModule, CommonModule, FormsModule],
   exports: [
     HomeComponent,
     ApprovedRequestComponent,
@@ -18,7 +20,8 @@ import { CommonModule } from "@angular/common";
     HomeComponent,
     ApprovedRequestComponent,
     PendingRequestComponent,
-    PreApprovedRequestComponent
+    PreApprovedRequestComponent,
+    DialogOverviewComponent
   ]
 })
 export class HomeModule {}
