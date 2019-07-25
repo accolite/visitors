@@ -4,7 +4,7 @@ import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog }
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { FormControl } from '@angular/forms';
 import { merge, of as observableOf } from 'rxjs';
-import { startWith, switchMap, map, catchError, debounceTime } from 'rxjs/operators';
+import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component( {
@@ -104,6 +104,8 @@ export class ReportComponent implements AfterViewInit {
       this.route.queryParams,
       this.paginator.page )
       .pipe(
+        debounceTime( 500 ),
+        distinctUntilChanged(),
         startWith( {} ),
         switchMap( () => {
           this.isLoadingResults = true;
