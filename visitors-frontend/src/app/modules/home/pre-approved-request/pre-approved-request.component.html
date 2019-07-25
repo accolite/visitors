@@ -15,10 +15,14 @@
             mat-raised-button
             color="secondary"
             type="button"
+            *ngIf="!element.visitSummary.badgeNo; else displayBadgeNo"
             (click)="assignBadge(element)"
           >
             Assign Badge
           </button>
+          <ng-template #displayBadgeNo>{{
+            element.visitSummary.badgeNo
+          }}</ng-template>
         </td>
       </ng-container>
       <ng-container matColumnDef="Name">

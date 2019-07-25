@@ -11,9 +11,11 @@ export class DialogOverviewComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: dataModel
-  ) {
-    console.log("dyfy" + data);
-  }
+  ) {}
 
   ngOnInit() {}
+
+  onNoClick(element): void {
+    this.dialogRef.close({ data: element });
+  }
 }

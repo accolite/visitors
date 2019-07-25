@@ -25,6 +25,8 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   searchObj: any;
   visitorSummaryObj: any;
   visitor: any;
+  badge: any;
+  visitorSummaryObj2: any;
 
   @Input()
   approved: ApprovedRequestComponent;
@@ -93,24 +95,30 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       });
   }
   assignBadge(event) {
+    console.log(event);
     this.visitor = {
       firstName: event.firstName,
       lastName: event.lastName,
-      contactPerson: event.contactPerson,
-      comingFrom: event.comingFrom,
-      purpose: event.purpose,
-      inTime: event.inTime,
-      scheduledTime: event.scheduledTime,
+      badgeNo: event.visitSummary.badgeNo,
+      phoneNumber: event.phoneNumber,
+      contactPerson: event.visitSummary.contactPerson,
+      comingFrom: event.visitSummary.comingFrom,
+      purpose: event.visitSummary.purpose,
+      inTime: event.visitSummary.inTime,
+      scheduledTime: event.visitSummary.scheduledTime,
       emailId: event.emailId
     };
+    console.log(this.visitor);
     const dialogRef = this.dialog.open(DialogOverviewComponent, {
       width: "500px",
       data: this.visitor
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
-      //this.visitor = result;
+      console.log("fuhghr" + result);
+      // this.visitorService
+      //   .updateVisitSummary(result.id, this.visitorSummaryObj2)
+      //   .subscribe();
     });
   }
   applyFilter(filterValue: string) {
