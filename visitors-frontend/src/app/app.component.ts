@@ -17,8 +17,12 @@ export class AppComponent {
   active: any;
   constructor( private router: Router, private activatedRoute: ActivatedRoute
     , private auth: AuthService ) {
-    if ( window.location.href.indexOf( 'loc' ) > -1 )
+    if ( window.location.href.indexOf( '?loc' ) > -1 ) {
       this.val = window.location.href.split( "=" )[ 1 ];
+    } else {
+      this.val = 'Bangalore';
+      this.selectedValue( this.val )
+    }
 
   }
   ngOnInit() {
@@ -43,7 +47,7 @@ export class AppComponent {
   }
   title = 'visitor-frontend';
   location: any = accoliteLocation;
-  val: string;
+  val: string = 'Bangalore';
   // searchUrl: string = "?"
   selectedValue( selectedval: string ) {
     this.val = selectedval;
