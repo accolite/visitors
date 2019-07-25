@@ -52,7 +52,9 @@ export class VisitorSearchOrCreateComponent {
   createUser() {
     this.user = new VisitorModel();
     this.user.visitSummary = [];
-    this.user.visitSummary.push( new VisitSummaryModel() );
+    let visitSummary = new VisitSummaryModel();
+    visitSummary.officeLocation = window.location.href.indexOf( '?loc' ) > -1 ? window.location.href.split( "=" )[ 1 ] : 'Bangalore'
+    this.user.visitSummary.push( visitSummary );
   }
 
   searchValues( value: string, type: string ) {

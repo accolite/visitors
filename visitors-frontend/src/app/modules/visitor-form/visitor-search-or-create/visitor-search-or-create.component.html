@@ -45,7 +45,11 @@
 
           <div class="flex-container">
               <mat-form-field>
-                <input [readonly]="data" id="input" name="purpose" [(ngModel)]="user.visitSummary[0].purpose"  matInput placeholder="Purpose" required>
+                <mat-select [(ngModel)]="user.visitSummary[0].purpose" name="idType" placeholder="Purpose" required>
+                  <mat-option value="Interview" >Interview</mat-option>
+                  <mat-option value="Meeting" >Meeting</mat-option>
+                  <mat-option value="New Joinee" >New Joinee</mat-option>
+                </mat-select>
               </mat-form-field>
               <mat-form-field> 
                   <input [readonly]="data" id="input"  name="comingFrom" [(ngModel)]="user.visitSummary[0].comingFrom" matInput placeholder="Coming From" required>
