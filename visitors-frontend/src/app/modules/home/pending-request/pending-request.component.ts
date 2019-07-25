@@ -34,14 +34,7 @@ export class PendingRequestComponent extends DataObtainer<any> {
   @Input()
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns = [
-    "badgeNo",
-    "Name",
-    "inTime",
-    "outTime",
-    "actions",
-    "remarks"
-  ];
+  displayedColumns = ["Name", "badgeNo", "inTime", "actions", "remarks"];
 
   constructor(
     private visitorService: VisitorService,

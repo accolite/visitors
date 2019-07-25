@@ -10,4 +10,9 @@ export class dataModel {
   purpose: string;
   inTime: string;
   scheduledTime: string;
+  [propName: string]: any;
+
+  constructor(jsonObj?: {}) {
+    Object.assign(this, jsonObj);
+  }
 }
