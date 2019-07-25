@@ -3,14 +3,17 @@ package com.accolite.auth.model;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Document(collection = "users")
+@AllArgsConstructor
 @Data
 public class User {
 	
@@ -24,13 +27,7 @@ public class User {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
-	private List<String> roles;
+	@DBRef
+	private List<Role> roles;
 	
-	public User(String name, String username, String password, List<String> roles) {
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-	}
-
 }
