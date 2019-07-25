@@ -13,7 +13,7 @@ import { PendingRequestComponent } from "../pending-request/pending-request.comp
 import { RestService } from "src/app/services/base/rest.service";
 import { tap } from "rxjs/operators";
 import { DialogOverviewComponent } from "../dialog-overview/dialog-overview.component";
-import { DialogDataService } from "../dialog-overview/dialog-data.service";
+
 import { dataModel } from "../dialog-overview/dataModel";
 
 @Component({
@@ -45,7 +45,7 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   @Input()
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns = ["badgeNo", "Name", "contactPerson", "actions", "remarks"];
+  displayedColumns = ["Name", "badgeNo", "contactPerson", "actions", "remarks"];
 
   constructor(
     private visitorService: VisitorService,
