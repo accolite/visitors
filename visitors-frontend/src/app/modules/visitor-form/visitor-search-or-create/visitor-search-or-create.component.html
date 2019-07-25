@@ -6,7 +6,7 @@
               
           <mat-form-field class="set-width">
             <span class="span" matPrefix><mat-icon class="span-maticon">mail</mat-icon>&nbsp;</span>
-            <input matInput type="email" placeholder="Email" [(ngModel)]="user.emailId" (keyup)="searchValues($event.target.value,'email');" class="example-right-align">
+            <input matInput type="string" placeholder="Email" [(ngModel)]="user.emailId" (keyup)="searchValues($event.target.value,'email');" class="example-right-align">
           </mat-form-field>
 
           <!-- <h3 class="setMiddle"> OR </h3>
@@ -16,7 +16,7 @@
             <span class="span" matPrefix><mat-icon class="span-maticon">smartphone</mat-icon>&nbsp;</span>
           </mat-form-field> -->
 
-          <mat-list role="list" *ngIf="user && user.idNumber">
+          <mat-list role="list" *ngIf="data && data.idNumber">
             <mat-list-item class="list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase()}}" role="listitem">
                 <span *ngIf="data && data.idNumber && data.visitSummary[0]?.status">Status -</span>
                  {{data?.visitSummary[data?.visitSummary?.length - 1]?.status}}
