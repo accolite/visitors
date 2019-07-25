@@ -34,7 +34,7 @@ export class ReportComponent implements AfterViewInit {
 
   displayedColumns = [
     'firstName', 'lastName', 'phoneNumber', 'purpose',
-    'contactPerson', 'inTime', 'idType', 'idNumber', 'actions'
+    'contactPerson', 'inTime', 'idType', 'idNumber'
   ];
 
   displayedSearchBoxes = [
@@ -119,7 +119,7 @@ export class ReportComponent implements AfterViewInit {
           return observableOf( [] );
         } ),
       ).subscribe( data => {
-        this.visitors = data[ 'data' ];
+        this.visitors = data[ 'data' ] ? data[ 'data' ] : [];
         this.dataSource = new MatTableDataSource( this.visitors );
         this.isLoadingResults = false;
         this.dataSource.sort = this.sort;
