@@ -29,7 +29,7 @@ import { loginComponent } from './components/login.component';
     HomeModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [DialogOverviewComponent]
-})
-export class AppModule {}
+  bootstrap: [ AppComponent ],
+  entryComponents: [ DialogOverviewComponent ]
+} )
+export class AppModule { }

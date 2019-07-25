@@ -25,6 +25,7 @@ export class AppComponent {
     }
 
   }
+
   ngOnInit() {
     // this.activatedRoute.paramMap.subscribe( params => {
     //   console.log( params.get( 'login' ) )

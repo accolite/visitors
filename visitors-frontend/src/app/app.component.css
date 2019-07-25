@@ -3,17 +3,50 @@
   margin: 10px;
 }
 .mat-sidenav-content{
-height: 539px !important;
-}  
+  height: 100% !important;
+  padding: 1.5rem;
+}
 
-.mat-toolbar-row, .mat-toolbar-single-row {
+.mat-toolbar-row {
+  background: #000;
+}
+  
+
+/* .mat-toolbar-row, .mat-toolbar-single-row {
 height: 81px;
 margin-top: 9px;
+} */
+
+span-img{
+  display: inline-block;
+}
+.icon-content{
+  padding-left: 0.5rem;
+}
+.icon-content mat-icon{
+  vertical-align: bottom;
+}
+
+.icon-content span{
+  padding-left: 0.5rem;
+  font-size: 17px;
+  color: #696969;
 }
 
 #img {
-width: 10em !important;
-margin: 0 1rem;
+  width: 11rem !important;
+  margin: 0px 1rem;
+  padding-top: 0.65rem;
+}
+
+.active{
+  font-weight: 700;
+  color: #ff3d00!important;
+  background: rgba(0,0,0,.04);
+}
+.active span{
+  color: #ff3d00!important;
+
 }
 
 mat-toolbar-row{

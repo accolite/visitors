@@ -21,9 +21,9 @@ mat-card-header,
 mat-card-content {
   padding: 1rem;
 }
-mat-card-header {
+/* mat-card-header {
   background-color: gainsboro;
-}
+} */
 
 .mat-card-title {
   margin: 0 !important;
