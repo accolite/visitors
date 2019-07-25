@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>{{label}}</mat-label>
-  <mat-select [(ngModel)]="selectedValue" (ngModelChange)="emitChanges($event)" name="dropDown">
+  <mat-select [(ngModel)]="selectedValue" (ngModelChange)="emitChanges()" name="dropDown">
     <mat-option *ngFor="let obj of data" [value]="id ? obj[id] : obj">
       {{id ? obj[id] : obj}}
     </mat-option>
