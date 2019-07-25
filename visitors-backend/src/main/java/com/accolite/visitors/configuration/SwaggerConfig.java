@@ -25,7 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@EnableWebMvc
+//@EnableWebMvc
 public class SwaggerConfig implements WebMvcConfigurer {
 
 	@Bean
@@ -42,7 +42,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 		return apiInfo;
 	}
 
-	@Override
+	/*@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 
 		registry.addRedirectViewController("/api/v2/api-docs", "/v2/api-docs");
@@ -59,6 +59,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/api/swagger-ui.html")
 				.addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
 		registry.addResourceHandler("/api/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-	}
+	}*/
 
 }
