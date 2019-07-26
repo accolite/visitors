@@ -1,6 +1,6 @@
 // Add Accolite related static data
 
-export const accoliteLocation = [ "Bangalore", "Hyderabad", "Delhi" ];
+export const accoliteLocation = ["Bangalore", "Hyderabad", "Delhi"];
 
 export const idType = [
   "Voter Id",
@@ -16,11 +16,13 @@ export const accoliteSnackbarMessages = {
     success: {
       "create-visitors": "Successfully created Visitor details",
       "successfully-approved": "Successfully approved visitor",
-      "successfully-cancelled": "Scheduled meeting is cancelled"
+      "successfully-cancelled": "Scheduled meeting is cancelled",
+      "successfully-exited": "Successfully exited"
     },
     error: {
       "create-visitors": "Failed to create Visitor details",
-      "successfully-approved": "Failed to approve visitor"
+      "successfully-approved": "Failed to approve visitor",
+      "successfully-exited": "Failed to exit"
     }
   }
 };
