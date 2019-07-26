@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { VisitorService } from 'src/app/services/visitor.service';
 
 @Component({
   selector: 'app-visit-summary',
@@ -11,18 +12,27 @@ export class VisitSummaryComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
 
-  visitSummary = [];
-
   displayedColumns = [
     'badgeNo', 'contactPerson', 'inTime', 'outTime', 'officeLocation', 'purpose', 'scheduledTime',
     'status', 'visitNumber'
   ];
 
-  constructor() { }
+  constructor(private visitService: VisitorService) { }
 
   ngOnInit() {
-    this.visitSummary = this.data.visitSummary || [];
-    this.dataSource = new MatTableDataSource(this.visitSummary);
+    const emailId: string = this.data.emailId || '';
+    if (emailId.length > 0) {
+      this.visitService.searchVisitor({ 'emailId': emailId }, 0, 500).subscribe((resp: any) => {
+        const total: number = resp.total || 0;
+        if (total > 0) {
+          const visitSummary: Array<any> = [];
+          for (let i = 0; i < total; i++) {
+            visitSummary.push(resp.data[i].visitSummary);
+          }
+          this.dataSource = new MatTableDataSource(visitSummary);
+        }
+      });
+    }
   }
 
 }
