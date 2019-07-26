@@ -96,7 +96,7 @@ module.exports = "<div class=\"snack-bar\">\r\n  <div class=\"message\">\r\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<card cardTitle=\"Approved Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.badgeNo }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"inTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>In Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.inTime | date: \"medium\" }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <mat-checkbox [disabled]=\"clicked\">Badge returned</mat-checkbox>\r\n          <button\r\n            mat-raised-button\r\n            class=\"md-small\"\r\n            color=\"secondary\"\r\n            type=\"button\"\r\n            (click)=\"exit(element)\"\r\n          >\r\n            Exit\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput>{{element.visitSummary.remarks}}</textarea>\r\n        </td>\r\n      </ng-container>\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <!-- <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator> -->\r\n  </div>\r\n</card>\r\n"
+module.exports = "<card cardTitle=\"Approved Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.badgeNo }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"inTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>In Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.inTime | date: \"medium\" }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <mat-checkbox [disabled]=\"clicked\">Badge returned</mat-checkbox>\r\n          <button\r\n            mat-raised-button\r\n            class=\"md-small\"\r\n            color=\"secondary\"\r\n            type=\"button\"\r\n            (click)=\"exit(element)\"\r\n          >\r\n            Exit\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput>{{element.visitSummary.remarks}}</textarea>\r\n        </td>\r\n      </ng-container>\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator>\r\n  </div>\r\n</card>\r\n"
 
 /***/ }),
 
@@ -162,7 +162,7 @@ module.exports = "<table mat-table [dataSource]=\"dataSource\" class=\"mat-eleva
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"width: 50%;display: inline-block;margin-top:30px;\">\r\n    <h6>{{data.firstName}} {{data.lastName}}</h6>\r\n    <img mat-card-sm-image src=\"../assets/images/profile.jpg\" style=\"height: 300px; width: 300px;border: 1px solid;\"\r\n        alt=\"Photo of Yash\">\r\n</div>\r\n\r\n<div style=\"width:50%; display: inline-block;margin-top: 30px;position: absolute;\">\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>First Name : </b></label>\r\n        {{data.firstName}}\r\n    </div>\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>Last Name : </b></label>\r\n        {{data.lastName}}\r\n    </div>\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>Visit Type : </b></label>\r\n        {{data.visitorType}}\r\n    </div>\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>Email-Id : </b></label>\r\n        {{data.emailId}}\r\n    </div>\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>Phone Number : </b></label>\r\n        {{data.phoneNumber}}\r\n    </div>\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>Id : </b></label>\r\n        {{data.id}}\r\n    </div>\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>Id Type : </b></label>\r\n        {{data.idType}}\r\n    </div>\r\n    <div class=\"padding5\">\r\n        <label class=\"width150\"><b>Govt. Id Number : </b></label>\r\n        {{data.idNumber}}\r\n    </div>\r\n</div>"
+module.exports = "<div style=\"width: 50%;display: inline-block;\">\r\n    <h3>{{data.firstName}} {{data.lastName}}</h3>\r\n    <img mat-card-sm-image src=\"../assets/images/profile.jpg\" style=\"height: 300px; width: 300px;border: 1px solid;\"\r\n        alt=\"Photo of {{data.firstName}} {{data.lastName}}\">\r\n</div>\r\n\r\n<div style=\"width:50%; display: inline-block;margin-top: 40px;position: absolute;\">\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>First Name : </b></label>\r\n        {{data.firstName}}\r\n    </div>\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>Last Name : </b></label>\r\n        {{data.lastName}}\r\n    </div>\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>Visit Type : </b></label>\r\n        {{data.visitorType}}\r\n    </div>\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>Email-Id : </b></label>\r\n        {{data.emailId}}\r\n    </div>\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>Phone Number : </b></label>\r\n        {{data.phoneNumber}}\r\n    </div>\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>Id : </b></label>\r\n        {{data.id}}\r\n    </div>\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>Id Type : </b></label>\r\n        {{data.idType}}\r\n    </div>\r\n    <div class=\"padding10\">\r\n        <label class=\"inline-block-label width150\"><b>Govt. Id Number : </b></label>\r\n        {{data.idNumber}}\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -1034,30 +1034,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_components_base_data_obtainer_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/components/base/data-obtainer.component */ "./src/app/components/base/data-obtainer.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/visitor.service */ "./src/app/services/visitor.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+
 
 
 
 
 
 let ApprovedRequestComponent = class ApprovedRequestComponent extends src_app_components_base_data_obtainer_component__WEBPACK_IMPORTED_MODULE_2__["DataObtainer"] {
-    constructor(visitorService, zone) {
+    constructor(visitorService, zone, route) {
         super(zone);
         this.visitorService = visitorService;
         this.zone = zone;
+        this.route = route;
         this.pagination = false;
+        this.searchObj = {};
         this.clicked = false;
         this.displayedColumns = ["Name", "badgeNo", "inTime", "actions", "remarks"];
     }
     getDataObservable(params) {
         this.searchObj = {
-            status: "APPROVED"
+            status: 'APPROVED',
+            officeLocation: this.ofcLocation
         };
         return this.visitorService.searchVisitor(this.searchObj);
     }
     onAfterUpdateData(data) {
         this.visitors = data && data.data ? data.data : null;
         this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](this.visitors ? this.visitors : []);
-        console.log(this.visitors);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }
@@ -1074,7 +1078,8 @@ let ApprovedRequestComponent = class ApprovedRequestComponent extends src_app_co
 };
 ApprovedRequestComponent.ctorParameters = () => [
     { type: src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_4__["VisitorService"] },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -1091,6 +1096,9 @@ tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
 ], ApprovedRequestComponent.prototype, "dataSource", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], ApprovedRequestComponent.prototype, "ofcLocation", void 0);
 ApprovedRequestComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: "app-approved-request",
@@ -1204,11 +1212,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/visitor.service */ "./src/app/services/visitor.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
-/* harmony import */ var _approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./approved-request/approved-request.component */ "./src/app/modules/home/approved-request/approved-request.component.ts");
-/* harmony import */ var _pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pending-request/pending-request.component */ "./src/app/modules/home/pending-request/pending-request.component.ts");
-/* harmony import */ var _pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pre-approved-request/pre-approved-request.component */ "./src/app/modules/home/pre-approved-request/pre-approved-request.component.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./approved-request/approved-request.component */ "./src/app/modules/home/approved-request/approved-request.component.ts");
+/* harmony import */ var _pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pending-request/pending-request.component */ "./src/app/modules/home/pending-request/pending-request.component.ts");
+/* harmony import */ var _pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pre-approved-request/pre-approved-request.component */ "./src/app/modules/home/pre-approved-request/pre-approved-request.component.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 
 
 
@@ -1217,31 +1225,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let HomeComponent = class HomeComponent {
-    constructor(visitorService, zone) {
-        this.visitorService = visitorService;
-        this.zone = zone;
+    constructor(route) {
+        this.route = route;
         this.pagination = false;
         this.displayedColumns = ["badgeNo", "Name", "inTime", "actions", "remarks"];
     }
+    ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            this.approved.ofcLocation = params.loc;
+            this.approved.refreshData();
+            this.pending.ofcLocation = params.loc;
+            this.pending.refreshData();
+            this.preApproved.ofcLocation = params.loc;
+            this.preApproved.refreshData();
+        });
+    }
 };
 HomeComponent.ctorParameters = () => [
-    { type: src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_2__["VisitorService"] },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatPaginator"], { static: true })
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_2__["MatPaginator"], { static: true })
 ], HomeComponent.prototype, "paginator", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSort"], { static: true })
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSort"], { static: true })
 ], HomeComponent.prototype, "sort", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_4__["ApprovedRequestComponent"], { static: true })
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_3__["ApprovedRequestComponent"], { static: true })
 ], HomeComponent.prototype, "approved", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_5__["PendingRequestComponent"], { static: true })
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_4__["PendingRequestComponent"], { static: true })
 ], HomeComponent.prototype, "pending", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_6__["PreApprovedRequestComponent"], { static: true })
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_5__["PreApprovedRequestComponent"], { static: true })
 ], HomeComponent.prototype, "preApproved", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -1359,13 +1375,13 @@ let PendingRequestComponent = class PendingRequestComponent extends src_app_comp
     }
     getDataObservable(params) {
         this.searchObj = {
-            status: "PENDING"
+            status: "PENDING",
+            officeLocation: this.ofcLocation
         };
         return this.visitorService.searchVisitor(this.searchObj);
     }
     onAfterUpdateData(data) {
         this.visitors = data.data;
-        console.log(this.visitors);
         this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](this.visitors);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -1386,7 +1402,6 @@ let PendingRequestComponent = class PendingRequestComponent extends src_app_comp
             scheduledTime: event["visitSummary"].scheduledTime,
             remarks: event["visitSummary"].remarks
         };
-        console.log(this.visitorSummaryObj);
         this.visitorService
             .updateVisitSummary(event.id, this.visitorSummaryObj)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(this.rest.createNotifySnackbar("successfully-approved")))
@@ -1394,9 +1409,6 @@ let PendingRequestComponent = class PendingRequestComponent extends src_app_comp
             this.refreshData();
             if (this.approved) {
                 this.approved.refreshData();
-            }
-            if (this.preApproved) {
-                this.preApproved.refreshData();
             }
         });
     }
@@ -1490,7 +1502,8 @@ let PreApprovedRequestComponent = class PreApprovedRequestComponent extends src_
     }
     getDataObservable(params) {
         this.searchObj = {
-            status: "SCHEDULED"
+            status: "SCHEDULED",
+            officeLocation: this.ofcLocation
         };
         return this.visitorService.searchVisitor(this.searchObj);
     }
@@ -1516,7 +1529,6 @@ let PreApprovedRequestComponent = class PreApprovedRequestComponent extends src_
             scheduledTime: event["visitSummary"].scheduledTime,
             remarks: event["visitSummary"].remarks
         };
-        console.log(this.visitorSummaryObj);
         this.visitorService
             .updateVisitSummary(event.id, this.visitorSummaryObj)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["tap"])(this.rest.createNotifySnackbar("successfully-cancelled")))
@@ -1525,7 +1537,6 @@ let PreApprovedRequestComponent = class PreApprovedRequestComponent extends src_
         });
     }
     assignBadge(event) {
-        console.log(event);
         this.visitor = {
             firstName: event.firstName,
             lastName: event.lastName,
@@ -1538,14 +1549,12 @@ let PreApprovedRequestComponent = class PreApprovedRequestComponent extends src_
             scheduledTime: event.visitSummary.scheduledTime,
             emailId: event.emailId
         };
-        console.log(this.visitor);
         const dialogRef = this.dialog.open(_dialog_overview_dialog_overview_component__WEBPACK_IMPORTED_MODULE_7__["DialogOverviewComponent"], {
             width: "500px",
             data: this.visitor
         });
         dialogRef.afterClosed().subscribe(result => {
             let dialogRefModel = new _dialog_overview_dataModel__WEBPACK_IMPORTED_MODULE_8__["dataModel"](result.data);
-            // console.log(lll);
             let putVisitor = this.visitors.filter((data) => dialogRefModel.phoneNumber == data.phoneNumber)[0];
             putVisitor.visitSummary.badgeNo = dialogRefModel.badgeNo;
             this.visitorService
@@ -1697,22 +1706,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/visitor.service */ "./src/app/services/visitor.service.ts");
+
 
 
 
 let VisitSummaryComponent = class VisitSummaryComponent {
-    constructor() {
-        this.visitSummary = [];
+    constructor(visitService) {
+        this.visitService = visitService;
         this.displayedColumns = [
             'badgeNo', 'contactPerson', 'inTime', 'outTime', 'officeLocation', 'purpose', 'scheduledTime',
             'status', 'visitNumber'
         ];
     }
     ngOnInit() {
-        this.visitSummary = this.data.visitSummary || [];
-        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatTableDataSource"](this.visitSummary);
+        const emailId = this.data.emailId || '';
+        if (emailId.length > 0) {
+            this.visitService.searchVisitor({ 'emailId': emailId }, 0, 500).subscribe((resp) => {
+                const total = resp.total || 0;
+                if (total > 0) {
+                    const visitSummary = [];
+                    for (let i = 0; i < total; i++) {
+                        visitSummary.push(resp.data[i].visitSummary);
+                    }
+                    this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatTableDataSource"](visitSummary);
+                }
+            });
+        }
     }
 };
+VisitSummaryComponent.ctorParameters = () => [
+    { type: src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_3__["VisitorService"] }
+];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
 ], VisitSummaryComponent.prototype, "data", void 0);
@@ -1735,7 +1760,7 @@ VisitSummaryComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".example-card {\r\n    max-width: 400px;\r\n  }\r\n  \r\n  .example-header-image {\r\n    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\r\n    background-size: cover;\r\n  }\r\n  \r\n  .padding5 {\r\n      padding: 5px;\r\n  }\r\n  \r\n  .width150 {\r\n      width: 150px;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9yZXBvcnQvY29tcG9uZW50cy92aXNpdG9yLXByb2ZpbGUvdmlzaXRvci1wcm9maWxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxnQkFBZ0I7RUFDbEI7O0VBRUE7SUFDRSxtRkFBbUY7SUFDbkYsc0JBQXNCO0VBQ3hCOztFQUVBO01BQ0ksWUFBWTtFQUNoQjs7RUFFQTtNQUNJLFlBQVk7RUFDaEIiLCJmaWxlIjoic3JjL2FwcC9tb2R1bGVzL3JlcG9ydC9jb21wb25lbnRzL3Zpc2l0b3ItcHJvZmlsZS92aXNpdG9yLXByb2ZpbGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5leGFtcGxlLWNhcmQge1xyXG4gICAgbWF4LXdpZHRoOiA0MDBweDtcclxuICB9XHJcbiAgXHJcbiAgLmV4YW1wbGUtaGVhZGVyLWltYWdlIHtcclxuICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybCgnaHR0cHM6Ly9tYXRlcmlhbC5hbmd1bGFyLmlvL2Fzc2V0cy9pbWcvZXhhbXBsZXMvc2hpYmExLmpwZycpO1xyXG4gICAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcclxuICB9XHJcbiAgXHJcbiAgLnBhZGRpbmc1IHtcclxuICAgICAgcGFkZGluZzogNXB4O1xyXG4gIH1cclxuXHJcbiAgLndpZHRoMTUwIHtcclxuICAgICAgd2lkdGg6IDE1MHB4O1xyXG4gIH0iXX0= */"
+module.exports = ".example-card {\r\n    max-width: 400px;\r\n  }\r\n  \r\n  .example-header-image {\r\n    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\r\n    background-size: cover;\r\n  }\r\n  \r\n  .padding10 {\r\n      padding: 10px;\r\n  }\r\n  \r\n  .width150 {\r\n      width: 150px;\r\n  }\r\n  \r\n  .inline-block-label {\r\n    display: inline-block;\r\n  }\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9yZXBvcnQvY29tcG9uZW50cy92aXNpdG9yLXByb2ZpbGUvdmlzaXRvci1wcm9maWxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxnQkFBZ0I7RUFDbEI7O0VBRUE7SUFDRSxtRkFBbUY7SUFDbkYsc0JBQXNCO0VBQ3hCOztFQUVBO01BQ0ksYUFBYTtFQUNqQjs7RUFFQTtNQUNJLFlBQVk7RUFDaEI7O0VBRUE7SUFDRSxxQkFBcUI7RUFDdkIiLCJmaWxlIjoic3JjL2FwcC9tb2R1bGVzL3JlcG9ydC9jb21wb25lbnRzL3Zpc2l0b3ItcHJvZmlsZS92aXNpdG9yLXByb2ZpbGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5leGFtcGxlLWNhcmQge1xyXG4gICAgbWF4LXdpZHRoOiA0MDBweDtcclxuICB9XHJcbiAgXHJcbiAgLmV4YW1wbGUtaGVhZGVyLWltYWdlIHtcclxuICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybCgnaHR0cHM6Ly9tYXRlcmlhbC5hbmd1bGFyLmlvL2Fzc2V0cy9pbWcvZXhhbXBsZXMvc2hpYmExLmpwZycpO1xyXG4gICAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcclxuICB9XHJcbiAgXHJcbiAgLnBhZGRpbmcxMCB7XHJcbiAgICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgfVxyXG5cclxuICAud2lkdGgxNTAge1xyXG4gICAgICB3aWR0aDogMTUwcHg7XHJcbiAgfVxyXG5cclxuICAuaW5saW5lLWJsb2NrLWxhYmVsIHtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICB9Il19 */"
 
 /***/ }),
 

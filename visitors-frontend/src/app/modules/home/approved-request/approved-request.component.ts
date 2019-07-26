@@ -5,16 +5,20 @@ import { VisitorService } from "src/app/services/visitor.service";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
 import { PendingRequestComponent } from "../pending-request/pending-request.component";
 import { PreApprovedRequestComponent } from "../pre-approved-request/pre-approved-request.component";
+import { ActivatedRoute } from "@angular/router";
+import { tap } from "rxjs/operators";
+import { RestService } from "src/app/services/base/rest.service";
 
 @Component({
   selector: "app-approved-request",
   templateUrl: "./approved-request.component.html",
   styleUrls: ["./approved-request.component.css"]
 })
-export class ApprovedRequestComponent extends DataObtainer<any> {
+export class ApprovedRequestComponent extends DataObtainer<any>
+  implements OnInit {
   visitors: any;
   pagination = false;
-  searchObj: any;
+  searchObj = {};
   clicked = false;
 
   @Input()
@@ -33,14 +37,22 @@ export class ApprovedRequestComponent extends DataObtainer<any> {
   dataSource: MatTableDataSource<any>;
 
   displayedColumns = ["Name", "badgeNo", "inTime", "actions", "remarks"];
+  @Input()
+  ofcLocation: any;
 
-  constructor(private visitorService: VisitorService, private zone: NgZone) {
+  constructor(
+    private visitorService: VisitorService,
+    private zone: NgZone,
+    private route: ActivatedRoute,
+    private rest: RestService
+  ) {
     super(zone);
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
     this.searchObj = {
-      status: "APPROVED"
+      status: "APPROVED",
+      officeLocation: this.ofcLocation
     };
     return this.visitorService.searchVisitor(this.searchObj);
   }
@@ -50,7 +62,7 @@ export class ApprovedRequestComponent extends DataObtainer<any> {
     this.dataSource = new MatTableDataSource(
       this.visitors ? this.visitors : []
     );
-    console.log(this.visitors);
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -61,6 +73,7 @@ export class ApprovedRequestComponent extends DataObtainer<any> {
         data.visitSummary.visitNumber,
         data.visitSummary.remarks
       )
+      .pipe(tap(this.rest.createNotifySnackbar("successfully-exited")))
       .subscribe(val => {
         this.refreshData();
       });
