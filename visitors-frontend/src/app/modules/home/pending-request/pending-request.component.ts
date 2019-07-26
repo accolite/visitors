@@ -8,12 +8,13 @@ import { ApprovedRequestComponent } from "../approved-request/approved-request.c
 import { tap } from "rxjs/operators";
 import { RestService } from "src/app/services/base/rest.service";
 
-@Component( {
+@Component({
   selector: "app-pending-request",
   templateUrl: "./pending-request.component.html",
-  styleUrls: [ "./pending-request.component.css" ]
-} )
-export class PendingRequestComponent extends DataObtainer<any> {
+  styleUrls: ["./pending-request.component.css"]
+})
+export class PendingRequestComponent extends DataObtainer<any>
+  implements OnInit {
   visitors: any;
   pagination = false;
   searchObj: any;
@@ -25,16 +26,16 @@ export class PendingRequestComponent extends DataObtainer<any> {
   @Input()
   preApproved: PreApprovedRequestComponent;
 
-  @ViewChild( MatPaginator, { static: true } )
+  @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
-  @ViewChild( MatSort, { static: true } )
+  @ViewChild(MatSort, { static: true })
   sort: MatSort;
 
   @Input()
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns = [ "Name", "badgeNo", "inTime", "actions", "remarks" ];
+  displayedColumns = ["Name", "badgeNo", "inTime", "actions", "remarks"];
   ofcLocation: any;
 
   constructor(
@@ -42,53 +43,53 @@ export class PendingRequestComponent extends DataObtainer<any> {
     private zone: NgZone,
     private rest: RestService
   ) {
-    super( zone );
+    super(zone);
   }
+  ngOnInit() {}
 
-  getDataObservable( params: ServiceSearchParamsInputModel ) {
+  getDataObservable(params: ServiceSearchParamsInputModel) {
     this.searchObj = {
       status: "PENDING",
       officeLocation: this.ofcLocation
     };
-    return this.visitorService.searchVisitor( this.searchObj );
+    return this.visitorService.searchVisitor(this.searchObj);
   }
 
-  onAfterUpdateData( data: any ) {
+  onAfterUpdateData(data: any) {
     this.visitors = data.data;
-    this.dataSource = new MatTableDataSource( this.visitors );
+    this.dataSource = new MatTableDataSource(this.visitors);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  approveVisitor( event ) {
+  approveVisitor(event) {
     this.visitorSummaryObj = {
-      visitNumber: event[ "visitSummary" ].visitNumber, // Existing one no need to change
-      badgeNo: event[ "visitSummary" ].badgeNo,
-      comingFrom: event[ "visitSummary" ].comingFrom,
-      contactPerson: event[ "visitSummary" ].contactPerson,
-      contactPersonEmailId: event[ "visitSummary" ].contactPersonEmailId,
-      contactPersonPhone: event[ "visitSummary" ].contactPersonPhone,
-      purpose: event[ "visitSummary" ].purpose,
-      officeLocation: event[ "visitSummary" ].officeLocation,
-      inTime: event[ "visitSummary" ].inTime,
-      outTime: event[ "visitSummary" ].outTime,
+      visitNumber: event["visitSummary"].visitNumber, // Existing one no need to change
+      badgeNo: event["visitSummary"].badgeNo,
+      comingFrom: event["visitSummary"].comingFrom,
+      contactPerson: event["visitSummary"].contactPerson,
+      contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
+      contactPersonPhone: event["visitSummary"].contactPersonPhone,
+      purpose: event["visitSummary"].purpose,
+      officeLocation: event["visitSummary"].officeLocation,
+      inTime: event["visitSummary"].inTime,
+      outTime: event["visitSummary"].outTime,
       status: "APPROVED",
-      scheduledTime: event[ "visitSummary" ].scheduledTime,
-      remarks: event[ "visitSummary" ].remarks
+      scheduledTime: event["visitSummary"].scheduledTime,
+      remarks: event["visitSummary"].remarks
     };
     this.visitorService
-      .updateVisitSummary( event.id, this.visitorSummaryObj )
-      .pipe( tap( this.rest.createNotifySnackbar( "successfully-approved" ) ) )
-      .subscribe( () => {
+      .updateVisitSummary(event.id, this.visitorSummaryObj)
+      .pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
+      .subscribe(() => {
         this.refreshData();
-        if ( this.approved ) {
+        if (this.approved) {
           this.approved.refreshData();
         }
-
-      } );
+      });
   }
 
-  applyFilter( filterValue: string ) {
+  applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

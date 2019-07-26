@@ -5,6 +5,7 @@ import { ApprovedRequestComponent } from "./approved-request/approved-request.co
 import { PendingRequestComponent } from "./pending-request/pending-request.component";
 import { PreApprovedRequestComponent } from "./pre-approved-request/pre-approved-request.component";
 import { ActivatedRoute } from "@angular/router";
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
