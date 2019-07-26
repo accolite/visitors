@@ -1,9 +1,9 @@
-import { Component, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, Input, OnDestroy, OnInit } from '@angular/core';
 import { VisitorService } from 'src/app/services/visitor.service';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog } from '@angular/material';
 import { VisitorComponent } from './components/visitor/visitor.component';
 import { FormControl } from '@angular/forms';
-import { merge, of as observableOf } from 'rxjs';
+import { merge, of as observableOf, Subscription } from 'rxjs';
 import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,11 +13,12 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: 'report.component.html'
 } )
 
-export class ReportComponent implements AfterViewInit {
+export class ReportComponent implements OnDestroy, OnInit {
   visitors: any;
   isLoadingResults = true;
   resultsLength = 0;
   pageSize = 10;
+  private subscription: Subscription;
 
   @ViewChild( MatPaginator, { static: true } ) paginator: MatPaginator;
   @ViewChild( MatSort, { static: true } ) sort: MatSort;
@@ -25,7 +26,7 @@ export class ReportComponent implements AfterViewInit {
 
   firstNameFilter = new FormControl( '' );
   lastNameFilter = new FormControl( '' );
-  //phoneNumberFilter = new FormControl( '' );
+  phoneNumberFilter = new FormControl( '' );
   purposeFilter = new FormControl( '' );
   contactPersonFilter = new FormControl( '' );
   inTimeFilter = new FormControl( '' );
@@ -38,15 +39,15 @@ export class ReportComponent implements AfterViewInit {
   ];
 
   displayedSearchBoxes = [
-    'firstName-search', 'lastName-search', 'purpose-search',
+    'firstName-search', 'lastName-search', 'phoneNumber-search', 'purpose-search',
     'contactPerson-search', 'inTime-search', 'idType-search'
-  ]; //'phoneNumber-search',
+  ];
 
   constructor( private visitorService: VisitorService,
     private dialog: MatDialog,
     private route: ActivatedRoute ) { }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.route.queryParams.subscribe( params => {
       this.filterValues[ 'officeLocation' ] = params.loc;
       this.paginator.pageIndex = 0;
@@ -66,8 +67,12 @@ export class ReportComponent implements AfterViewInit {
     );
     /* this.phoneNumberFilter.valueChanges.subscribe(
       phoneNumber => {
-        this.filterValues.phoneNumber = phoneNumber;
-        this.paginator.pageIndex = 0;
+        if ( phoneNumber.length == 10 ) {
+          console.log( 'HIT' );
+          this.paginator.pageIndex = 0;
+        }
+        this.filterValues[ 'phoneNumber' ] = phoneNumber;
+
       }
     ); */
     this.purposeFilter.valueChanges.subscribe(
@@ -94,7 +99,7 @@ export class ReportComponent implements AfterViewInit {
         this.paginator.pageIndex = 0;
       }
     );
-    merge( this.firstNameFilter.valueChanges,
+    this.subscription = merge( this.firstNameFilter.valueChanges,
       this.lastNameFilter.valueChanges,
       // this.phoneNumberFilter.valueChanges,
       this.purposeFilter.valueChanges,
@@ -108,8 +113,11 @@ export class ReportComponent implements AfterViewInit {
         distinctUntilChanged(),
         startWith( {} ),
         switchMap( () => {
+          /*if ( ( this.filterValues[ 'phoneNumber' ] && this.filterValues[ 'phoneNumber' ].length == 10 ) ||
+            !this.filterValues[ 'phoneNumber' ] ) {*/
           this.isLoadingResults = true;
           return this.visitorService.searchVisitor( this.filterValues, this.paginator.pageIndex, this.paginator.pageSize );
+          // }
         } ),
         map( data => {
           // Flip flag to show that loading has finished.
@@ -135,5 +143,7 @@ export class ReportComponent implements AfterViewInit {
 
     const matDialogRef = this.dialog.open( VisitorComponent, dialogConfig );
   }
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
