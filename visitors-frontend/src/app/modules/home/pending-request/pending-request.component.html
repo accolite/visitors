@@ -45,7 +45,7 @@
       <ng-container matColumnDef="remarks">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>
         <td mat-cell *matCellDef="let element">
-          <textarea matInput></textarea>
+          <textarea matInput>{{element.visitSummary.remarks}}</textarea>
         </td>
       </ng-container>
 

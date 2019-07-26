@@ -75,7 +75,7 @@
 
           <div class="flex-container">
               <mat-form-field>
-                  <input [readonly]="data" id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary batch number">
+                  <input [readonly]="data" id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary badge number">
               </mat-form-field>
               <mat-form-field>
                 <input  [readonly]="data" matInput type="number" placeholder="Mobile number" minlength="8" maxlength="10" [(ngModel)]="user.phoneNumber" name="phoneNumber" #phoneNumber required>
