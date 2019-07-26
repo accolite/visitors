@@ -1,3 +1,9 @@
+/**
+ * @author M.Shashikant(shashikant.mittapelli@accoliteindia.com)
+ * gives flexibility to search or create visitor details
+ */
+
+
 import { Component, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, switchMap, distinctUntilChanged, filter } from 'rxjs/operators';
@@ -20,9 +26,12 @@ export class VisitorSearchOrCreateComponent {
   search: string;
   model: { [ propName: string ]: any } = {}
   idTypes: Array<string> = idType;
-  lastKeyPress: number = 0;
+  showLoading: boolean = false;
+
   @ViewChild( 'heroForm', { static: true } )
   heroForm: NgForm;
+
+  isEmailPresent: boolean = true;
 
   @ViewChild( 'step', { static: true } )
   step: MatStep
@@ -37,14 +46,19 @@ export class VisitorSearchOrCreateComponent {
       debounceTime( 1000 ),
       distinctUntilChanged(),
       filter( ( data ) => data != '' ),
-      switchMap( ( data ) => this.visitorService.getVisitorByEmailId( data ) )
+      switchMap( ( data ) => { this.showLoading = true; return this.visitorService.getVisitorByEmailId( data ) } )
     ).subscribe( ( data ) => {
       this.data = data;
       if ( data ) {
         this.user = new VisitorModel( data );
+        this.isEmailPresent = true;
+        this.showLoading = false
       } else {
         this.createUser();
-        this.user.emailId = this.search
+        this.user.emailId = this.search;
+        this.isEmailPresent = false;
+        this.showLoading = false
+
       }
     } )
   }
@@ -52,7 +66,9 @@ export class VisitorSearchOrCreateComponent {
   createUser() {
     this.user = new VisitorModel();
     this.user.visitSummary = [];
-    this.user.visitSummary.push( new VisitSummaryModel() );
+    let visitSummary = new VisitSummaryModel();
+    visitSummary.officeLocation = window.location.href.indexOf( '?loc' ) > -1 ? window.location.href.split( "=" )[ 1 ] : 'Bangalore'
+    this.user.visitSummary.push( visitSummary );
   }
 
   searchValues( value: string, type: string ) {

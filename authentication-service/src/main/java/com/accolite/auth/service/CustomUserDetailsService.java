@@ -27,11 +27,11 @@ public class CustomUserDetailsService implements UserDetailsService{
 		
 		if(dbUser == null) {
 			throw new UsernameNotFoundException(String.format("Username %s not found", username));
-			
+	 
 		} else {
 			List<GrantedAuthority> grantedAuthorities = dbUser.getRoles()
 																.stream()
-																.map(role -> new SimpleGrantedAuthority(role))
+																.map(role -> new SimpleGrantedAuthority(role.getRole()))
 																.collect(Collectors.toList());
 		
 			org.springframework.security.core.userdetails.User user = 

@@ -14,6 +14,8 @@ import { RestService } from "src/app/services/base/rest.service";
 import { tap } from "rxjs/operators";
 import { DialogOverviewComponent } from "../dialog-overview/dialog-overview.component";
 
+import { dataModel } from "../dialog-overview/dataModel";
+
 @Component({
   selector: "app-pre-approved-request",
   templateUrl: "./pre-approved-request.component.html",
@@ -25,6 +27,8 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   searchObj: any;
   visitorSummaryObj: any;
   visitor: any;
+  badge: any;
+  visitorSummaryObj2: any;
 
   @Input()
   approved: ApprovedRequestComponent;
@@ -41,7 +45,7 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   @Input()
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns = ["badgeNo", "Name", "contactPerson", "actions", "remarks"];
+  displayedColumns = ["Name", "badgeNo", "contactPerson", "actions", "remarks"];
 
   constructor(
     private visitorService: VisitorService,
@@ -50,6 +54,10 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
     public dialog: MatDialog
   ) {
     super(zone);
+  }
+
+  ngOnInit() {
+    this.refreshData();
   }
 
   getDataObservable(params: ServiceSearchParamsInputModel) {
@@ -93,24 +101,37 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       });
   }
   assignBadge(event) {
+    console.log(event);
     this.visitor = {
       firstName: event.firstName,
       lastName: event.lastName,
-      contactPerson: event.contactPerson,
-      comingFrom: event.comingFrom,
-      purpose: event.purpose,
-      inTime: event.inTime,
-      scheduledTime: event.scheduledTime,
+      badgeNo: event.visitSummary.badgeNo,
+      phoneNumber: event.phoneNumber,
+      contactPerson: event.visitSummary.contactPerson,
+      comingFrom: event.visitSummary.comingFrom,
+      purpose: event.visitSummary.purpose,
+      inTime: event.visitSummary.inTime,
+      scheduledTime: event.visitSummary.scheduledTime,
       emailId: event.emailId
     };
+    console.log(this.visitor);
     const dialogRef = this.dialog.open(DialogOverviewComponent, {
       width: "500px",
       data: this.visitor
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
-      //this.visitor = result;
+      let dialogRefModel = new dataModel(result.data);
+      // console.log(lll);
+
+      let putVisitor = this.visitors.filter(
+        (data: any) => dialogRefModel.phoneNumber == data.phoneNumber
+      )[0];
+
+      putVisitor.visitSummary.badgeNo = dialogRefModel.badgeNo;
+      this.visitorService
+        .updateVisitSummary(putVisitor.id, putVisitor.visitSummary)
+        .subscribe();
     });
   }
   applyFilter(filterValue: string) {

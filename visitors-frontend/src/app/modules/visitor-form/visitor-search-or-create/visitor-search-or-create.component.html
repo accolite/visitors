@@ -9,6 +9,8 @@
             <input matInput type="string" placeholder="Email" [(ngModel)]="user.emailId" (keyup)="searchValues($event.target.value,'email');" class="example-right-align">
           </mat-form-field>
 
+          <mat-spinner *ngIf="showLoading"></mat-spinner>
+
           <!-- <h3 class="setMiddle"> OR </h3>
           
           <mat-form-field class="set-width">
@@ -16,16 +18,19 @@
             <span class="span" matPrefix><mat-icon class="span-maticon">smartphone</mat-icon>&nbsp;</span>
           </mat-form-field> -->
 
-          <mat-list role="list" *ngIf="data && data.idNumber">
+          <mat-list role="list" *ngIf="(data && data.idNumber) || !isEmailPresent">
             <mat-list-item class="list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase()}}" role="listitem">
                 <span *ngIf="data && data.idNumber && data.visitSummary[0]?.status">Status -</span>
                  {{data?.visitSummary[data?.visitSummary?.length - 1]?.status}}
             </mat-list-item>
+            <mat-list-item class="list failed" role="listitem" *ngIf="!isEmailPresent">
+                <span >Searched email is not present</span>
+            </mat-list-item>
           </mat-list>
         </div> 
         <div>
-            <button *ngIf="data" mat-button matStepperNext>Next</button>
-            <button *ngIf="!data" mat-button matStepperNext>Create</button>
+            <button *ngIf="data && isEmailPresent" mat-button matStepperNext>Next</button>
+            <button *ngIf="!isEmailPresent" mat-button matStepperNext>Create</button>
         </div>
     </mat-step>
 
@@ -45,7 +50,11 @@
 
           <div class="flex-container">
               <mat-form-field>
-                <input [readonly]="data" id="input" name="purpose" [(ngModel)]="user.visitSummary[0].purpose"  matInput placeholder="Purpose" required>
+                <mat-select [(ngModel)]="user.visitSummary[0].purpose" name="idType" placeholder="Purpose" required>
+                  <mat-option value="Interview" >Interview</mat-option>
+                  <mat-option value="Meeting" >Meeting</mat-option>
+                  <mat-option value="New Joinee" >New Joinee</mat-option>
+                </mat-select>
               </mat-form-field>
               <mat-form-field> 
                   <input [readonly]="data" id="input"  name="comingFrom" [(ngModel)]="user.visitSummary[0].comingFrom" matInput placeholder="Coming From" required>
@@ -66,7 +75,7 @@
 
           <div class="flex-container">
               <mat-form-field>
-                  <input [readonly]="data" id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary batch number">
+                  <input [readonly]="data" id="input"  name="badgeNo" [(ngModel)]="user.visitSummary[0].badgeNo" matInput placeholder="Temporary badge number">
               </mat-form-field>
               <mat-form-field>
                 <input  [readonly]="data" matInput type="number" placeholder="Mobile number" minlength="8" maxlength="10" [(ngModel)]="user.phoneNumber" name="phoneNumber" #phoneNumber required>

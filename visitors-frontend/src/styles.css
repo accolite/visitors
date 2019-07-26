@@ -1,2 +1,87 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/* html,body{
+  height: 100%;
+}
+body{
+  margin: 0;
+} */
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+#toolbarMenu {
+  cursor: pointer;
+  margin-right: 20px;
+}
+#mainToolbar .toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+#mainToolbar .toolbar-icon {
+  cursor: pointer;
+  margin: 0 8px;
+}
+
+#sidenavContainer {
+  margin-top: 64px;
+}
+
+#sidenav {
+  width: 240px;
+}
+
+#sidenav.menu-close {
+  width: 70px
+}
+
+#sidenav.menu-open {
+  width: 240px
+}
+
+#sidenav .avatar {
+  background-image: url('http://i.pravatar.cc/300');
+  background-size: cover;
+}
+
+#sidenav .mat-list-item-content {
+  padding: 0;
+}
+
+#sidenav .menu-item {
+  width: 100%;
+  border-radius: 0;
+  text-align: left;
+  padding: 10px;
+}
+
+#sidenav .menu-item:hover {
+background: #eee;
+}
+#sidenav .menu-item mat-icon {
+  margin-right: 20px;
+  margin-left: 12px;
+}
+
+.dash-list h3 {
+  padding: 12px;
+}
+
+.mat-list-base{
+padding-top: 0 !important; 
+}
+
+/* div#visitor-home{
+  display: inline-block; 
+} */
+div#visitor-home mat-tab-body{
+  padding: 1rem;
+}
+
+div#visitor-home mat-tab-body mat-card {
+  margin-top: 0.75rem 
+}
+

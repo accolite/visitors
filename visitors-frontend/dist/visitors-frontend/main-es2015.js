@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\r\n  <mat-toolbar-row>\r\n    <button\r\n      type=\"button\"\r\n      aria-label=\"Toggle sidenav\"\r\n      mat-icon-button\r\n      (click)=\"drawer.toggle()\"\r\n    >\r\n      <mat-icon aria-label=\"Side nav toggle icon\">menu</mat-icon>\r\n    </button>\r\n    <span><img id=\"img\" src=\"../assets/images/accolite.jpg\"/></span>\r\n  </mat-toolbar-row>\r\n</mat-toolbar>\r\n<mat-sidenav-container class=\"example-container\">\r\n  <mat-sidenav #drawer mode=\"side\" opened role=\"navigation\">\r\n    <mat-nav-list class=\"matNavList\">\r\n      <a mat-list-item routerLinkActive=\"active\" [routerLink]=\"['/visitor']\" routerLinkActive=\"active\" [queryParams]=\"{ loc: val }\">Visitor</a>\r\n      <a mat-list-item routerLinkActive=\"active\" [routerLink]=\"['/report']\" routerLinkActive=\"active\" [queryParams]=\"{ loc: val }\">Report</a>\r\n    </mat-nav-list>\r\n    <drop-down class=\"locSelect\" [data]=\"location\" label=\"Location\" [selectedValue]=\"val\" (selectedValueChange)=\"selectedValue($event)\" ></drop-down>\r\n  </mat-sidenav>\r\n  <mat-sidenav-content>\r\n    <router-outlet></router-outlet>\r\n  </mat-sidenav-content>\r\n</mat-sidenav-container>\r\n"
+module.exports = "<mat-toolbar id=\"mainToolbar\" color=\"primary\">\r\n    <mat-toolbar-row>\r\n      <button type=\"button\" aria-label=\"Toggle sidenav\" mat-icon-button (click)=\"sidenav.toggle()\">\r\n        <mat-icon aria-label=\"Side nav toggle icon\">menu</mat-icon>\r\n      </button>\r\n      <span class=\"span-img\"><img id=\"img\" src=\"../assets/images/accolite-new.png\"/></span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <mat-sidenav-container id=\"sidenavContainer\" fullscreen>\r\n    <mat-sidenav mode=\"side\" #sidenav id=\"sidenav\" opened> \r\n\r\n      <mat-nav-list class=\"matNavList\">\r\n          <a mat-list-item [routerLink]=\"['/visitor']\" routerLinkActive=\"active\" [queryParams]=\"{ loc: val }\">\r\n            <div class=\"icon-content\">\r\n              <mat-icon>group</mat-icon>\r\n              <span>Visitor</span>\r\n            </div>\r\n          </a>\r\n          <a mat-list-item [routerLink]=\"['/report']\" routerLinkActive=\"active\" [queryParams]=\"{ loc: val }\">\r\n            <div class=\"icon-content\">\r\n              <mat-icon>insert_invitation</mat-icon>\r\n              <span>Report</span>\r\n            </div>\r\n          </a>\r\n\r\n\r\n      </mat-nav-list>\r\n      \r\n\r\n      <drop-down class=\"locSelect\" [data]=\"location\" label=\"Location\" [selectedValue]=\"val\" (selectedValueChange)=\"selectedValue($event)\" ></drop-down>\r\n      \r\n      \r\n    </mat-sidenav>\r\n  \r\n    <mat-sidenav-content [ngStyle]=\"{ 'margin-left.px': contentMargin }\">\r\n\r\n      <router-outlet></router-outlet>\r\n      \r\n    </mat-sidenav-content>\r\n  </mat-sidenav-container>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -74,7 +74,7 @@ module.exports = "<mat-form-field>\r\n  <input matInput (keyup)=\"applyFilter($e
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field>\r\n  <mat-label>{{label}}</mat-label>\r\n  <mat-select [(ngModel)]=\"selectedValue\" (ngModelChange)=\"emitChanges($event)\" name=\"dropDown\">\r\n    <mat-option *ngFor=\"let obj of data\" [value]=\"id ? obj[id] : obj\">\r\n      {{id ? obj[id] : obj}}\r\n    </mat-option>\r\n  </mat-select>\r\n</mat-form-field>\r\n"
+module.exports = "<mat-form-field>\r\n  <mat-label>{{label}}</mat-label>\r\n  <mat-select [(ngModel)]=\"selectedValue\" (ngModelChange)=\"emitChanges()\" name=\"dropDown\">\r\n    <mat-option *ngFor=\"let obj of data\" [value]=\"id ? obj[id] : obj\">\r\n      {{id ? obj[id] : obj}}\r\n    </mat-option>\r\n  </mat-select>\r\n</mat-form-field>\r\n"
 
 /***/ }),
 
@@ -96,7 +96,18 @@ module.exports = "<div class=\"snack-bar\">\r\n  <div class=\"message\">\r\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<card cardTitle=\"Approved Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">{{ element.badgeNo }}</td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"inTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>In Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.inTime | date: \"short\" }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"outTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Out Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.outTime | date: \"short\" }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <mat-checkbox>Badge returned</mat-checkbox>\r\n          <button\r\n            mat-raised-button\r\n            class=\"md-small\"\r\n            color=\"secondary\"\r\n            type=\"button\"\r\n          >\r\n            Exit\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput></textarea>\r\n        </td>\r\n      </ng-container>\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator>\r\n  </div>\r\n</card>\r\n"
+module.exports = "<card cardTitle=\"Approved Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.badgeNo }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"inTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>In Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.inTime | date: \"medium\" }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <mat-checkbox [disabled]=\"clicked\">Badge returned</mat-checkbox>\r\n          <button\r\n            mat-raised-button\r\n            class=\"md-small\"\r\n            color=\"secondary\"\r\n            type=\"button\"\r\n            (click)=\"exit(element)\"\r\n          >\r\n            Exit\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput>{{element.visitSummary.remarks}}</textarea>\r\n        </td>\r\n      </ng-container>\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <!-- <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator> -->\r\n  </div>\r\n</card>\r\n"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/modules/home/dialog-overview/dialog-overview.component.html":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/modules/home/dialog-overview/dialog-overview.component.html ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"flex-container\">\r\n  <table>\r\n    <tr>\r\n      <td>\r\n        <mat-form-field>\r\n          <input\r\n            name=\"firstName\"\r\n            [(ngModel)]=\"data.firstName\"\r\n            matInput\r\n            placeholder=\"First Name\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n      <td>\r\n        <mat-form-field class=\"column\">\r\n          <input\r\n            name=\"lastName\"\r\n            [(ngModel)]=\"data.lastName\"\r\n            matInput\r\n            placeholder=\"Last Name\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n    </tr>\r\n    <tr>\r\n      <td>\r\n        <mat-form-field>\r\n          <input\r\n            name=\"badgeNo\"\r\n            [(ngModel)]=\"data.badgeNo\"\r\n            matInput\r\n            placeholder=\"Badge No\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n      <td>\r\n        <mat-form-field class=\"column\">\r\n          <input\r\n            name=\"comingFrom\"\r\n            [(ngModel)]=\"data.comingFrom\"\r\n            matInput\r\n            placeholder=\"Coming From\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n    </tr>\r\n    <tr>\r\n      <td>\r\n        <mat-form-field>\r\n          <input\r\n            name=\"phoneNumber\"\r\n            [(ngModel)]=\"data.phoneNumber\"\r\n            matInput\r\n            placeholder=\"Phone Number\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n      <td>\r\n        <mat-form-field class=\"column\">\r\n          <input\r\n            name=\"emailId\"\r\n            [(ngModel)]=\"data.emailId\"\r\n            matInput\r\n            placeholder=\"email Id\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n    </tr>\r\n    <tr>\r\n      <td>\r\n        <mat-form-field>\r\n          <input\r\n            name=\"contactPerson\"\r\n            [(ngModel)]=\"data.contactPerson\"\r\n            matInput\r\n            placeholder=\"Contact Person\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n      <td>\r\n        <mat-form-field class=\"column\">\r\n          <input\r\n            name=\"purpose\"\r\n            [(ngModel)]=\"data.purpose\"\r\n            matInput\r\n            placeholder=\"purpose\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n    </tr>\r\n    <tr>\r\n      <td>\r\n        <mat-form-field>\r\n          <input\r\n            name=\"inTime\"\r\n            [(ngModel)]=\"data.inTime\"\r\n            matInput\r\n            placeholder=\"In Time\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n      <td>\r\n        <mat-form-field class=\"column\">\r\n          <input\r\n            name=\"scheduledTime\"\r\n            [(ngModel)]=\"data.scheduledTime\"\r\n            matInput\r\n            placeholder=\"Scheduled time\"\r\n          />\r\n        </mat-form-field>\r\n      </td>\r\n    </tr>\r\n    <tr>\r\n      <td><button mat-button (click)=\"onNoClick(data)\">Submit</button></td>\r\n    </tr>\r\n  </table>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -107,7 +118,7 @@ module.exports = "<card cardTitle=\"Approved Request\" [loading]=\"loading\">\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-approved-request></app-approved-request>\r\n<app-pending-request></app-pending-request>\r\n<app-pre-approved-request></app-pre-approved-request>\r\n"
+module.exports = "<app-approved-request\r\n  [pending]=\"pending\"\r\n  [preApproved]=\"preApproved\"\r\n></app-approved-request>\r\n<app-pending-request\r\n  [approved]=\"approved\"\r\n  [preApproved]=\"preApproved\"\r\n></app-pending-request>\r\n<app-pre-approved-request\r\n  [pending]=\"pending\"\r\n  [approved]=\"approved\"\r\n></app-pre-approved-request>\r\n"
 
 /***/ }),
 
@@ -118,7 +129,7 @@ module.exports = "<app-approved-request></app-approved-request>\r\n<app-pending-
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<card cardTitle=\"Pending Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">{{ element.badgeNo }}</td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"inTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>In Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.inTime | date: \"short\" }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"outTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Out Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.outTime | date: \"short\" }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <button mat-raised-button color=\"secondary\" type=\"button\">\r\n            Approve\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput></textarea>\r\n        </td>\r\n      </ng-container>\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator>\r\n  </div>\r\n</card>\r\n"
+module.exports = "<card cardTitle=\"Pending Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.badgeNo }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"inTime\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>In Time</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.inTime | date: \"medium\" }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <button\r\n            mat-raised-button\r\n            color=\"secondary\"\r\n            type=\"button\"\r\n            (click)=\"approveVisitor(element)\"\r\n          >\r\n            Approve\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput>{{element.visitSummary.remarks}}</textarea>\r\n        </td>\r\n      </ng-container>\r\n\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator>\r\n  </div>\r\n</card>\r\n"
 
 /***/ }),
 
@@ -129,7 +140,7 @@ module.exports = "<card cardTitle=\"Pending Request\" [loading]=\"loading\">\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<card cardTitle=\"Pre Approved Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <button mat-raised-button color=\"secondary\" type=\"button\">\r\n            Assign Badge\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"contactPerson\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>\r\n          Contact Person\r\n        </th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.contactPerson }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <button mat-raised-button color=\"secondary\" type=\"button\">\r\n            Cancel\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput></textarea>\r\n        </td>\r\n      </ng-container>\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator>\r\n  </div>\r\n</card>\r\n"
+module.exports = "<card cardTitle=\"Pre Approved Request\" [loading]=\"loading\">\r\n  <mat-form-field>\r\n    <input\r\n      matInput\r\n      (keyup)=\"applyFilter($event.target.value)\"\r\n      placeholder=\"Filter\"\r\n    />\r\n  </mat-form-field>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table matSort [dataSource]=\"dataSource\">\r\n      <ng-container matColumnDef=\"badgeNo\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge No</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <button\r\n            mat-raised-button\r\n            color=\"secondary\"\r\n            type=\"button\"\r\n            *ngIf=\"!element.visitSummary.badgeNo; else displayBadgeNo\"\r\n            (click)=\"assignBadge(element)\"\r\n          >\r\n            Assign Badge\r\n          </button>\r\n          <ng-template #displayBadgeNo>{{\r\n            element.visitSummary.badgeNo\r\n          }}</ng-template>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"Name\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.firstName }} {{ element.lastName }}\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"contactPerson\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>\r\n          Contact Person\r\n        </th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          {{ element.visitSummary.contactPerson }}\r\n        </td>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"actions\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <button\r\n            mat-raised-button\r\n            color=\"secondary\"\r\n            type=\"button\"\r\n            (click)=\"cancelled(element)\"\r\n          >\r\n            Cancel\r\n          </button>\r\n        </td>\r\n      </ng-container>\r\n      <ng-container matColumnDef=\"remarks\">\r\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</th>\r\n        <td mat-cell *matCellDef=\"let element\">\r\n          <textarea matInput>{{ element.visitSummary.remarks }}</textarea>\r\n        </td>\r\n      </ng-container>\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns\"></tr>\r\n    </table>\r\n\r\n    <mat-paginator\r\n      [pageSizeOptions]=\"[5, 10, 15]\"\r\n      showFirstLastButtons\r\n    ></mat-paginator>\r\n  </div>\r\n</card>\r\n"
 
 /***/ }),
 
@@ -173,7 +184,7 @@ module.exports = "<div mat-dialog-content style=\"height:500px;\">\r\n    <mat-t
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<card cardTitle='Report'>\r\n<div class=\"mat-elevation-z8\">\r\n    <div class=\"report-loading-shade\"   *ngIf=\"isLoadingResults\">\r\n    <mat-spinner *ngIf=\"isLoadingResults\"></mat-spinner>\r\n</div>\r\n<table mat-table matSort [dataSource]=\"dataSource\">\r\n\r\n <!--- Note that these columns can be defined in any order.\r\n       The actual rendered columns are set as a property on the row definition\" -->\r\n\r\n <!-- Position Column -->\r\n <ng-container matColumnDef=\"firstName\" >\r\n   <th  mat-header-cell *matHeaderCellDef mat-sort-header>First Name </th>\r\n   <td mat-cell *matCellDef=\"let element\"> {{element.firstName}} </td>\r\n </ng-container>\r\n <ng-container matColumnDef=\"lastName\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.lastName}} </td>\r\n   </ng-container>     \r\n   <!-- Name Column -->\r\n   <ng-container matColumnDef=\"phoneNumber\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.phoneNumber}} </td>\r\n   </ng-container>      \r\n   <!-- Weight Column -->\r\n   <ng-container matColumnDef=\"purpose\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header>Visit Purpose </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.visitSummary.purpose}} </td>\r\n   </ng-container>\r\n\r\n   <!-- Symbol Column -->\r\n   <ng-container matColumnDef=\"contactPerson\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact Person </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.visitSummary.contactPerson}} </td>\r\n   </ng-container>\r\n\r\n     <!-- Symbol Column -->\r\n   <ng-container matColumnDef=\"inTime\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> In Time </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.visitSummary.inTime | date:'short'}} </td>\r\n   </ng-container>\r\n\r\n   <ng-container matColumnDef=\"idType\">\r\n       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Type </th>\r\n       <td mat-cell *matCellDef=\"let element\"> {{element.idType }} </td>\r\n   </ng-container>\r\n\r\n   <ng-container matColumnDef=\"idNumber\">\r\n       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Number </th>\r\n       <td mat-cell *matCellDef=\"let element\"> {{element.idNumber }} </td>\r\n   </ng-container>\r\n   <!-- <ng-container matColumnDef=\"actions\">\r\n       <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>\r\n       <td mat-cell *matCellDef=\"let element\"> </td>\r\n   </ng-container> -->\r\n   <!-- Search Columns-->\r\n   <ng-container matColumnDef=\"firstName-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"firstNameFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"lastName-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"lastNameFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n<!--    <ng-container matColumnDef=\"phoneNumber-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"phoneNumberFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container> -->\r\n   <ng-container matColumnDef=\"purpose-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"purposeFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"contactPerson-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"contactPersonFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"inTime-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"inTimeFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"idType-search\">\r\n     <th mat-header-cell *matHeaderCellDef></th>\r\n   </ng-container>\r\n   <tr mat-header-row *matHeaderRowDef=\"displayedColumns\" class=\"first-header-row\"></tr>\r\n   <tr mat-header-row *matHeaderRowDef=\"displayedSearchBoxes\" ></tr>\r\n  <tr mat-row *matRowDef=\"let row; columns: displayedColumns\" (click)=\"openDialog(row)\"></tr>\r\n</table>\r\n<mat-paginator [pageSizeOptions]=\"[2,5,10,15]\"  [length]=\"resultsLength\" [pageSize]=\"pageSize\"  showFirstLastButtons></mat-paginator>\r\n</div>\r\n</card>\r\n"
+module.exports = "<card cardTitle='Report'>\r\n<div class=\"mat-elevation-z8\">\r\n    <div class=\"report-loading-shade\"   *ngIf=\"isLoadingResults\">\r\n    <mat-spinner *ngIf=\"isLoadingResults\"></mat-spinner>\r\n</div>\r\n<table mat-table matSort [dataSource]=\"dataSource\">\r\n\r\n <!--- Note that these columns can be defined in any order.\r\n       The actual rendered columns are set as a property on the row definition\" -->\r\n\r\n <!-- Position Column -->\r\n <ng-container matColumnDef=\"firstName\" >\r\n   <th  mat-header-cell *matHeaderCellDef mat-sort-header>First Name </th>\r\n   <td mat-cell *matCellDef=\"let element\"> {{element.firstName}} </td>\r\n </ng-container>\r\n <ng-container matColumnDef=\"lastName\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.lastName}} </td>\r\n   </ng-container>     \r\n   <!-- Name Column -->\r\n   <ng-container matColumnDef=\"phoneNumber\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.phoneNumber}} </td>\r\n   </ng-container>      \r\n   <!-- Weight Column -->\r\n   <ng-container matColumnDef=\"purpose\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header>Visit Purpose </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.visitSummary.purpose}} </td>\r\n   </ng-container>\r\n\r\n   <!-- Symbol Column -->\r\n   <ng-container matColumnDef=\"contactPerson\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact Person </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.visitSummary.contactPerson}} </td>\r\n   </ng-container>\r\n\r\n     <!-- Symbol Column -->\r\n   <ng-container matColumnDef=\"inTime\">\r\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> In Time </th>\r\n     <td mat-cell *matCellDef=\"let element\"> {{element.visitSummary.inTime | date:'short'}} </td>\r\n   </ng-container>\r\n\r\n   <ng-container matColumnDef=\"idType\">\r\n       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Type </th>\r\n       <td mat-cell *matCellDef=\"let element\"> {{element.idType }} </td>\r\n   </ng-container>\r\n\r\n   <ng-container matColumnDef=\"idNumber\">\r\n       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Number </th>\r\n       <td mat-cell *matCellDef=\"let element\"> {{element.idNumber }} </td>\r\n   </ng-container>\r\n   <!-- <ng-container matColumnDef=\"actions\">\r\n       <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>\r\n       <td mat-cell *matCellDef=\"let element\"> </td>\r\n   </ng-container> -->\r\n   <!-- Search Columns-->\r\n   <ng-container matColumnDef=\"firstName-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"firstNameFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"lastName-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"lastNameFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n <ng-container matColumnDef=\"phoneNumber-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"phoneNumberFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"purpose-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"purposeFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"contactPerson-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"contactPersonFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"inTime-search\">\r\n     <th mat-header-cell *matHeaderCellDef>\r\n       <mat-form-field class=\"filter\" floatLabel=\"never\">\r\n           <mat-label>Search</mat-label>\r\n           <input matInput [formControl]=\"inTimeFilter\">\r\n         </mat-form-field>\r\n      </th>\r\n   </ng-container>\r\n   <ng-container matColumnDef=\"idType-search\">\r\n     <th mat-header-cell *matHeaderCellDef></th>\r\n   </ng-container>\r\n   <tr mat-header-row *matHeaderRowDef=\"displayedColumns\" class=\"first-header-row\"></tr>\r\n   <tr mat-header-row *matHeaderRowDef=\"displayedSearchBoxes\" ></tr>\r\n  <tr mat-row *matRowDef=\"let row; columns: displayedColumns\" (click)=\"openDialog(row)\"></tr>\r\n</table>\r\n<mat-paginator [pageSizeOptions]=\"[2,5,10,15]\"  [length]=\"resultsLength\" [pageSize]=\"pageSize\"  showFirstLastButtons></mat-paginator>\r\n</div>\r\n</card>\r\n"
 
 /***/ }),
 
@@ -195,7 +206,7 @@ module.exports = "<div class=\"container\">\r\n    <form [formGroup]=\"form\" cl
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-tab-group>\r\n  <mat-tab label=\"Home\">\r\n    <app-home></app-home>\r\n  </mat-tab>\r\n\r\n  <mat-tab label=\"Create\">\r\n    <visitor-search-or-create></visitor-search-or-create>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n"
+module.exports = "<div id=\"visitor-home\">\r\n  <mat-tab-group>\r\n    <mat-tab label=\"Home\">\r\n      <app-home></app-home>\r\n    </mat-tab>\r\n    \r\n    <mat-tab label=\"Create\">\r\n      <visitor-search-or-create></visitor-search-or-create>\r\n    </mat-tab>\r\n  </mat-tab-group>\r\n  \r\n</div>\r\n"
 
 /***/ }),
 
@@ -206,7 +217,7 @@ module.exports = "<mat-tab-group>\r\n  <mat-tab label=\"Home\">\r\n    <app-home
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-vertical-stepper [linear]=\"true\" #stepper>\r\n    <mat-step>\r\n        <ng-template matStepLabel>Visitor search or create</ng-template>\r\n\r\n        <div class=\"example-container\">\r\n              \r\n          <mat-form-field class=\"set-width\">\r\n            <span class=\"span\" matPrefix><mat-icon class=\"span-maticon\">mail</mat-icon>&nbsp;</span>\r\n            <input matInput type=\"string\" placeholder=\"Email\" [(ngModel)]=\"user.emailId\" (keyup)=\"searchValues($event.target.value,'email');\" class=\"example-right-align\">\r\n          </mat-form-field>\r\n\r\n          <!-- <h3 class=\"setMiddle\"> OR </h3>\r\n          \r\n          <mat-form-field class=\"set-width\">\r\n            <input matInput type=\"number\" placeholder=\"Mobile number\" [(ngModel)]=\"user.phoneNumber\" (keyup)=\"searchValues($event.target.value,'phoneNumber');\" #phoneNumber>\r\n            <span class=\"span\" matPrefix><mat-icon class=\"span-maticon\">smartphone</mat-icon>&nbsp;</span>\r\n          </mat-form-field> -->\r\n\r\n          <mat-list role=\"list\" *ngIf=\"data && data.idNumber\">\r\n            <mat-list-item class=\"list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase()}}\" role=\"listitem\">\r\n                <span *ngIf=\"data && data.idNumber && data.visitSummary[0]?.status\">Status -</span>\r\n                 {{data?.visitSummary[data?.visitSummary?.length - 1]?.status}}\r\n            </mat-list-item>\r\n          </mat-list>\r\n        </div> \r\n        <div>\r\n            <button *ngIf=\"data\" mat-button matStepperNext>Next</button>\r\n            <button *ngIf=\"!data\" mat-button matStepperNext>Create</button>\r\n        </div>\r\n    </mat-step>\r\n\r\n    <mat-step [stepControl]=\"heroForm\">\r\n        <ng-template [ngIf]=\"data\" matStepLabel>{{ !data ? 'Create Visitor': 'View Visitor' }}</ng-template>\r\n        <form #heroForm=\"ngForm\">\r\n        <div class=\"flex-container-wrapper\">\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" id=\"input\" name=\"firstName\" [(ngModel)]=\"user.firstName\" matInput placeholder=\"First Name\" required>\r\n              </mat-form-field>\r\n              <mat-form-field>\r\n                  <input [readonly]=\"data\" id=\"input\" name=\"lastName\" [(ngModel)]=\"user.lastName\" matInput placeholder=\"Last Name\" required>\r\n              </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" id=\"input\" name=\"purpose\" [(ngModel)]=\"user.visitSummary[0].purpose\"  matInput placeholder=\"Purpose\" required>\r\n              </mat-form-field>\r\n              <mat-form-field> \r\n                  <input [readonly]=\"data\" id=\"input\"  name=\"comingFrom\" [(ngModel)]=\"user.visitSummary[0].comingFrom\" matInput placeholder=\"Coming From\" required>\r\n              </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <mat-select [(ngModel)]=\"user.idType\" name=\"idType\" placeholder=\"Govt Id Type\" required>\r\n                  <mat-option value=\"{{id}}\" *ngFor=\"let id of idTypes\">{{id}}</mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" id=\"input\"  name=\"idNumber\" [(ngModel)]=\"user.idNumber\" matInput placeholder=\"Id number\" required>\r\n              </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                  <input [readonly]=\"data\" id=\"input\"  name=\"badgeNo\" [(ngModel)]=\"user.visitSummary[0].badgeNo\" matInput placeholder=\"Temporary batch number\">\r\n              </mat-form-field>\r\n              <mat-form-field>\r\n                <input  [readonly]=\"data\" matInput type=\"number\" placeholder=\"Mobile number\" minlength=\"8\" maxlength=\"10\" [(ngModel)]=\"user.phoneNumber\" name=\"phoneNumber\" #phoneNumber required>\r\n              </mat-form-field>\r\n          </div>\r\n            <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" name=\"contactPerson\" [(ngModel)]=\"user.visitSummary[0].contactPerson\"\r\n                 matInput placeholder=\"Contact Person\" required>\r\n              </mat-form-field>\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" type=\"email\" pattern=\"[^@]+@[^\\.]+\\..+\" name=\"contactPersonEmailId\" [(ngModel)]=\"user.visitSummary[0].contactPersonEmailId\"\r\n                matInput placeholder=\"Contact Person Email Id\" required>\r\n              </mat-form-field>\r\n\r\n              <!-- <button mat-button>Add Contact Person</button> -->\r\n            </div>\r\n            <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" name=\"contactPersonPhone\" minlength=\"8\" maxlength=\"10\" [(ngModel)]=\"user.visitSummary[0].contactPersonPhone\"\r\n                matInput placeholder=\"Contact Person Phone Number\" required>\r\n              </mat-form-field>\r\n\r\n              <!-- <button mat-button>Add Contact Person</button> -->\r\n            </div>\r\n            \r\n          <!-- <div>\r\n            <button mat-button matStepperPrevious>Request Approval</button>\r\n            <button mat-button (click)=\"stepper.reset()\">Notify</button>\r\n          </div> -->\r\n          <div>\r\n            <button mat-button matStepperNext>Next</button>\r\n          </div>\r\n        </div>\r\n      </form>  \r\n    </mat-step>\r\n    <mat-step>\r\n      <ng-template matStepLabel>Approval</ng-template>\r\n      <h6 *ngIf=\"user && user?.firstName \">Name - {{user?.firstName +' '+ user?.lastName }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.purpose\">Purpose - {{user?.visitSummary[user?.visitSummary?.length - 1]?.purpose }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPerson\">Contact Person Name - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPerson }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonEmailId\">Contact Person Email - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonEmailId }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonPhone\">Contact Person Contact - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonPhone }} </h6>\r\n      <mat-list role=\"list\" *ngIf=\"data && data.idNumber\">\r\n        <mat-list-item class=\"list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status ? data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase(): data?.idNumber ? 'pending': null}}\" role=\"listitem\">\r\n          <span *ngIf=\"data && data.idNumber\">Status -</span>\r\n               {{ data?.visitSummary[data?.visitSummary?.length - 1]?.status ? data?.visitSummary[data?.visitSummary?.length - 1]?.status : data?.idNumber ? 'PENDING' : null}}\r\n        </mat-list-item>\r\n      </mat-list>\r\n\r\n      <div>\r\n        <button mat-button matStepperPrevious>Back</button>\r\n        <button *ngIf=\"!data\" mat-button (click)=\"stepper.reset()\">Reset</button>\r\n        <button *ngIf=\"!data\" mat-button (click)=\"onSubmit()\">Finish</button>\r\n      </div>\r\n    </mat-step>\r\n  </mat-vertical-stepper>"
+module.exports = "<mat-vertical-stepper [linear]=\"true\" #stepper>\r\n    <mat-step>\r\n        <ng-template matStepLabel>Visitor search or create</ng-template>\r\n\r\n        <div class=\"example-container\">\r\n              \r\n          <mat-form-field class=\"set-width\">\r\n            <span class=\"span\" matPrefix><mat-icon class=\"span-maticon\">mail</mat-icon>&nbsp;</span>\r\n            <input matInput type=\"string\" placeholder=\"Email\" [(ngModel)]=\"user.emailId\" (keyup)=\"searchValues($event.target.value,'email');\" class=\"example-right-align\">\r\n          </mat-form-field>\r\n\r\n          <mat-spinner *ngIf=\"showLoading\"></mat-spinner>\r\n\r\n          <!-- <h3 class=\"setMiddle\"> OR </h3>\r\n          \r\n          <mat-form-field class=\"set-width\">\r\n            <input matInput type=\"number\" placeholder=\"Mobile number\" [(ngModel)]=\"user.phoneNumber\" (keyup)=\"searchValues($event.target.value,'phoneNumber');\" #phoneNumber>\r\n            <span class=\"span\" matPrefix><mat-icon class=\"span-maticon\">smartphone</mat-icon>&nbsp;</span>\r\n          </mat-form-field> -->\r\n\r\n          <mat-list role=\"list\" *ngIf=\"(data && data.idNumber) || !isEmailPresent\">\r\n            <mat-list-item class=\"list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase()}}\" role=\"listitem\">\r\n                <span *ngIf=\"data && data.idNumber && data.visitSummary[0]?.status\">Status -</span>\r\n                 {{data?.visitSummary[data?.visitSummary?.length - 1]?.status}}\r\n            </mat-list-item>\r\n            <mat-list-item class=\"list failed\" role=\"listitem\" *ngIf=\"!isEmailPresent\">\r\n                <span >Searched email is not present</span>\r\n            </mat-list-item>\r\n          </mat-list>\r\n        </div> \r\n        <div>\r\n            <button *ngIf=\"data && isEmailPresent\" mat-button matStepperNext>Next</button>\r\n            <button *ngIf=\"!isEmailPresent\" mat-button matStepperNext>Create</button>\r\n        </div>\r\n    </mat-step>\r\n\r\n    <mat-step [stepControl]=\"heroForm\">\r\n        <ng-template [ngIf]=\"data\" matStepLabel>{{ !data ? 'Create Visitor': 'View Visitor' }}</ng-template>\r\n        <form #heroForm=\"ngForm\">\r\n        <div class=\"flex-container-wrapper\">\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" id=\"input\" name=\"firstName\" [(ngModel)]=\"user.firstName\" matInput placeholder=\"First Name\" required>\r\n              </mat-form-field>\r\n              <mat-form-field>\r\n                  <input [readonly]=\"data\" id=\"input\" name=\"lastName\" [(ngModel)]=\"user.lastName\" matInput placeholder=\"Last Name\" required>\r\n              </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <mat-select [(ngModel)]=\"user.visitSummary[0].purpose\" name=\"idType\" placeholder=\"Purpose\" required>\r\n                  <mat-option value=\"Interview\" >Interview</mat-option>\r\n                  <mat-option value=\"Meeting\" >Meeting</mat-option>\r\n                  <mat-option value=\"New Joinee\" >New Joinee</mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n              <mat-form-field> \r\n                  <input [readonly]=\"data\" id=\"input\"  name=\"comingFrom\" [(ngModel)]=\"user.visitSummary[0].comingFrom\" matInput placeholder=\"Coming From\" required>\r\n              </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <mat-select [(ngModel)]=\"user.idType\" name=\"idType\" placeholder=\"Govt Id Type\" required>\r\n                  <mat-option value=\"{{id}}\" *ngFor=\"let id of idTypes\">{{id}}</mat-option>\r\n                </mat-select>\r\n              </mat-form-field>\r\n\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" id=\"input\"  name=\"idNumber\" [(ngModel)]=\"user.idNumber\" matInput placeholder=\"Id number\" required>\r\n              </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                  <input [readonly]=\"data\" id=\"input\"  name=\"badgeNo\" [(ngModel)]=\"user.visitSummary[0].badgeNo\" matInput placeholder=\"Temporary badge number\">\r\n              </mat-form-field>\r\n              <mat-form-field>\r\n                <input  [readonly]=\"data\" matInput type=\"number\" placeholder=\"Mobile number\" minlength=\"8\" maxlength=\"10\" [(ngModel)]=\"user.phoneNumber\" name=\"phoneNumber\" #phoneNumber required>\r\n              </mat-form-field>\r\n          </div>\r\n            <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" name=\"contactPerson\" [(ngModel)]=\"user.visitSummary[0].contactPerson\"\r\n                 matInput placeholder=\"Contact Person\" required>\r\n              </mat-form-field>\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" type=\"email\" pattern=\"[^@]+@[^\\.]+\\..+\" name=\"contactPersonEmailId\" [(ngModel)]=\"user.visitSummary[0].contactPersonEmailId\"\r\n                matInput placeholder=\"Contact Person Email Id\" required>\r\n              </mat-form-field>\r\n\r\n              <!-- <button mat-button>Add Contact Person</button> -->\r\n            </div>\r\n            <div class=\"flex-container\">\r\n              <mat-form-field>\r\n                <input [readonly]=\"data\" name=\"contactPersonPhone\" minlength=\"8\" maxlength=\"10\" [(ngModel)]=\"user.visitSummary[0].contactPersonPhone\"\r\n                matInput placeholder=\"Contact Person Phone Number\" required>\r\n              </mat-form-field>\r\n\r\n              <!-- <button mat-button>Add Contact Person</button> -->\r\n            </div>\r\n            \r\n          <!-- <div>\r\n            <button mat-button matStepperPrevious>Request Approval</button>\r\n            <button mat-button (click)=\"stepper.reset()\">Notify</button>\r\n          </div> -->\r\n          <div>\r\n            <button mat-button matStepperNext>Next</button>\r\n          </div>\r\n        </div>\r\n      </form>  \r\n    </mat-step>\r\n    <mat-step>\r\n      <ng-template matStepLabel>Approval</ng-template>\r\n      <h6 *ngIf=\"user && user?.firstName \">Name - {{user?.firstName +' '+ user?.lastName }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.purpose\">Purpose - {{user?.visitSummary[user?.visitSummary?.length - 1]?.purpose }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPerson\">Contact Person Name - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPerson }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonEmailId\">Contact Person Email - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonEmailId }} </h6>\r\n      <h6 *ngIf=\"user && user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonPhone\">Contact Person Contact - {{user?.visitSummary[user?.visitSummary?.length - 1]?.contactPersonPhone }} </h6>\r\n      <mat-list role=\"list\" *ngIf=\"data && data.idNumber\">\r\n        <mat-list-item class=\"list {{data?.visitSummary[data?.visitSummary?.length - 1]?.status ? data?.visitSummary[data?.visitSummary?.length - 1]?.status?.toLowerCase(): data?.idNumber ? 'pending': null}}\" role=\"listitem\">\r\n          <span *ngIf=\"data && data.idNumber\">Status -</span>\r\n               {{ data?.visitSummary[data?.visitSummary?.length - 1]?.status ? data?.visitSummary[data?.visitSummary?.length - 1]?.status : data?.idNumber ? 'PENDING' : null}}\r\n        </mat-list-item>\r\n      </mat-list>\r\n\r\n      <div>\r\n        <button mat-button matStepperPrevious>Back</button>\r\n        <button *ngIf=\"!data\" mat-button (click)=\"stepper.reset()\">Reset</button>\r\n        <button *ngIf=\"!data\" mat-button (click)=\"onSubmit()\">Finish</button>\r\n      </div>\r\n    </mat-step>\r\n  </mat-vertical-stepper>"
 
 /***/ }),
 
@@ -256,7 +267,7 @@ AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".example-container {\r\n  height: 50%;\r\n  margin: 10px;\r\n}\r\n.mat-sidenav-content{\r\nheight: 539px !important;\r\n}\r\n.mat-toolbar-row, .mat-toolbar-single-row {\r\nheight: 81px;\r\nmargin-top: 9px;\r\n}\r\n#img {\r\nwidth: 10em !important;\r\nmargin: 0 1rem;\r\n}\r\nmat-toolbar-row{\r\nmargin: 0 !important;\r\n}\r\n.mat-drawer.mat-drawer-side{\r\nz-index: 1 !important;\r\n}\r\n.matNavList{\r\n  height: 86%;\r\n}\r\n.locSelect{\r\n  margin-top: 5px !important;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0VBQ1gsWUFBWTtBQUNkO0FBQ0E7QUFDQSx3QkFBd0I7QUFDeEI7QUFFQTtBQUNBLFlBQVk7QUFDWixlQUFlO0FBQ2Y7QUFFQTtBQUNBLHNCQUFzQjtBQUN0QixjQUFjO0FBQ2Q7QUFFQTtBQUNBLG9CQUFvQjtBQUNwQjtBQUVBO0FBQ0EscUJBQXFCO0FBQ3JCO0FBRUE7RUFDRSxXQUFXO0FBQ2I7QUFFQTtFQUNFLDBCQUEwQjtBQUM1QiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmV4YW1wbGUtY29udGFpbmVyIHtcclxuICBoZWlnaHQ6IDUwJTtcclxuICBtYXJnaW46IDEwcHg7XHJcbn1cclxuLm1hdC1zaWRlbmF2LWNvbnRlbnR7XHJcbmhlaWdodDogNTM5cHggIWltcG9ydGFudDtcclxufSAgXHJcblxyXG4ubWF0LXRvb2xiYXItcm93LCAubWF0LXRvb2xiYXItc2luZ2xlLXJvdyB7XHJcbmhlaWdodDogODFweDtcclxubWFyZ2luLXRvcDogOXB4O1xyXG59XHJcblxyXG4jaW1nIHtcclxud2lkdGg6IDEwZW0gIWltcG9ydGFudDtcclxubWFyZ2luOiAwIDFyZW07XHJcbn1cclxuXHJcbm1hdC10b29sYmFyLXJvd3tcclxubWFyZ2luOiAwICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbi5tYXQtZHJhd2VyLm1hdC1kcmF3ZXItc2lkZXtcclxuei1pbmRleDogMSAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4ubWF0TmF2TGlzdHtcclxuICBoZWlnaHQ6IDg2JTtcclxufVxyXG5cclxuLmxvY1NlbGVjdHtcclxuICBtYXJnaW4tdG9wOiA1cHggIWltcG9ydGFudDtcclxufVxyXG4iXX0= */"
+module.exports = ".example-container {\r\n  height: 50%;\r\n  margin: 10px;\r\n}\r\n.mat-sidenav-content{\r\n  height: 100% !important;\r\n  padding: 1.5rem;\r\n}\r\n.mat-toolbar-row {\r\n  background: #000;\r\n}\r\n/* .mat-toolbar-row, .mat-toolbar-single-row {\r\nheight: 81px;\r\nmargin-top: 9px;\r\n} */\r\nspan-img{\r\n  display: inline-block;\r\n}\r\n.icon-content{\r\n  padding-left: 0.5rem;\r\n}\r\n.icon-content mat-icon{\r\n  vertical-align: bottom;\r\n}\r\n.icon-content span{\r\n  padding-left: 0.5rem;\r\n  font-size: 17px;\r\n  color: #696969;\r\n}\r\n#img {\r\n  width: 11rem !important;\r\n  margin: 0px 1rem;\r\n  padding-top: 0.65rem;\r\n}\r\n.active{\r\n  font-weight: 700;\r\n  color: #ff3d00!important;\r\n  background: rgba(0,0,0,.04);\r\n}\r\n.active span{\r\n  color: #ff3d00!important;\r\n\r\n}\r\nmat-toolbar-row{\r\nmargin: 0 !important;\r\n}\r\n.mat-drawer.mat-drawer-side{\r\nz-index: 1 !important;\r\n}\r\n.matNavList{\r\n  height: 86%;\r\n}\r\n.locSelect{\r\n  margin-top: 5px !important;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0VBQ1gsWUFBWTtBQUNkO0FBQ0E7RUFDRSx1QkFBdUI7RUFDdkIsZUFBZTtBQUNqQjtBQUVBO0VBQ0UsZ0JBQWdCO0FBQ2xCO0FBR0E7OztHQUdHO0FBRUg7RUFDRSxxQkFBcUI7QUFDdkI7QUFDQTtFQUNFLG9CQUFvQjtBQUN0QjtBQUNBO0VBQ0Usc0JBQXNCO0FBQ3hCO0FBRUE7RUFDRSxvQkFBb0I7RUFDcEIsZUFBZTtFQUNmLGNBQWM7QUFDaEI7QUFFQTtFQUNFLHVCQUF1QjtFQUN2QixnQkFBZ0I7RUFDaEIsb0JBQW9CO0FBQ3RCO0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsd0JBQXdCO0VBQ3hCLDJCQUEyQjtBQUM3QjtBQUNBO0VBQ0Usd0JBQXdCOztBQUUxQjtBQUVBO0FBQ0Esb0JBQW9CO0FBQ3BCO0FBRUE7QUFDQSxxQkFBcUI7QUFDckI7QUFFQTtFQUNFLFdBQVc7QUFDYjtBQUVBO0VBQ0UsMEJBQTBCO0FBQzVCIiwiZmlsZSI6InNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZXhhbXBsZS1jb250YWluZXIge1xyXG4gIGhlaWdodDogNTAlO1xyXG4gIG1hcmdpbjogMTBweDtcclxufVxyXG4ubWF0LXNpZGVuYXYtY29udGVudHtcclxuICBoZWlnaHQ6IDEwMCUgIWltcG9ydGFudDtcclxuICBwYWRkaW5nOiAxLjVyZW07XHJcbn1cclxuXHJcbi5tYXQtdG9vbGJhci1yb3cge1xyXG4gIGJhY2tncm91bmQ6ICMwMDA7XHJcbn1cclxuICBcclxuXHJcbi8qIC5tYXQtdG9vbGJhci1yb3csIC5tYXQtdG9vbGJhci1zaW5nbGUtcm93IHtcclxuaGVpZ2h0OiA4MXB4O1xyXG5tYXJnaW4tdG9wOiA5cHg7XHJcbn0gKi9cclxuXHJcbnNwYW4taW1ne1xyXG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxufVxyXG4uaWNvbi1jb250ZW50e1xyXG4gIHBhZGRpbmctbGVmdDogMC41cmVtO1xyXG59XHJcbi5pY29uLWNvbnRlbnQgbWF0LWljb257XHJcbiAgdmVydGljYWwtYWxpZ246IGJvdHRvbTtcclxufVxyXG5cclxuLmljb24tY29udGVudCBzcGFue1xyXG4gIHBhZGRpbmctbGVmdDogMC41cmVtO1xyXG4gIGZvbnQtc2l6ZTogMTdweDtcclxuICBjb2xvcjogIzY5Njk2OTtcclxufVxyXG5cclxuI2ltZyB7XHJcbiAgd2lkdGg6IDExcmVtICFpbXBvcnRhbnQ7XHJcbiAgbWFyZ2luOiAwcHggMXJlbTtcclxuICBwYWRkaW5nLXRvcDogMC42NXJlbTtcclxufVxyXG5cclxuLmFjdGl2ZXtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGNvbG9yOiAjZmYzZDAwIWltcG9ydGFudDtcclxuICBiYWNrZ3JvdW5kOiByZ2JhKDAsMCwwLC4wNCk7XHJcbn1cclxuLmFjdGl2ZSBzcGFue1xyXG4gIGNvbG9yOiAjZmYzZDAwIWltcG9ydGFudDtcclxuXHJcbn1cclxuXHJcbm1hdC10b29sYmFyLXJvd3tcclxubWFyZ2luOiAwICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbi5tYXQtZHJhd2VyLm1hdC1kcmF3ZXItc2lkZXtcclxuei1pbmRleDogMSAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4ubWF0TmF2TGlzdHtcclxuICBoZWlnaHQ6IDg2JTtcclxufVxyXG5cclxuLmxvY1NlbGVjdHtcclxuICBtYXJnaW4tdG9wOiA1cHggIWltcG9ydGFudDtcclxufVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -364,7 +375,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_report_report_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/report/report.module */ "./src/app/modules/report/report.module.ts");
 /* harmony import */ var _modules_visitor_form_visitors_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/visitor-form/visitors.module */ "./src/app/modules/visitor-form/visitors.module.ts");
 /* harmony import */ var _modules_home_home_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/home/home.module */ "./src/app/modules/home/home.module.ts");
-/* harmony import */ var _components_login_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/login.component */ "./src/app/components/login.component.ts");
+/* harmony import */ var _modules_home_dialog_overview_dialog_overview_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/home/dialog-overview/dialog-overview.component */ "./src/app/modules/home/dialog-overview/dialog-overview.component.ts");
+/* harmony import */ var _components_login_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/login.component */ "./src/app/components/login.component.ts");
+
 
 
 
@@ -382,7 +395,7 @@ let AppModule = class AppModule {
 };
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"])({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _components_login_component__WEBPACK_IMPORTED_MODULE_12__["loginComponent"]],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _components_login_component__WEBPACK_IMPORTED_MODULE_13__["loginComponent"]],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"],
@@ -397,7 +410,8 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _modules_home_home_module__WEBPACK_IMPORTED_MODULE_11__["HomeModule"]
         ],
         providers: [],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]],
+        entryComponents: [_modules_home_dialog_overview_dialog_overview_component__WEBPACK_IMPORTED_MODULE_12__["DialogOverviewComponent"]]
     })
 ], AppModule);
 
@@ -415,10 +429,8 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataObtainer", function() { return DataObtainer; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var src_app_helpers_models_service_search_params_input_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/helpers/models/service-search-params-input.model */ "./src/app/helpers/models/service-search-params-input.model.ts");
-
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_helpers_models_service_search_params_input_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/helpers/models/service-search-params-input.model */ "./src/app/helpers/models/service-search-params-input.model.ts");
 /**
  * @author M.Shashikant(shashikant.mittapelli@accoliteindia.com)
  *
@@ -428,11 +440,11 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-let DataObtainer = class DataObtainer {
+class DataObtainer {
     constructor(zones) {
         this.zones = zones;
         this.loading = false;
-        this.parameters = new src_app_helpers_models_service_search_params_input_model__WEBPACK_IMPORTED_MODULE_2__["ServiceSearchParamsInputModel"]();
+        this.parameters = new src_app_helpers_models_service_search_params_input_model__WEBPACK_IMPORTED_MODULE_1__["ServiceSearchParamsInputModel"]();
         this.refreshOnInit = true;
     }
     ngOnInit() {
@@ -448,7 +460,6 @@ let DataObtainer = class DataObtainer {
             this.onAfterUpdateData(data);
             this.onNextStage(data);
             this.loading = false;
-            console.log(this.data);
         }, (error) => {
             this.onErrorStage(error);
         }, () => {
@@ -460,17 +471,10 @@ let DataObtainer = class DataObtainer {
     onCompleteStage() { }
     onNextStage(data) { }
     onErrorStage(error) { }
-};
+}
 DataObtainer.ctorParameters = () => [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"] }
 ];
-DataObtainer = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: "data-obtainer",
-        template: ""
-    })
-], DataObtainer);
-
 
 
 /***/ }),
@@ -575,7 +579,7 @@ loginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "mat-card {\r\n  padding: 0;\r\n}\r\n\r\n.card-title {\r\n  font-weight: 700;\r\n}\r\n\r\n.fullscreen {\r\n  position: fixed;\r\n  top: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 997;\r\n  overflow: auto;\r\n  margin-bottom: 0;\r\n}\r\n\r\nmat-card-header,\r\nmat-card-content {\r\n  padding: 1rem;\r\n}\r\n\r\nmat-card-header {\r\n  background-color: gainsboro;\r\n}\r\n\r\n.mat-card-title {\r\n  margin: 0 !important;\r\n}\r\n\r\nmat-card-header {\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\nmat-card-header div.title {\r\n  width: 70%;\r\n  float: left;\r\n}\r\n\r\nmat-card-header div.actions {\r\n  width: 30%;\r\n  display: inline-block;\r\n  text-align: right;\r\n}\r\n\r\ndiv.actions mat-icon:hover {\r\n  cursor: pointer;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy91aS1jb21wb25lbnRzL2NhcmQvY2FyZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsVUFBVTtBQUNaOztBQUVBO0VBQ0UsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsZUFBZTtFQUNmLE1BQU07RUFDTixTQUFTO0VBQ1QsT0FBTztFQUNQLFFBQVE7RUFDUixZQUFZO0VBQ1osY0FBYztFQUNkLGdCQUFnQjtBQUNsQjs7QUFFQTs7RUFFRSxhQUFhO0FBQ2Y7O0FBQ0E7RUFDRSwyQkFBMkI7QUFDN0I7O0FBRUE7RUFDRSxvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSw2QkFBNkI7QUFDL0I7O0FBRUE7RUFDRSxVQUFVO0VBQ1YsV0FBVztBQUNiOztBQUVBO0VBQ0UsVUFBVTtFQUNWLHFCQUFxQjtFQUNyQixpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy91aS1jb21wb25lbnRzL2NhcmQvY2FyZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LWNhcmQge1xyXG4gIHBhZGRpbmc6IDA7XHJcbn1cclxuXHJcbi5jYXJkLXRpdGxlIHtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG59XHJcblxyXG4uZnVsbHNjcmVlbiB7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIHRvcDogMDtcclxuICBib3R0b206IDA7XHJcbiAgbGVmdDogMDtcclxuICByaWdodDogMDtcclxuICB6LWluZGV4OiA5OTc7XHJcbiAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgbWFyZ2luLWJvdHRvbTogMDtcclxufVxyXG5cclxubWF0LWNhcmQtaGVhZGVyLFxyXG5tYXQtY2FyZC1jb250ZW50IHtcclxuICBwYWRkaW5nOiAxcmVtO1xyXG59XHJcbm1hdC1jYXJkLWhlYWRlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogZ2FpbnNib3JvO1xyXG59XHJcblxyXG4ubWF0LWNhcmQtdGl0bGUge1xyXG4gIG1hcmdpbjogMCAhaW1wb3J0YW50O1xyXG59XHJcblxyXG5tYXQtY2FyZC1oZWFkZXIge1xyXG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZGRkO1xyXG59XHJcblxyXG5tYXQtY2FyZC1oZWFkZXIgZGl2LnRpdGxlIHtcclxuICB3aWR0aDogNzAlO1xyXG4gIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG5tYXQtY2FyZC1oZWFkZXIgZGl2LmFjdGlvbnMge1xyXG4gIHdpZHRoOiAzMCU7XHJcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gIHRleHQtYWxpZ246IHJpZ2h0O1xyXG59XHJcblxyXG5kaXYuYWN0aW9ucyBtYXQtaWNvbjpob3ZlciB7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG59Il19 */"
+module.exports = "mat-card {\r\n  padding: 0;\r\n}\r\n\r\n.card-title {\r\n  font-weight: 700;\r\n}\r\n\r\n.fullscreen {\r\n  position: fixed;\r\n  top: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 997;\r\n  overflow: auto;\r\n  margin-bottom: 0;\r\n}\r\n\r\nmat-card-header,\r\nmat-card-content {\r\n  padding: 1rem;\r\n}\r\n\r\n/* mat-card-header {\r\n  background-color: gainsboro;\r\n} */\r\n\r\n.mat-card-title {\r\n  margin: 0 !important;\r\n}\r\n\r\nmat-card-header {\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\nmat-card-header div.title {\r\n  width: 70%;\r\n  float: left;\r\n}\r\n\r\nmat-card-header div.actions {\r\n  width: 30%;\r\n  display: inline-block;\r\n  text-align: right;\r\n}\r\n\r\ndiv.actions mat-icon:hover {\r\n  cursor: pointer;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy91aS1jb21wb25lbnRzL2NhcmQvY2FyZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsVUFBVTtBQUNaOztBQUVBO0VBQ0UsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsZUFBZTtFQUNmLE1BQU07RUFDTixTQUFTO0VBQ1QsT0FBTztFQUNQLFFBQVE7RUFDUixZQUFZO0VBQ1osY0FBYztFQUNkLGdCQUFnQjtBQUNsQjs7QUFFQTs7RUFFRSxhQUFhO0FBQ2Y7O0FBQ0E7O0dBRUc7O0FBRUg7RUFDRSxvQkFBb0I7QUFDdEI7O0FBRUE7RUFDRSw2QkFBNkI7QUFDL0I7O0FBRUE7RUFDRSxVQUFVO0VBQ1YsV0FBVztBQUNiOztBQUVBO0VBQ0UsVUFBVTtFQUNWLHFCQUFxQjtFQUNyQixpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy91aS1jb21wb25lbnRzL2NhcmQvY2FyZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LWNhcmQge1xyXG4gIHBhZGRpbmc6IDA7XHJcbn1cclxuXHJcbi5jYXJkLXRpdGxlIHtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG59XHJcblxyXG4uZnVsbHNjcmVlbiB7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIHRvcDogMDtcclxuICBib3R0b206IDA7XHJcbiAgbGVmdDogMDtcclxuICByaWdodDogMDtcclxuICB6LWluZGV4OiA5OTc7XHJcbiAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgbWFyZ2luLWJvdHRvbTogMDtcclxufVxyXG5cclxubWF0LWNhcmQtaGVhZGVyLFxyXG5tYXQtY2FyZC1jb250ZW50IHtcclxuICBwYWRkaW5nOiAxcmVtO1xyXG59XHJcbi8qIG1hdC1jYXJkLWhlYWRlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogZ2FpbnNib3JvO1xyXG59ICovXHJcblxyXG4ubWF0LWNhcmQtdGl0bGUge1xyXG4gIG1hcmdpbjogMCAhaW1wb3J0YW50O1xyXG59XHJcblxyXG5tYXQtY2FyZC1oZWFkZXIge1xyXG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZGRkO1xyXG59XHJcblxyXG5tYXQtY2FyZC1oZWFkZXIgZGl2LnRpdGxlIHtcclxuICB3aWR0aDogNzAlO1xyXG4gIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG5tYXQtY2FyZC1oZWFkZXIgZGl2LmFjdGlvbnMge1xyXG4gIHdpZHRoOiAzMCU7XHJcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gIHRleHQtYWxpZ246IHJpZ2h0O1xyXG59XHJcblxyXG5kaXYuYWN0aW9ucyBtYXQtaWNvbjpob3ZlciB7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG59Il19 */"
 
 /***/ }),
 
@@ -977,17 +981,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "accoliteLocation", function() { return accoliteLocation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "idType", function() { return idType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "accoliteSnackbarMessages", function() { return accoliteSnackbarMessages; });
-// Add Accolite related static data 
-const accoliteLocation = ['Bangalore', 'Hyderabad', 'Delhi'];
-const idType = ['Voter Id', 'Aadhar Card', 'PAN Card', 'Driving License', 'Passport'];
+// Add Accolite related static data
+const accoliteLocation = ["Bangalore", "Hyderabad", "Delhi"];
+const idType = [
+    "Voter Id",
+    "Aadhar Card",
+    "PAN Card",
+    "Driving License",
+    "Passport"
+];
 // To Add success or error snackbar message
 const accoliteSnackbarMessages = {
     rest: {
         success: {
-            'create-visitors': "Successfully created Visitor details"
+            "create-visitors": "Successfully created Visitor details",
+            "successfully-approved": "Successfully approved visitor",
+            "successfully-cancelled": "Scheduled meeting is cancelled"
         },
         error: {
-            'create-visitors': "Failed to create Visitor details"
+            "create-visitors": "Failed to create Visitor details",
+            "successfully-approved": "Failed to approve visitor"
         }
     }
 };
@@ -1032,24 +1045,28 @@ let ApprovedRequestComponent = class ApprovedRequestComponent extends src_app_co
         this.visitorService = visitorService;
         this.zone = zone;
         this.pagination = false;
-        this.displayedColumns = [
-            "badgeNo",
-            "Name",
-            "inTime",
-            "outTime",
-            "actions",
-            "remarks"
-        ];
+        this.clicked = false;
+        this.displayedColumns = ["Name", "badgeNo", "inTime", "actions", "remarks"];
     }
     getDataObservable(params) {
-        console.log(this.visitorService.fetchAllVisitors());
-        return this.visitorService.fetchAllVisitors();
+        this.searchObj = {
+            status: "APPROVED"
+        };
+        return this.visitorService.searchVisitor(this.searchObj);
     }
     onAfterUpdateData(data) {
-        this.visitors = data;
-        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](this.visitors);
+        this.visitors = data && data.data ? data.data : null;
+        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](this.visitors ? this.visitors : []);
+        console.log(this.visitors);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+    }
+    exit(data) {
+        this.visitorService
+            .updateExitTime(data.id, data.visitSummary.visitNumber, data.visitSummary.remarks)
+            .subscribe(val => {
+            this.refreshData();
+        });
     }
     applyFilter(filterValue) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -1059,6 +1076,12 @@ ApprovedRequestComponent.ctorParameters = () => [
     { type: src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_4__["VisitorService"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }
 ];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], ApprovedRequestComponent.prototype, "pending", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], ApprovedRequestComponent.prototype, "preApproved", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatPaginator"], { static: true })
 ], ApprovedRequestComponent.prototype, "paginator", void 0);
@@ -1075,6 +1098,84 @@ ApprovedRequestComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [__webpack_require__(/*! ./approved-request.component.css */ "./src/app/modules/home/approved-request/approved-request.component.css")]
     })
 ], ApprovedRequestComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/modules/home/dialog-overview/dataModel.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/modules/home/dialog-overview/dataModel.ts ***!
+  \***********************************************************/
+/*! exports provided: dataModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dataModel", function() { return dataModel; });
+class dataModel {
+    constructor(jsonObj) {
+        Object.assign(this, jsonObj);
+    }
+}
+dataModel.ctorParameters = () => [
+    { type: undefined }
+];
+
+
+/***/ }),
+
+/***/ "./src/app/modules/home/dialog-overview/dialog-overview.component.css":
+/*!****************************************************************************!*\
+  !*** ./src/app/modules/home/dialog-overview/dialog-overview.component.css ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".column {\r\n  margin-left: 30px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9ob21lL2RpYWxvZy1vdmVydmlldy9kaWFsb2ctb3ZlcnZpZXcuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGlCQUFpQjtBQUNuQiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvaG9tZS9kaWFsb2ctb3ZlcnZpZXcvZGlhbG9nLW92ZXJ2aWV3LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY29sdW1uIHtcclxuICBtYXJnaW4tbGVmdDogMzBweDtcclxufVxyXG4iXX0= */"
+
+/***/ }),
+
+/***/ "./src/app/modules/home/dialog-overview/dialog-overview.component.ts":
+/*!***************************************************************************!*\
+  !*** ./src/app/modules/home/dialog-overview/dialog-overview.component.ts ***!
+  \***************************************************************************/
+/*! exports provided: DialogOverviewComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DialogOverviewComponent", function() { return DialogOverviewComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _dataModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dataModel */ "./src/app/modules/home/dialog-overview/dataModel.ts");
+
+
+
+
+let DialogOverviewComponent = class DialogOverviewComponent {
+    constructor(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    ngOnInit() { }
+    onNoClick(element) {
+        this.dialogRef.close({ data: element });
+    }
+};
+DialogOverviewComponent.ctorParameters = () => [
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"] },
+    { type: _dataModel__WEBPACK_IMPORTED_MODULE_3__["dataModel"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_material__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"],] }] }
+];
+DialogOverviewComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: "app-dialog-overview",
+        template: __webpack_require__(/*! raw-loader!./dialog-overview.component.html */ "./node_modules/raw-loader/index.js!./src/app/modules/home/dialog-overview/dialog-overview.component.html"),
+        styles: [__webpack_require__(/*! ./dialog-overview.component.css */ "./src/app/modules/home/dialog-overview/dialog-overview.component.css")]
+    }),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"]))
+], DialogOverviewComponent);
 
 
 
@@ -1105,6 +1206,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/visitor.service */ "./src/app/services/visitor.service.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./approved-request/approved-request.component */ "./src/app/modules/home/approved-request/approved-request.component.ts");
+/* harmony import */ var _pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pending-request/pending-request.component */ "./src/app/modules/home/pending-request/pending-request.component.ts");
+/* harmony import */ var _pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pre-approved-request/pre-approved-request.component */ "./src/app/modules/home/pre-approved-request/pre-approved-request.component.ts");
+
+
+
 
 
 
@@ -1127,6 +1234,15 @@ tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSort"], { static: true })
 ], HomeComponent.prototype, "sort", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_4__["ApprovedRequestComponent"], { static: true })
+], HomeComponent.prototype, "approved", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_5__["PendingRequestComponent"], { static: true })
+], HomeComponent.prototype, "pending", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_6__["PreApprovedRequestComponent"], { static: true })
+], HomeComponent.prototype, "preApproved", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
 ], HomeComponent.prototype, "dataSource", void 0);
@@ -1160,6 +1276,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pending-request/pending-request.component */ "./src/app/modules/home/pending-request/pending-request.component.ts");
 /* harmony import */ var _pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pre-approved-request/pre-approved-request.component */ "./src/app/modules/home/pre-approved-request/pre-approved-request.component.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _dialog_overview_dialog_overview_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./dialog-overview/dialog-overview.component */ "./src/app/modules/home/dialog-overview/dialog-overview.component.ts");
+
+
 
 
 
@@ -1172,7 +1292,7 @@ let HomeModule = class HomeModule {
 };
 HomeModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        imports: [_material_module__WEBPACK_IMPORTED_MODULE_2__["MaterialModule"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["CommonModule"]],
+        imports: [_material_module__WEBPACK_IMPORTED_MODULE_2__["MaterialModule"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormsModule"]],
         exports: [
             _home_component__WEBPACK_IMPORTED_MODULE_3__["HomeComponent"],
             _approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_4__["ApprovedRequestComponent"],
@@ -1183,7 +1303,8 @@ HomeModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _home_component__WEBPACK_IMPORTED_MODULE_3__["HomeComponent"],
             _approved_request_approved_request_component__WEBPACK_IMPORTED_MODULE_4__["ApprovedRequestComponent"],
             _pending_request_pending_request_component__WEBPACK_IMPORTED_MODULE_5__["PendingRequestComponent"],
-            _pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_6__["PreApprovedRequestComponent"]
+            _pre_approved_request_pre_approved_request_component__WEBPACK_IMPORTED_MODULE_6__["PreApprovedRequestComponent"],
+            _dialog_overview_dialog_overview_component__WEBPACK_IMPORTED_MODULE_9__["DialogOverviewComponent"]
         ]
     })
 ], HomeModule);
@@ -1218,35 +1339,66 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_components_base_data_obtainer_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/components/base/data-obtainer.component */ "./src/app/components/base/data-obtainer.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/visitor.service */ "./src/app/services/visitor.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var src_app_services_base_rest_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/base/rest.service */ "./src/app/services/base/rest.service.ts");
+
+
 
 
 
 
 
 let PendingRequestComponent = class PendingRequestComponent extends src_app_components_base_data_obtainer_component__WEBPACK_IMPORTED_MODULE_2__["DataObtainer"] {
-    constructor(visitorService, zone) {
+    constructor(visitorService, zone, rest) {
         super(zone);
         this.visitorService = visitorService;
         this.zone = zone;
+        this.rest = rest;
         this.pagination = false;
-        this.displayedColumns = [
-            "badgeNo",
-            "Name",
-            "inTime",
-            "outTime",
-            "actions",
-            "remarks"
-        ];
+        this.displayedColumns = ["Name", "badgeNo", "inTime", "actions", "remarks"];
     }
     getDataObservable(params) {
-        console.log(this.visitorService.fetchAllVisitors());
-        return this.visitorService.fetchAllVisitors();
+        this.searchObj = {
+            status: "PENDING"
+        };
+        return this.visitorService.searchVisitor(this.searchObj);
     }
     onAfterUpdateData(data) {
-        this.visitors = data;
+        this.visitors = data.data;
+        console.log(this.visitors);
         this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](this.visitors);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+    }
+    approveVisitor(event) {
+        this.visitorSummaryObj = {
+            visitNumber: event["visitSummary"].visitNumber,
+            badgeNo: event["visitSummary"].badgeNo,
+            comingFrom: event["visitSummary"].comingFrom,
+            contactPerson: event["visitSummary"].contactPerson,
+            contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
+            contactPersonPhone: event["visitSummary"].contactPersonPhone,
+            purpose: event["visitSummary"].purpose,
+            officeLocation: event["visitSummary"].officeLocation,
+            inTime: event["visitSummary"].inTime,
+            outTime: event["visitSummary"].outTime,
+            status: "APPROVED",
+            scheduledTime: event["visitSummary"].scheduledTime,
+            remarks: event["visitSummary"].remarks
+        };
+        console.log(this.visitorSummaryObj);
+        this.visitorService
+            .updateVisitSummary(event.id, this.visitorSummaryObj)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(this.rest.createNotifySnackbar("successfully-approved")))
+            .subscribe(() => {
+            this.refreshData();
+            if (this.approved) {
+                this.approved.refreshData();
+            }
+            if (this.preApproved) {
+                this.preApproved.refreshData();
+            }
+        });
     }
     applyFilter(filterValue) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -1254,8 +1406,15 @@ let PendingRequestComponent = class PendingRequestComponent extends src_app_comp
 };
 PendingRequestComponent.ctorParameters = () => [
     { type: src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_4__["VisitorService"] },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
+    { type: src_app_services_base_rest_service__WEBPACK_IMPORTED_MODULE_6__["RestService"] }
 ];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PendingRequestComponent.prototype, "approved", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PendingRequestComponent.prototype, "preApproved", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatPaginator"], { static: true })
 ], PendingRequestComponent.prototype, "paginator", void 0);
@@ -1303,28 +1462,96 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_components_base_data_obtainer_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/components/base/data-obtainer.component */ "./src/app/components/base/data-obtainer.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/visitor.service */ "./src/app/services/visitor.service.ts");
+/* harmony import */ var src_app_services_base_rest_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/base/rest.service */ "./src/app/services/base/rest.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _dialog_overview_dialog_overview_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../dialog-overview/dialog-overview.component */ "./src/app/modules/home/dialog-overview/dialog-overview.component.ts");
+/* harmony import */ var _dialog_overview_dataModel__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../dialog-overview/dataModel */ "./src/app/modules/home/dialog-overview/dataModel.ts");
+
+
+
+
 
 
 
 
 
 let PreApprovedRequestComponent = class PreApprovedRequestComponent extends src_app_components_base_data_obtainer_component__WEBPACK_IMPORTED_MODULE_2__["DataObtainer"] {
-    constructor(visitorService, zone) {
+    constructor(visitorService, zone, rest, dialog) {
         super(zone);
         this.visitorService = visitorService;
         this.zone = zone;
+        this.rest = rest;
+        this.dialog = dialog;
         this.pagination = false;
-        this.displayedColumns = ["badgeNo", "Name", "contactPerson", "actions", "remarks"];
+        this.displayedColumns = ["Name", "badgeNo", "contactPerson", "actions", "remarks"];
+    }
+    ngOnInit() {
+        this.refreshData();
     }
     getDataObservable(params) {
-        console.log(this.visitorService.fetchAllVisitors());
-        return this.visitorService.fetchAllVisitors();
+        this.searchObj = {
+            status: "SCHEDULED"
+        };
+        return this.visitorService.searchVisitor(this.searchObj);
     }
     onAfterUpdateData(data) {
-        this.visitors = data;
-        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](this.visitors);
+        this.visitors = data && data.data ? data.data : null;
+        this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](this.visitors ? this.visitors : []);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+    }
+    cancelled(event) {
+        this.visitorSummaryObj = {
+            visitNumber: event["visitSummary"].visitNumber,
+            badgeNo: event["visitSummary"].badgeNo,
+            comingFrom: event["visitSummary"].comingFrom,
+            contactPerson: event["visitSummary"].contactPerson,
+            contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
+            contactPersonPhone: event["visitSummary"].contactPersonPhone,
+            purpose: event["visitSummary"].purpose,
+            officeLocation: event["visitSummary"].officeLocation,
+            inTime: event["visitSummary"].inTime,
+            outTime: event["visitSummary"].outTime,
+            status: "CANCELLED",
+            scheduledTime: event["visitSummary"].scheduledTime,
+            remarks: event["visitSummary"].remarks
+        };
+        console.log(this.visitorSummaryObj);
+        this.visitorService
+            .updateVisitSummary(event.id, this.visitorSummaryObj)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["tap"])(this.rest.createNotifySnackbar("successfully-cancelled")))
+            .subscribe(() => {
+            this.refreshData();
+        });
+    }
+    assignBadge(event) {
+        console.log(event);
+        this.visitor = {
+            firstName: event.firstName,
+            lastName: event.lastName,
+            badgeNo: event.visitSummary.badgeNo,
+            phoneNumber: event.phoneNumber,
+            contactPerson: event.visitSummary.contactPerson,
+            comingFrom: event.visitSummary.comingFrom,
+            purpose: event.visitSummary.purpose,
+            inTime: event.visitSummary.inTime,
+            scheduledTime: event.visitSummary.scheduledTime,
+            emailId: event.emailId
+        };
+        console.log(this.visitor);
+        const dialogRef = this.dialog.open(_dialog_overview_dialog_overview_component__WEBPACK_IMPORTED_MODULE_7__["DialogOverviewComponent"], {
+            width: "500px",
+            data: this.visitor
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            let dialogRefModel = new _dialog_overview_dataModel__WEBPACK_IMPORTED_MODULE_8__["dataModel"](result.data);
+            // console.log(lll);
+            let putVisitor = this.visitors.filter((data) => dialogRefModel.phoneNumber == data.phoneNumber)[0];
+            putVisitor.visitSummary.badgeNo = dialogRefModel.badgeNo;
+            this.visitorService
+                .updateVisitSummary(putVisitor.id, putVisitor.visitSummary)
+                .subscribe();
+        });
     }
     applyFilter(filterValue) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -1332,8 +1559,16 @@ let PreApprovedRequestComponent = class PreApprovedRequestComponent extends src_
 };
 PreApprovedRequestComponent.ctorParameters = () => [
     { type: src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_4__["VisitorService"] },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
+    { type: src_app_services_base_rest_service__WEBPACK_IMPORTED_MODULE_5__["RestService"] },
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialog"] }
 ];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PreApprovedRequestComponent.prototype, "approved", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PreApprovedRequestComponent.prototype, "pending", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatPaginator"], { static: true })
 ], PreApprovedRequestComponent.prototype, "paginator", void 0);
@@ -1643,7 +1878,7 @@ let ReportComponent = class ReportComponent {
         this.pageSize = 10;
         this.firstNameFilter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
         this.lastNameFilter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
-        //phoneNumberFilter = new FormControl( '' );
+        this.phoneNumberFilter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
         this.purposeFilter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
         this.contactPersonFilter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
         this.inTimeFilter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
@@ -1654,11 +1889,11 @@ let ReportComponent = class ReportComponent {
             'contactPerson', 'inTime', 'idType', 'idNumber'
         ];
         this.displayedSearchBoxes = [
-            'firstName-search', 'lastName-search', 'purpose-search',
+            'firstName-search', 'lastName-search', 'phoneNumber-search', 'purpose-search',
             'contactPerson-search', 'inTime-search', 'idType-search'
-        ]; //'phoneNumber-search',
+        ];
     }
-    ngAfterViewInit() {
+    ngOnInit() {
         this.route.queryParams.subscribe(params => {
             this.filterValues['officeLocation'] = params.loc;
             this.paginator.pageIndex = 0;
@@ -1673,8 +1908,12 @@ let ReportComponent = class ReportComponent {
         });
         /* this.phoneNumberFilter.valueChanges.subscribe(
           phoneNumber => {
-            this.filterValues.phoneNumber = phoneNumber;
-            this.paginator.pageIndex = 0;
+            if ( phoneNumber.length == 10 ) {
+              console.log( 'HIT' );
+              this.paginator.pageIndex = 0;
+            }
+            this.filterValues[ 'phoneNumber' ] = phoneNumber;
+    
           }
         ); */
         this.purposeFilter.valueChanges.subscribe(purpose => {
@@ -1693,12 +1932,15 @@ let ReportComponent = class ReportComponent {
             this.filterValues['idType'] = idType;
             this.paginator.pageIndex = 0;
         });
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["merge"])(this.firstNameFilter.valueChanges, this.lastNameFilter.valueChanges, 
+        this.subscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["merge"])(this.firstNameFilter.valueChanges, this.lastNameFilter.valueChanges, 
         // this.phoneNumberFilter.valueChanges,
         this.purposeFilter.valueChanges, this.contactPersonFilter.valueChanges, this.inTimeFilter.valueChanges, this.idTypeFilter.valueChanges, this.route.queryParams, this.paginator.page)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])({}), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(() => {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["debounceTime"])(500), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["distinctUntilChanged"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])({}), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(() => {
+            /*if ( ( this.filterValues[ 'phoneNumber' ] && this.filterValues[ 'phoneNumber' ].length == 10 ) ||
+              !this.filterValues[ 'phoneNumber' ] ) {*/
             this.isLoadingResults = true;
             return this.visitorService.searchVisitor(this.filterValues, this.paginator.pageIndex, this.paginator.pageSize);
+            // }
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(data => {
             // Flip flag to show that loading has finished.
             this.resultsLength = data['total'];
@@ -1719,6 +1961,9 @@ let ReportComponent = class ReportComponent {
         dialogConfig.height = '600px';
         dialogConfig.width = '1000px';
         const matDialogRef = this.dialog.open(_components_visitor_visitor_component__WEBPACK_IMPORTED_MODULE_4__["VisitorComponent"], dialogConfig);
+    }
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 };
 ReportComponent.ctorParameters = () => [
@@ -1765,6 +2010,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_visitor_profile_visitor_profile_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/visitor-profile/visitor-profile.component */ "./src/app/modules/report/components/visitor-profile/visitor-profile.component.ts");
 /* harmony import */ var _components_visit_summary_visit_summary_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/visit-summary/visit-summary.component */ "./src/app/modules/report/components/visit-summary/visit-summary.component.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+
 
 
 
@@ -1777,11 +2024,7 @@ let ReportModule = class ReportModule {
 };
 ReportModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        imports: [
-            _material_module__WEBPACK_IMPORTED_MODULE_2__["MaterialModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormsModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ReactiveFormsModule"]
-        ],
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__["CommonModule"], _material_module__WEBPACK_IMPORTED_MODULE_2__["MaterialModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ReactiveFormsModule"]],
         exports: [_report_component__WEBPACK_IMPORTED_MODULE_3__["ReportComponent"]],
         declarations: [
             _report_component__WEBPACK_IMPORTED_MODULE_3__["ReportComponent"],
@@ -1923,7 +2166,7 @@ VisitorFormComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n.span{\r\n    display: inline-block\r\n}\r\n.span-maticon{\r\n    vertical-align: bottom\r\n}\r\n.example-container {\r\n    display: -webkit-box;\r\n    display: flex;\r\n    -webkit-box-orient: vertical;\r\n    -webkit-box-direction: normal;\r\n            flex-direction: column;\r\n  }\r\n.example-container > mat-form-field{\r\n    display: block;\r\n    width:23rem;\r\n  }\r\nh2.setMiddle{\r\n    padding-left: 10rem; \r\n  }\r\ndiv.flex-container-wrapper{\r\n    padding: 1rem;\r\n  }\r\ndiv.flex-container-wrapper >  div.flex-container{\r\n    display: -webkit-box;\r\n    display: flex;\r\n  }\r\ndiv.flex-container-wrapper >  div.flex-container > mat-form-field{\r\n    -webkit-box-flex:1;\r\n            flex:1;\r\n    padding-right: 2rem;\r\n  }\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy92aXNpdG9yLWZvcm0vdmlzaXRvci1ob21lL3Zpc2l0b3ItaG9tZS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtJQUNJO0FBQ0o7QUFDQTtJQUNJO0FBQ0o7QUFFQTtJQUNJLG9CQUFhO0lBQWIsYUFBYTtJQUNiLDRCQUFzQjtJQUF0Qiw2QkFBc0I7WUFBdEIsc0JBQXNCO0VBQ3hCO0FBRUE7SUFDRSxjQUFjO0lBQ2QsV0FBVztFQUNiO0FBRUE7SUFDRSxtQkFBbUI7RUFDckI7QUFFQTtJQUNFLGFBQWE7RUFDZjtBQUVBO0lBQ0Usb0JBQWE7SUFBYixhQUFhO0VBQ2Y7QUFFQTtJQUNFLGtCQUFNO1lBQU4sTUFBTTtJQUNOLG1CQUFtQjtFQUNyQiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvdmlzaXRvci1mb3JtL3Zpc2l0b3ItaG9tZS92aXNpdG9yLWhvbWUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG4uc3BhbntcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9ja1xyXG59XHJcbi5zcGFuLW1hdGljb257XHJcbiAgICB2ZXJ0aWNhbC1hbGlnbjogYm90dG9tXHJcbn1cclxuXHJcbi5leGFtcGxlLWNvbnRhaW5lciB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICB9XHJcbiAgXHJcbiAgLmV4YW1wbGUtY29udGFpbmVyID4gbWF0LWZvcm0tZmllbGR7XHJcbiAgICBkaXNwbGF5OiBibG9jaztcclxuICAgIHdpZHRoOjIzcmVtO1xyXG4gIH1cclxuICBcclxuICBoMi5zZXRNaWRkbGV7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDEwcmVtOyBcclxuICB9XHJcblxyXG4gIGRpdi5mbGV4LWNvbnRhaW5lci13cmFwcGVye1xyXG4gICAgcGFkZGluZzogMXJlbTtcclxuICB9XHJcblxyXG4gIGRpdi5mbGV4LWNvbnRhaW5lci13cmFwcGVyID4gIGRpdi5mbGV4LWNvbnRhaW5lcntcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgfVxyXG5cclxuICBkaXYuZmxleC1jb250YWluZXItd3JhcHBlciA+ICBkaXYuZmxleC1jb250YWluZXIgPiBtYXQtZm9ybS1maWVsZHtcclxuICAgIGZsZXg6MTtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDJyZW07XHJcbiAgfVxyXG4iXX0= */"
+module.exports = "\r\n/* \r\n.span{\r\n    display: inline-block\r\n}\r\n.span-maticon{\r\n    vertical-align: bottom\r\n}\r\n\r\n.example-container {\r\n    display: flex;\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .example-container > mat-form-field{\r\n    display: block;\r\n    width:23rem;\r\n  }\r\n  \r\n  h2.setMiddle{\r\n    padding-left: 10rem; \r\n  }\r\n\r\n  div.flex-container-wrapper{\r\n    padding: 1rem;\r\n  }\r\n\r\n  div.flex-container-wrapper >  div.flex-container{\r\n    display: flex;\r\n  }\r\n\r\n  div.flex-container-wrapper >  div.flex-container > mat-form-field{\r\n    flex:1;\r\n    padding-right: 2rem;\r\n  } */\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy92aXNpdG9yLWZvcm0vdmlzaXRvci1ob21lL3Zpc2l0b3ItaG9tZS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0tBaUNLIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy92aXNpdG9yLWZvcm0vdmlzaXRvci1ob21lL3Zpc2l0b3ItaG9tZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbi8qIFxyXG4uc3BhbntcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9ja1xyXG59XHJcbi5zcGFuLW1hdGljb257XHJcbiAgICB2ZXJ0aWNhbC1hbGlnbjogYm90dG9tXHJcbn1cclxuXHJcbi5leGFtcGxlLWNvbnRhaW5lciB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICB9XHJcbiAgXHJcbiAgLmV4YW1wbGUtY29udGFpbmVyID4gbWF0LWZvcm0tZmllbGR7XHJcbiAgICBkaXNwbGF5OiBibG9jaztcclxuICAgIHdpZHRoOjIzcmVtO1xyXG4gIH1cclxuICBcclxuICBoMi5zZXRNaWRkbGV7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDEwcmVtOyBcclxuICB9XHJcblxyXG4gIGRpdi5mbGV4LWNvbnRhaW5lci13cmFwcGVye1xyXG4gICAgcGFkZGluZzogMXJlbTtcclxuICB9XHJcblxyXG4gIGRpdi5mbGV4LWNvbnRhaW5lci13cmFwcGVyID4gIGRpdi5mbGV4LWNvbnRhaW5lcntcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgfVxyXG5cclxuICBkaXYuZmxleC1jb250YWluZXItd3JhcHBlciA+ICBkaXYuZmxleC1jb250YWluZXIgPiBtYXQtZm9ybS1maWVsZHtcclxuICAgIGZsZXg6MTtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDJyZW07XHJcbiAgfSAqL1xyXG4iXX0= */"
 
 /***/ }),
 
@@ -1986,6 +2229,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_visitor_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/visitor.service */ "./src/app/services/visitor.service.ts");
 /* harmony import */ var src_app_helpers_models_visitors_visit_summary_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/helpers/models/visitors/visit-summary.model */ "./src/app/helpers/models/visitors/visit-summary.model.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/**
+ * @author M.Shashikant(shashikant.mittapelli@accoliteindia.com)
+ * gives flexibility to search or create visitor details
+ */
 
 
 
@@ -2002,25 +2249,32 @@ let VisitorSearchOrCreateComponent = class VisitorSearchOrCreateComponent {
         this.search$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
         this.model = {};
         this.idTypes = src_app_helpers_static_data__WEBPACK_IMPORTED_MODULE_4__["idType"];
-        this.lastKeyPress = 0;
+        this.showLoading = false;
+        this.isEmailPresent = true;
         this.createUser();
     }
     ngOnInit() {
-        this.search$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(1000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["distinctUntilChanged"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])((data) => data != ''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])((data) => this.visitorService.getVisitorByEmailId(data))).subscribe((data) => {
+        this.search$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(1000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["distinctUntilChanged"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])((data) => data != ''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])((data) => { this.showLoading = true; return this.visitorService.getVisitorByEmailId(data); })).subscribe((data) => {
             this.data = data;
             if (data) {
                 this.user = new src_app_helpers_models_visitors_visitors_model__WEBPACK_IMPORTED_MODULE_5__["VisitorModel"](data);
+                this.isEmailPresent = true;
+                this.showLoading = false;
             }
             else {
                 this.createUser();
                 this.user.emailId = this.search;
+                this.isEmailPresent = false;
+                this.showLoading = false;
             }
         });
     }
     createUser() {
         this.user = new src_app_helpers_models_visitors_visitors_model__WEBPACK_IMPORTED_MODULE_5__["VisitorModel"]();
         this.user.visitSummary = [];
-        this.user.visitSummary.push(new src_app_helpers_models_visitors_visit_summary_model__WEBPACK_IMPORTED_MODULE_7__["VisitSummaryModel"]());
+        let visitSummary = new src_app_helpers_models_visitors_visit_summary_model__WEBPACK_IMPORTED_MODULE_7__["VisitSummaryModel"]();
+        visitSummary.officeLocation = window.location.href.indexOf('?loc') > -1 ? window.location.href.split("=")[1] : 'Bangalore';
+        this.user.visitSummary.push(visitSummary);
     }
     searchValues(value, type) {
         this.search = value;
@@ -2263,7 +2517,7 @@ let VisitorService = class VisitorService {
     createNewVisitor(visitorObj) {
         return this.restService
             .jsonPost(_config_constants__WEBPACK_IMPORTED_MODULE_4__["urls"].BASE_URL + _config_constants__WEBPACK_IMPORTED_MODULE_4__["urls"].CREATE_NEW_VISITOR, visitorObj)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(this.restService.createNotifySnackbar('create-visitors')));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(this.restService.createNotifySnackbar("create-visitors")));
     }
     addVisitorSummary(visitorId, visitorSummaryObj) {
         return this.restService.jsonPost(_config_constants__WEBPACK_IMPORTED_MODULE_4__["urls"].BASE_URL + _config_constants__WEBPACK_IMPORTED_MODULE_4__["urls"].ADD_VISIT_SUMMARY + visitorId, visitorSummaryObj);
