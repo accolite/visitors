@@ -1,6 +1,6 @@
 // Add Accolite related static data
 
-export const accoliteLocation = ["Bangalore", "Hyderabad", "Delhi"];
+export const accoliteLocation = [ "Bangalore", "Hyderabad", "Delhi" ];
 
 export const idType = [
   "Voter Id",
