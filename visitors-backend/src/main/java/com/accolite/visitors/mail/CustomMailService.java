@@ -1,5 +1,11 @@
 package com.accolite.visitors.mail;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -17,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import com.accolite.visitors.db.VisitorsMongoData;
 import com.accolite.visitors.enums.VisitorStatus;
@@ -47,6 +54,7 @@ public class CustomMailService {
 
 	Properties prop = new Properties();
 	Session session;
+	Map<String, String> valuesMap = new HashMap<>();
 
 	private void configPropertis() {
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -78,77 +86,138 @@ public class CustomMailService {
 		}
 	}
 
-	public JSONObject sendApprovalMail(Visitor visitor) {
-		logger.info("INSIDE sendApprovalMail()");
-		JSONObject status = new JSONObject();
-		VisitSummary visitSummary = visitor.getVisitSummary().get(0);
-		status.put("status", "Unable to Send Approval Mail to " + visitSummary.getContactPerson() + "!!");
-		String subject = "Visitor Approval Required for " + visitor.getFirstName();
-		String responseUrl = env.getProperty("applicationURL")+"/api-dev/visitor/approvalResponse";
-		String pocApprovalOption=VisitorStatus.APPROVED.toString();
-		String approvalStatus=VisitorStatus.PENDING.toString();
-		if (visitor.getVisitSummary().get(0).getBadgeNo()==null || visitor.getVisitSummary().get(0).getBadgeNo().isEmpty()) {
-			pocApprovalOption=VisitorStatus.SCHEDULED.toString();
-			approvalStatus=VisitorStatus.SCHEDULED.toString();
+	public String readFile(String filePath) {
+		try {
+			File file = ResourceUtils.getFile(filePath);
+			return new String(Files.readAllBytes(file.toPath()));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return null;
+	}
 
-		String content = "<p><strong>Dear " + visitSummary.getContactPerson() + "</strong><br />" + "One visitor "
-				+ visitor.getFirstName() + " is waiting for your approval.<br /> <br />" + "Visitor's full name : "
-				+ visitor.getFirstName() + "  " + visitor.getLastName() + "<br />" + "Visitor's email: "
-				+ visitor.getEmailId() + "<br />Phone no.:" + visitor.getPhoneNumber() + "<br />" + "Purpose:"
-				+ visitSummary.getPurpose() + "&nbsp;<br /></p>\r\n"
-				+ "<p>Please Responsd back with your Response !</p>\r\n" + "<form action=\"" + responseUrl
-				+ "\" method=\"get\">\r\n" + "			<input type=\"hidden\"  name=\"visitorId\" value=\""
-				+ visitor.getId() + "\">\r\n" + "			<input type=\"hidden\"  name=\"visitNumber\" value=\""
-				+ visitSummary.getVisitNumber() + "\">\r\n"+ "			<input type=\"hidden\"  name=\"visitorEmail\" value=\""
-						+ visitor.getEmailId() + "\">\r\n"
-				+ "            <input type=\"radio\"  name=\"approval\" value=\""+pocApprovalOption+"\" checked><label style=\"color:green;font-weight: bold;\"> Approve</label>\r\n"
-				+ "            <input type=\"radio\" name=\"approval\" value=\"DECLINED\"><label style=\"color:red;font-weight: bold;\"> Decline</label><br /><br/>\r\n"
-				+ "			Comment / Remarks: <input required type=\"text\" name=\"remarks\" value=\"Wait for 10 minutes !\"></br></br>\r\n"
-				+ "			<button type=\"submit\" >Submit</button>\r\n" + "</form>";
+	public Map<String, String> mapPlaceHolders(Visitor visitor) {
+		Map<String, String> valuesMap = new HashMap<>();
+	
+		valuesMap.put("appURL", env.getProperty("applicationURL"));
+		valuesMap.put("visitor.firstName", String.valueOf(visitor.getFirstName()));
+		valuesMap.put("visitor.lastName", String.valueOf(visitor.getLastName()));
+		valuesMap.put("visitor.visitSummary.contactPerson", String.valueOf(visitor.getVisitSummary().get(0).getContactPerson()));
+		valuesMap.put("visitor.email", String.valueOf(visitor.getEmailId()));
+		valuesMap.put("visitor.phone", String.valueOf(visitor.getPhoneNumber()));
+		valuesMap.put("visitor.visitSummary.comingFrom",String.valueOf( visitor.getVisitSummary().get(0).getComingFrom()));
+		valuesMap.put("visitor.visitSummary.purpose", String.valueOf(visitor.getVisitSummary().get(0).getPurpose()));
+		valuesMap.put("visitor.id",String.valueOf( visitor.getId()));
+		valuesMap.put("visitor.visitSummary.visitNumber", String.valueOf(visitor.getVisitSummary().get(0).getVisitNumber()));
+		valuesMap.put("visitor.visitSummary.inTime", String.valueOf(visitor.getVisitSummary().get(0).getInTime()));
+		valuesMap.put("visitor.visitSummary.scheduledTime",String.valueOf(visitor.getVisitSummary().get(0).getScheduledTime()));
+		valuesMap.put("visitor.statusDeclined", VisitorStatus.DECLINED.toString());
+		valuesMap.put("visitor.statusApproved", VisitorStatus.APPROVED.toString());
+		return valuesMap;
+	}
 
-		if (sendMail(visitSummary.getContactPersonEmailId(), subject, content)) {
-			logger.info("Approval Mail Successfully Sent to " + visitSummary.getContactPersonEmailId() + "!!");
-			// Updating VisitSummary Status
-			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(), visitSummary.getVisitNumber(),
-					approvalStatus, "Approval Mail Sent");
-			logger.info("Status Updated to PENDING for visitNumber: " + visitSummary.getVisitNumber() + "of visitorID: "
-					+ visitor.getId() + "!!");
-
-			new Thread(() -> {
-				final String sub = "Your visit request created for Accolite office ";
-				final String msg = "<p><strong>Dear " + visitor.getFirstName()
-						+ "</strong><br /> one visit request is created on behalf of you.<br /> your POC <strong> "
-						+ visitor.getVisitSummary().get(0).getContactPerson()
-						+ "</strong> will get back to you shortly!<br /><br /> <br /> this is a system generated mail please do not reply to this mail.<br /> <br />  Thank you for visiting @ Accolite </p>";
-				if(sendMail(visitor.getEmailId(), sub, msg)) {
-					logger.info(visitor.getFirstName()+" is updated for his/her visit @ Accolite" + "!!");
-				}
-
-			}).start();
-
-			return status.put("status",
-					"Approval Mail Successfully Sent to " + visitSummary.getContactPersonEmailId() + " !!");
+	public boolean sendApprovalReqMail(Visitor visitor) {
+		String subjectLine = "Visitor Approval Required for " + visitor.getFirstName();
+		String fileContent = readFile("classpath:approval_request.html");
+		valuesMap.put("responseEndpoint", "approvalResponse");
+		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
+		String mailContent = StrSubstitutor.replace(fileContent);
+		if (sendMail(visitor.getVisitSummary().get(0).getContactPersonEmailId(), subjectLine, mailContent)) {
+			logger.info(visitor.getVisitSummary().get(0).getContactPersonEmailId()
+					+ " is Notified for new visitor request Creation !!");
+			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.PENDING.toString(),
+					"Approval Mail Sent");
+			logger.info("Status Updated to PENDING for visitNumber: "
+					+ visitor.getVisitSummary().get(0).getVisitNumber() + " of visitorID: " + visitor.getId() + "!!");
+			return true;
+		} else {
+			logger.info("Unable to Send Approval mail to" + visitor.getVisitSummary().get(0).getContactPersonEmailId()
+					+ "  !!");
+			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.FAILED.toString(),
+					"Unable to send Approval Mail");
+			logger.info("Status Updated to Failed for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
+					+ " of visitorID: " + visitor.getId() + "!!");
+			return false;
 		}
-		status.put("fail", "true");
+	}
+
+	public boolean sendReqCreationMail(Visitor visitor) {
+		boolean status = false;
+		String subjectLine = "Visit Request created for " + visitor.getFirstName();
+		String fileContent = readFile("classpath:v_req_created_notice.html");
+		valuesMap.put("responseEndpoint", "approvalResponse");
+		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
+		String mailContent = StrSubstitutor.replace(fileContent);
+		if (sendMail(visitor.getVisitSummary().get(0).getContactPersonEmailId(), subjectLine, mailContent)) {
+			logger.info(visitor.getVisitSummary().get(0).getContactPersonEmailId()
+					+ " is Notified for new visitor request Creation !!");
+			status = true;
+		} else {
+			logger.info("Unable to notify " + visitor.getVisitSummary().get(0).getContactPersonEmailId()
+					+ "  for request Creation !!");
+			status = false;
+		}
+		visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+				visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.SCHEDULED.toString(),
+				"Request Created by: " + visitor.getVisitSummary().get(0).getContactPersonEmailId());
+		logger.info("Status Updated to SCHEDULED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
+				+ " of visitorID: " + visitor.getId() + "!!");
 		return status;
 	}
 
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remarks, String visitorEmail) {
+	public JSONObject sendApprovalMail(Visitor visitor) {// newVisitMail
+		logger.info("INSIDE newVisitMail()");
+		JSONObject status = new JSONObject();
+		valuesMap = mapPlaceHolders(visitor);
+		if (visitor.getVisitSummary().get(0).getBadgeNo() == null
+				|| visitor.getVisitSummary().get(0).getBadgeNo().isEmpty()) {
+			if (!sendReqCreationMail(visitor)) {
+				status.put("fail", "true");
+				status.put("status", "unable to notify Contact Person via Mail");
+			} else {
+				status.put("status", "new Visit notification Mail Sent Successfully !!");
+			}
+		} else {
+			if (sendApprovalReqMail(visitor)) {
+				status.put("fail", "true");
+				status.put("status", "unable to send Approval Mail");
+			} else {
+				status.put("status", "Approval Mail Sent Successfully !!");
+			}
+		}
+
+		new Thread(() -> {// notify visitor for his/her visit
+			final String sub = "Your visit request created for Accolite office ";
+			String fileContent = readFile("classpath:notify_to_visitor_req_creation.html");
+			StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
+			String mailContent = StrSubstitutor.replace(fileContent);
+			if (sendMail(visitor.getEmailId(), sub, mailContent))
+				logger.info(visitor.getFirstName() + " is updated for his/her visit @ Accolite" + "!!");
+			else
+				logger.info("unable to send notification mail to visitor :" + visitor.getFirstName() + " !!");
+		}).start();
+		return status;
+	}
+
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remarks,
+			String visitorEmail) {
 		JSONObject response = new JSONObject();
 		String status = "Unable to Update Status for visitorId: " + visitorId + " visitNumber: " + visitNumber
-				+ " approval: " + approval + "remarks: " + remarks+"remarks: " + visitorEmail;
-			if (visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitorId, Integer.parseInt(visitNumber), approval,
+				+ " approval: " + approval + "remarks: " + remarks + "remarks: " + visitorEmail;
+		if (visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitorId, Integer.parseInt(visitNumber), approval,
 				remarks)) {
 			logger.info("Status Updated to " + approval + " for visit number:" + visitNumber + "of visitorID :"
 					+ visitorId + "remarks" + remarks + "!!");
-			status = "Your Response is Recorded,  Thank you for your Response!!";
-			
-			new Thread(() -> {
+			status = "Your Response is Recorded,  Thank you !!";
+
+			new Thread(() -> { // update visitor for his/her visit status
 				final String sub = "Update for your visit @ Accolite office ";
-				final String msg = "<p>Your vsit request is <strong>"+approval+"<br /> Comments:"+remarks+"</strong><br /><br /><br /><br /> this is a system generated mail please do not reply to this mail !<br /> Thank you for visiting @ Accolite";
-				if(sendMail(visitorEmail, sub, msg)) {
-					logger.info(visitorEmail+" is updated for his/her visit @ Accolite" + "!!");
+				final String msg = "<p>Your vsit request is <strong>" + approval + "<br /> Comments:" + remarks
+						+ "</strong><br /><br /><br /><br /> this is a system generated mail please do not reply to this mail !<br /> Thank you for visiting @ Accolite";
+				if (sendMail(visitorEmail, sub, msg)) {
+					logger.info(visitorEmail + " is updated for his/her visit @ Accolite" + "!!");
 				}
 			}).start();
 		}
@@ -156,60 +225,81 @@ public class CustomMailService {
 		return response;
 	}
 
-	public JSONObject sendNotifyMail(Visitor visitor) {
-		logger.info("INSIDE sendNotifyMail()");
+	public JSONObject sendVisitorArrivalMail(Visitor visitor) {
+
+		logger.info("INSIDE sendVisitorArrivalMail()");
 		JSONObject status = new JSONObject();
-		VisitSummary visitSummary = visitor.getVisitSummary().get(0);
-		status.put("status", "Unable to send Notification Email to  " + visitSummary.getContactPerson() + " !!");
-		String subject = "Visitor " + visitor.getFirstName() + " is waiting at Reception";
-		String responseUrl = env.getProperty("applicationURL")+"/api-dev/visitor/approvalResponse";
+	valuesMap = mapPlaceHolders(visitor);
+		valuesMap.put("responseEndpoint", "notifyResponse");
 
-		String content = "<p><strong>Dear " + visitSummary.getContactPerson() + "</strong><br />"
-				+ "The Scheduled visitor " + visitor.getFirstName() + " is waiting at Reception.<br />"
-				+ "Visitor's full name : " + visitor.getFirstName() + "  " + visitor.getLastName() + "<br />"
-				+ "Visitor's email: " + visitor.getEmailId() + "<br />Phone no.:" + visitor.getPhoneNumber() + "<br />"
-				+ "Purpose:" + visitSummary.getPurpose() + "&nbsp;<br /> Comming from:" + visitSummary.getComingFrom()
-				+ "</p>\r\n" + "<p>Please Responsd back with your Response.</p>\r\n" + "<form action=\"" + responseUrl
-				+ "\" method=\"get\">\r\n" + "			<input type=\"hidden\"  name=\"visitorId\" value=\""
-				+ visitor.getId() + "\">\r\n" + "			<input type=\"hidden\"  name=\"visitNumber\" value=\""
-				+ visitSummary.getVisitNumber() + "\">\r\n"+ "			<input type=\"hidden\"  name=\"visitorEmail\" value=\""
-						+ visitor.getEmailId() + "\">\r\n"
-				+ "            <input type=\"radio\"  name=\"approval\" value=\"APPROVED\" checked><label style=\"color:green;font-weight: bold;\"> Approve</label>\r\n"
-				+ "            <input type=\"radio\" name=\"approval\" value=\"DECLINED\"><label style=\"color:red;font-weight: bold;\"> Decline</label><br /><br/>\r\n"
-				+ "			Comment / Remarks: <input required type=\"text\" name=\"remarks\" value=\"Wait for 10 minutes !\"></br></br>\r\n"
-				+ "			<button type=\"submit\" >Submit</button>\r\n" + "</form>";
-
-		if (sendMail(visitSummary.getContactPersonEmailId(), subject, content)) {
-			logger.info("Notification Mail Successfully Sent to " + visitSummary.getContactPersonEmailId() + "!!");
-			visitSummary.setStatus(VisitorStatus.PENDING);
-			// visitorService.updateVisitSummary(visitor.getId(), visitSummary);
-
-			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(), visitSummary.getVisitNumber(),
-					VisitorStatus.PENDING.toString(), "Notification Mail Sent");
-
-			logger.info("Status Updated to PENDING for visit number:" + visitSummary.getVisitNumber()
-					+ " of visitorID :" + visitor.getId() + "!!");
+		String subjectLine = "Visitor " + visitor.getFirstName() + " is waiting at Reception";
+		String fileContent = readFile("classpath:visitor_arrival_notification.html");
+		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
+		String mailContent = StrSubstitutor.replace(fileContent);
+		if (sendMail(visitor.getVisitSummary().get(0).getContactPersonEmailId(), subjectLine, mailContent)) {
+			logger.info(visitor.getVisitSummary().get(0).getContactPersonEmailId()
+					+ " is Notified for new visitor's Arrival !!");
+			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.PENDING.toString(),
+					"Arrival notification Mail Sent");
+			logger.info("Status Updated to PENDING for visitNumber: "
+					+ visitor.getVisitSummary().get(0).getVisitNumber() + " of visitorID: " + visitor.getId() + "!!");
 			
-			new Thread(() -> {
-				final String sub = "Your POC "+visitor.getVisitSummary().get(0).getContactPerson()+" has been notified for your visit @ Accolite office ";
-				final String msg = "<p>Dear <strong>" + visitor.getFirstName()
-						+ "</strong> Your POC  <strong>"+visitor.getVisitSummary().get(0).getContactPerson()
+			new Thread(() -> {// notify Visitor
+				final String sub = "Your POC " + visitor.getVisitSummary().get(0).getContactPerson()
+						+ " has been notified for your visit @ Accolite office ";
+				final String msg = "<p>Dear <strong>" + visitor.getFirstName() + "</strong> Your POC  <strong>"
+						+ visitor.getVisitSummary().get(0).getContactPerson()
 						+ "</strong> has been notified for your visit @ Accolite Office <br /> we will get back to you shortly!<br /><br /><br /><br /> this is a system generated mail please do not reply to this mail !<br /><br /> Thank you for visiting @ Accolite";
-				if(sendMail(visitor.getEmailId(), sub, msg)) {
-					logger.info(visitor.getFirstName()+" is updated for his/her visit @ Accolite" + "!!");
+				if (sendMail(visitor.getEmailId(), sub, msg)) {
+					logger.info(visitor.getFirstName() + " is updated for his/her visit @ Accolite" + "!!");
 				}
 
 			}).start();
-			
-			
-			return status.put("status",
-					"Notification Mail Successfully Sent to  " + visitSummary.getContactPersonEmailId() + " !!");
+			return status.put("status", "POC notified for visitor Arrival !!");
+		} else {
+			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.FAILED.toString(),
+					"Unable to send visitor Arrival notification Mail");
+			logger.info("Status Updated to FAILED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
+					+ " of visitorID: " + visitor.getId() + "!!");
+			status.put("fail", "true");
+			status.put("status", "unable to send Approval Mail");
+			return status;
 		}
-		status.put("fail", "true");
-		return status;
+
 	}
 
 	public void notifyVisitor(String to, String subject, String Content) {
+
+	}
+
+	public void sendApproveOnBehalf(Visitor visitor) {
+		VisitSummary visitSummary=visitor.getVisitSummary().get(0);
+		String subjectLine = "One Visitor Request Approved on Behalf of You" ;
+		String fileContent = readFile("classpath:approval_on_behalf.html");
+		visitor.setVisitSummary(Arrays.asList(visitSummary));
+		valuesMap.put("responseEndpoint", "approvalResponse");
+		valuesMap = mapPlaceHolders(visitor);
+		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
+		String mailContent = StrSubstitutor.replace(fileContent);
+		if (sendMail(visitSummary.getContactPersonEmailId(), subjectLine, mailContent)) {
+			logger.info(visitSummary.getContactPersonEmailId()
+					+ " is Notified for Approval on behalf of him/her !!");
+		} else {
+			logger.info(visitSummary.getContactPersonEmailId()
+					+ " is unable to Notified for Approval on behalf of him/her !!");
+		}
+		String remarks="Approved on behalf of POC";
+		if(visitSummary.getRemarks()!=null && ! visitSummary.getRemarks().isEmpty()) {
+			remarks=visitSummary.getRemarks();
+		}
+		visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+				visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.APPROVED.toString(),
+				remarks);
+
+		logger.info("Status Updated to APPROVED for visitNumber: "
+				+ visitor.getVisitSummary().get(0).getVisitNumber() + " of visitorID: " + visitor.getId() + "!!");
 
 	}
 }

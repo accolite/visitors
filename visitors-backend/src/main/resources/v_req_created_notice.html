@@ -1,0 +1,29 @@
+<p>
+	Dear <strong>${visitor.visitSummary.contactPerson}</strong>,
+</p>
+<p>New visitor request is created.</p>
+<p>Visitor Details:</p>
+<p>
+	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />Email:
+	<strong>${visitor.email}</strong><br />Contact Number: <strong>${visitor.phone}</strong><br />Coming
+	From: <strong>${visitor.visitSummary.comingFrom}</strong><br />Purpose:
+	<strong>${visitor.visitSummary.purpose}</strong><br />Scheduled Time:
+	<strong>${visitor.visitSummary.scheduledTime}</strong>
+</p>
+<p>Respond back if you want to cancel the request.</p>
+<form action="${appURL}/api-dev/visitor/${responseEndpoint}" method="get">
+	<p>
+		<input type="hidden" name="visitorId" value="${visitor.id}"> 
+		<input type="hidden" name="visitNumber"
+			value="${visitor.visitSummary.visitNumber}">
+			<input type="hidden" name="visitorEmail"
+			value="${visitor.email}"> <label
+			style="color: green; font-weight: bold;"></label><input
+			name="approval" type="radio" value="${visitor.statusDeclined}" required /><label
+			style="color: red; font-weight: bold;"> Cancel Request</label> <br />
+		<br /> Comment / Remarks: <input name="remarks" type="text"
+			value="Wait for 10 minutes !" /><br /> <br />
+		<button type="submit">Submit</button>
+	</p>
+</form>
+<p>This is a system generated mail, do not reply directly.</p>
