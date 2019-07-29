@@ -1,6 +1,5 @@
 package com.accolite.visitors.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,15 +34,6 @@ public interface VisitorService {
 	 * @return
 	 */
 	public Visitor createVisitor(Visitor visitorBO);
-
-	/**
-	 * returns visitors between startDate and endDate order by DateTime descending
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	public List<Visitor> getVisitorsByInTime(Date startDate, Date endDate);
 
 	/**
 	 * update exit/out time of the visitor

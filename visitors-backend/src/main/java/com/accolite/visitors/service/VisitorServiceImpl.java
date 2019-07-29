@@ -39,9 +39,6 @@ public class VisitorServiceImpl implements VisitorService {
 	@Autowired
 	private CustomMailService customMailService;
 
-//	@Autowired
-//	private VisitorHelperUtil visitorHelperUtil;
-
 	@Override
 	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {
 		return visitorRepository.findByEmailId(email)
@@ -84,11 +81,6 @@ public class VisitorServiceImpl implements VisitorService {
 	public boolean deleteVisitor(String id) {
 		visitorRepository.deleteById(id);
 		return Boolean.TRUE;
-	}
-
-	@Override
-	public List<Visitor> getVisitorsByInTime(Date startDate, Date endDate) {
-		return visitorRepository.findByVisitSummary_InTimeBetweenOrderByVisitSummary_InTimeDesc(startDate, endDate);
 	}
 
 	@Override
@@ -147,8 +139,10 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remaarks,String visitorEmail) {
-		JSONObject approvalResponse = customMailService.approvalResponse(visitorId, visitNumber, approval, remaarks,visitorEmail);
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remaarks,
+			String visitorEmail) {
+		JSONObject approvalResponse = customMailService.approvalResponse(visitorId, visitNumber, approval, remaarks,
+				visitorEmail);
 		return approvalResponse;
 	}
 

@@ -70,10 +70,10 @@ const moduleDeclarations = [
   MatStepperModule
 ];
 
-@NgModule({
-  declarations: [...componentDeclarations],
-  imports: [...moduleDeclarations],
-  exports: [...moduleDeclarations, ...componentDeclarations],
-  entryComponents: [SnackbarComponent]
-})
-export class MaterialModule {}
+@NgModule( {
+  declarations: [ ...componentDeclarations ],
+  imports: [ ...moduleDeclarations ],
+  exports: [ ...moduleDeclarations, ...componentDeclarations ],
+  entryComponents: [ SnackbarComponent ]
+} )
+export class MaterialModule { }

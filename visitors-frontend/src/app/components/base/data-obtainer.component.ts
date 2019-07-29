@@ -8,38 +8,34 @@
 import { Component, NgZone } from "@angular/core";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
 import { Observable } from "rxjs";
+import { ArrayUtil } from "src/app/helpers/array.util";
 
-@Component({
-  selector: "data-obtainer",
-  template: ""
-})
 export abstract class DataObtainer<T> {
   loading: boolean = false;
   data: T;
   parameters: ServiceSearchParamsInputModel = new ServiceSearchParamsInputModel();
   refreshOnInit: boolean = true;
 
-  constructor(private zones: NgZone) {}
+  constructor( private zones: NgZone ) { }
 
   ngOnInit() {
-    if (this.refreshOnInit) {
-      this.zones.run(() => this.refreshData());
+    if ( this.refreshOnInit ) {
+      this.zones.run( () => this.refreshData() );
     }
   }
 
   refreshData() {
     this.onBeforeUpdateData();
     this.loading = true;
-    this.getDataObservable(this.parameters).subscribe(
+    this.getDataObservable( this.parameters ).subscribe(
       data => {
-        this.data = JSON.parse(JSON.stringify(data));
-        this.onAfterUpdateData(data);
-        this.onNextStage(data);
+        this.data = JSON.parse( JSON.stringify( data ) );
+        this.onAfterUpdateData( data );
+        this.onNextStage( data );
         this.loading = false;
-        console.log(this.data);
       },
-      (error: any) => {
-        this.onErrorStage(error);
+      ( error: any ) => {
+        this.onErrorStage( error );
       },
       () => {
         this.onCompleteStage();
@@ -50,9 +46,9 @@ export abstract class DataObtainer<T> {
   protected abstract getDataObservable(
     parameters: ServiceSearchParamsInputModel
   ): Observable<any>;
-  protected onBeforeUpdateData() {}
-  protected onAfterUpdateData(data: any) {}
-  protected onCompleteStage() {}
-  protected onNextStage(data: any) {}
-  protected onErrorStage(error: any) {}
+  protected onBeforeUpdateData() { }
+  protected onAfterUpdateData( data: any ) { }
+  protected onCompleteStage() { }
+  protected onNextStage( data: any ) { }
+  protected onErrorStage( error: any ) { }
 }

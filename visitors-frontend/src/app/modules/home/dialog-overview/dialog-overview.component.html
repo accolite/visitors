@@ -1,0 +1,117 @@
+<div class="flex-container">
+  <table>
+    <tr>
+      <td>
+        <mat-form-field>
+          <input
+            name="firstName"
+            [(ngModel)]="data.firstName"
+            matInput
+            placeholder="First Name"
+          />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="column">
+          <input
+            name="lastName"
+            [(ngModel)]="data.lastName"
+            matInput
+            placeholder="Last Name"
+          />
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field>
+          <input
+            name="badgeNo"
+            [(ngModel)]="data.badgeNo"
+            matInput
+            placeholder="Badge No"
+          />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="column">
+          <input
+            name="comingFrom"
+            [(ngModel)]="data.comingFrom"
+            matInput
+            placeholder="Coming From"
+          />
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field>
+          <input
+            name="phoneNumber"
+            [(ngModel)]="data.phoneNumber"
+            matInput
+            placeholder="Phone Number"
+          />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="column">
+          <input
+            name="emailId"
+            [(ngModel)]="data.emailId"
+            matInput
+            placeholder="email Id"
+          />
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field>
+          <input
+            name="contactPerson"
+            [(ngModel)]="data.contactPerson"
+            matInput
+            placeholder="Contact Person"
+          />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="column">
+          <input
+            name="purpose"
+            [(ngModel)]="data.purpose"
+            matInput
+            placeholder="purpose"
+          />
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field>
+          <input
+            name="inTime"
+            [(ngModel)]="data.inTime"
+            matInput
+            placeholder="In Time"
+          />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="column">
+          <input
+            name="scheduledTime"
+            [(ngModel)]="data.scheduledTime"
+            matInput
+            placeholder="Scheduled time"
+          />
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td><button mat-button (click)="onNoClick(data)">Submit</button></td>
+    </tr>
+  </table>
+</div>

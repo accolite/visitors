@@ -21,9 +21,9 @@ mat-card-header,
 mat-card-content {
   padding: 1rem;
 }
-mat-card-header {
+/* mat-card-header {
   background-color: gainsboro;
-}
+} */
 
 .mat-card-title {
   margin: 0 !important;
@@ -42,4 +42,8 @@ mat-card-header div.actions {
   width: 30%;
   display: inline-block;
   text-align: right;
+}
+
+div.actions mat-icon:hover {
+  cursor: pointer;
 }

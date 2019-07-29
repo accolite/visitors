@@ -6,7 +6,7 @@ export const urls = {
     'CREATE_NEW_VISITOR': 'create/',
     'EXIT_TIME': 'exit/',
     'GET_VISITORS_BY_IN_TIME': 'getVisitorsByInTime/',
-    'SEARCH': 'search/',
+    'SEARCH': 'search',
     'GET_VISITOR_BY_EMAIL': 'email/',
     'ADD_VISIT_SUMMARY': 'addVisitSummary/',
     'UPDATE_VISITOR_DETAILS': 'updateVisitorDetails/',
