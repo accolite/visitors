@@ -13,4 +13,5 @@ export const urls = {
     'UPDATE_VISITOR_SUMMARY': 'updateVisitSummary/',
     'SEND_APPROVAL_MAIL': 'sendApprovalMail/',
     'SEND_NOTIFY_MAIL': 'sendNotifyMail/',
+    'APPROVE_ON_BEHALF': 'approveOnBehalf/',
 };
