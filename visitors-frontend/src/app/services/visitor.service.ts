@@ -96,4 +96,8 @@ export class VisitorService {
   deleteVisitorSummary( visitSummaryId: string ) {
     return this.restService.get( urls.BASE_URL + visitSummaryId );
   }
+
+  approveOnBehalf(reqObj: any) {
+    return this.restService.jsonPost(urls.BASE_URL + urls.APPROVE_ON_BEHALF, reqObj);
+  }
 }
