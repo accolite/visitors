@@ -1,18 +1,25 @@
 package com.accolite.visitors.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.valves.rewrite.Substitution;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.mail.CustomMailService;
+import com.accolite.visitors.mail.StrSubstitutor;
 import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
@@ -127,7 +134,7 @@ public class VisitorServiceImpl implements VisitorService {
 
 	@Override
 	public JSONObject sendNotifyMail(Visitor visitor) {
-		JSONObject sendNotifyMail = customMailService.sendNotifyMail(visitor);
+		JSONObject sendNotifyMail = customMailService.sendVisitorArrivalMail(visitor);
 		return sendNotifyMail;
 	}
 
@@ -140,14 +147,18 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,
-			String visitorEmail) {
-		// JSONObject notifyResponse = customMailService.notifyResponse(visitorId,
-		// visitNumber, niticed, remarks);
-		JSONObject notifyResponse = customMailService.approvalResponse(visitorId, visitNumber, niticed, remarks,
-				visitorEmail);
+	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks, String visitorEmail) {
+
+		JSONObject notifyResponse = customMailService.approvalResponse(visitorId, visitNumber, niticed, remarks, visitorEmail);
 
 		return notifyResponse;
+	}
+	
+	@Override
+	//public void approveOnBehalf(String id, VisitSummary visitSummary) throws VisitorNotFoundException {
+	public void approveOnBehalf(Visitor visitor) throws VisitorNotFoundException {
+
+		customMailService.sendApproveOnBehalf(visitor);
 	}
 
 }

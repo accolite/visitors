@@ -1,0 +1,39 @@
+# Application configuration
+server:  port: 8081
+
+spring:  data:    mongodb:      database: visitors-dev
+      host: localhost
+      port: 27017
+    web:      pageable:        default-page-size: 10
+  mail:
+    host: smtp.gmail.com
+    username: tempaccolite@gmail.com
+    password: TempAccolite@2019
+    properties:
+      mail:
+        port: 587
+        properties:
+          mail:
+            smtp:
+              starttls:
+                enable: true
+                required: false
+        
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+             client-id: 978462556205-2l4sdcobrd4htrcrdmnuokktuuca8ms1.apps.googleusercontent.com
+             client-secret: IShDppijVj4UuXWT2PWyMk3x
+
+logging:  level:
+    com.accolite.visitor: DEBUG  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+applicationURL: http://13.233.40.37:8081

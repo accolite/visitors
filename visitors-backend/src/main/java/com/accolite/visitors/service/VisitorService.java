@@ -3,6 +3,8 @@ package com.accolite.visitors.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 
@@ -130,5 +132,13 @@ public interface VisitorService {
 	 * @param niticed
 	 */
 	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,String visitorMail);
+
+	/**
+	 * 
+	 * @param id
+	 * @param visitSummary
+	 */
+	//public void approveOnBehalf(String id, @Valid VisitSummary visitSummary);
+	public void approveOnBehalf(@Valid Visitor visitor);
 
 }
