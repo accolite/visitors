@@ -2,7 +2,7 @@
   <table>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="firstName"
             [(ngModel)]="data.firstName"
@@ -12,7 +12,7 @@
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="lastName"
             [(ngModel)]="data.lastName"
@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="badgeNo"
             [(ngModel)]="data.badgeNo"
@@ -34,7 +34,7 @@
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="comingFrom"
             [(ngModel)]="data.comingFrom"
@@ -46,7 +46,7 @@
     </tr>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="phoneNumber"
             [(ngModel)]="data.phoneNumber"
@@ -56,7 +56,7 @@
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="emailId"
             [(ngModel)]="data.emailId"
@@ -68,7 +68,7 @@
     </tr>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="contactPerson"
             [(ngModel)]="data.contactPerson"
@@ -78,7 +78,7 @@
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="purpose"
             [(ngModel)]="data.purpose"
@@ -90,7 +90,7 @@
     </tr>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="inTime"
             [(ngModel)]="data.inTime"
@@ -100,7 +100,7 @@
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin ">
           <input
             name="scheduledTime"
             [(ngModel)]="data.scheduledTime"
@@ -111,7 +111,11 @@
       </td>
     </tr>
     <tr>
-      <td><button mat-button (click)="onNoClick(data)">Submit</button></td>
+      <td>
+        <button mat-raised-button (click)="onNoClick(data)" color="primary">
+          Submit
+        </button>
+      </td>
     </tr>
   </table>
 </div>

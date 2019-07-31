@@ -63,30 +63,30 @@ export class PendingRequestComponent extends DataObtainer<any>
   }
 
   approveVisitor(event) {
-    this.visitorSummaryObj = {
-      visitNumber: event["visitSummary"].visitNumber, // Existing one no need to change
-      badgeNo: event["visitSummary"].badgeNo,
-      comingFrom: event["visitSummary"].comingFrom,
-      contactPerson: event["visitSummary"].contactPerson,
-      contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
-      contactPersonPhone: event["visitSummary"].contactPersonPhone,
-      purpose: event["visitSummary"].purpose,
-      officeLocation: event["visitSummary"].officeLocation,
-      inTime: event["visitSummary"].inTime,
-      outTime: event["visitSummary"].outTime,
-      status: "APPROVED",
-      scheduledTime: event["visitSummary"].scheduledTime,
-      remarks: event["visitSummary"].remarks
-    };
-    this.visitorService
-      .updateVisitSummary(event.id, this.visitorSummaryObj)
-      .pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
-      .subscribe(() => {
-        this.refreshData();
-        if (this.approved) {
-          this.approved.refreshData();
-        }
-      });
+    // this.visitorSummaryObj = {
+    //   visitNumber: event["visitSummary"].visitNumber, // Existing one no need to change
+    //   badgeNo: event["visitSummary"].badgeNo,
+    //   comingFrom: event["visitSummary"].comingFrom,
+    //   contactPerson: event["visitSummary"].contactPerson,
+    //   contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
+    //   contactPersonPhone: event["visitSummary"].contactPersonPhone,
+    //   purpose: event["visitSummary"].purpose,
+    //   officeLocation: event["visitSummary"].officeLocation,
+    //   inTime: event["visitSummary"].inTime,
+    //   outTime: event["visitSummary"].outTime,
+    //   status: "APPROVED",
+    //   scheduledTime: event["visitSummary"].scheduledTime,
+    //   remarks: event["visitSummary"].remarks
+    // };
+    // this.visitorService
+    //   .updateVisitSummary(event.id, this.visitorSummaryObj)
+    //   .pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
+    //   .subscribe(() => {
+    //     this.refreshData();
+    //     if (this.approved) {
+    //       this.approved.refreshData();
+    //     }
+    //   });
   }
 
   applyFilter(filterValue: string) {
