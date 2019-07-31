@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -19,6 +19,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 //		http.authorizeRequests().anyRequest().authenticated().and().oauth2Login().userInfoEndpoint()
 //				.oidcUserService(oidcUserService);
-		http.authorizeRequests().anyRequest().permitAll();
+		http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll();
 	}
 }
