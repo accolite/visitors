@@ -87,6 +87,16 @@ export class PendingRequestComponent extends DataObtainer<any>
     //       this.approved.refreshData();
     //     }
     //   });
+    console.log(event);
+    this.visitorService
+      .approveOnBehalf(event)
+      .pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
+      .subscribe(() => {
+        this.refreshData();
+        if (this.approved) {
+          this.approved.refreshData();
+        }
+      });
   }
 
   applyFilter(filterValue: string) {

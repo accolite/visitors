@@ -126,9 +126,10 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       )[0];
 
       putVisitor.visitSummary.badgeNo = dialogRefModel.badgeNo;
-      this.visitorService
-        .updateVisitSummary(putVisitor.id, putVisitor.visitSummary)
-        .subscribe();
+      // this.visitorService
+      //   .updateVisitSummary(putVisitor.id, putVisitor.visitSummary)
+      //   .subscribe();
+      this.visitorService.sendNotifyMail(putVisitor).subscribe();
     });
   }
   applyFilter(filterValue: string) {
