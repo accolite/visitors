@@ -186,6 +186,7 @@ public class VisitorController {
 		return new ResponseEntity<String>(notification.toString(), HttpStatus.OK);
 	}
 
+
 	/**
 	 * @param visitorId
 	 * @param visitNumber
@@ -199,7 +200,6 @@ public class VisitorController {
 	public ResponseEntity<String> approvalResponse(@RequestParam("visitorId") String visitorId,
 			@RequestParam("visitNumber") String visitNumber, @RequestParam("visitorEmail") String visitorEmail,
 			@RequestParam("approval") String approval, @RequestParam("remarks") String remarks) {
-
 		logger.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:"
 				+ approval + " remarks:" + remarks + " visitorMail:" + visitorEmail);
 
@@ -236,6 +236,13 @@ public class VisitorController {
 			return new ResponseEntity<String>(notifyResponse.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<String>(notifyResponse.toString(), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/approveOnBehalf")
+	public ResponseEntity<String> approveOnBehalf(@RequestBody Visitor visitor) {
+
+		visitorService.approveOnBehalf(visitor);
+		return new ResponseEntity<String>("Approved !", HttpStatus.OK);
 	}
 
 }

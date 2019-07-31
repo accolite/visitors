@@ -1,0 +1,30 @@
+<p>
+	Dear <strong>${visitor.visitSummary.contactPerson}</strong>,
+</p>
+<p>The visitor scheduled by you, is waiting at reception.</p>
+<p>Visitor Details:</p>
+<p>
+	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />Email:
+	<strong>${visitor.email}</strong><br />Contact Number: <strong>${visitor.phone}</strong><br />Coming
+	From: <strong>${visitor.visitSummary.comingFrom}</strong><br />Purpose:
+	<strong>${visitor.visitSummary.purpose}<br /></strong>Scheduled Time:
+	<strong>${visitor.visitSummary.scheduledTime}</strong><br />In Time: <strong>${visitor.visitSummary.inTime}<br />
+		<br /></strong>
+</p>
+<p>Please Provide Your Response below:</p>
+<form action="${appURL}/api-dev/visitor/${responseEndpoint}" method="get">
+	<input name="visitorId" type="hidden" value="${visitor.id}" /> <input
+		name="visitNumber" type="hidden"
+		value="${visitor.visitSummary.visitNumber}" /> 
+		<input type="hidden" name="visitorEmail" value="${visitor.email}"> 
+		<input
+		checked="checked" name="approval" type="radio"
+		value="${visitor.statusApproved}" /><label
+		style="color: green; font-weight: bold;"> Noticed</label> <input
+		name="approval" type="radio" value="${visitor.statusDeclined}" /><label
+		style="color: red; font-weight: bold;"> Ignore</label><br /> <br />
+	Comment / Remarks: <input name="remarks" type="text"
+		value="Wait for 10 minutes !" /><br /> <br />
+	<button type="submit">Submit</button>
+</form>
+<p>This is a system generated mail, do not reply directly.</p>
