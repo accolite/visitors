@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +28,7 @@ public class WebSocketController {
 	}
 
 	@MessageMapping("/topic/greetings")
-	@SendTo("/topic/greetings")
+	// @SendTo("/topic/greetings")
 	// @ResponseBody
 	public String greeting(String message) throws Exception {
 		System.out.println("************Message from Client : " + message);
