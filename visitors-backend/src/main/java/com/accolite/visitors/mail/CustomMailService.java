@@ -1,8 +1,9 @@
 package com.accolite.visitors.mail;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,12 +23,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import com.accolite.visitors.db.VisitorsMongoData;
 import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
+import com.google.common.io.CharStreams;
 
 @Service
 public class CustomMailService {
@@ -76,8 +77,10 @@ public class CustomMailService {
 
 	public String readFile(String filePath) {
 		try {
-			File file = ResourceUtils.getFile(filePath);
-			return new String(Files.readAllBytes(file.toPath()));
+			 InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
+			 Reader reader = new InputStreamReader(resourceAsStream);
+			 String data = CharStreams.toString(reader);			
+			return data;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +109,8 @@ public class CustomMailService {
 
 	public boolean sendApprovalReqMail(Visitor visitor) {
 		String subjectLine = "Visitor Approval Required for " + visitor.getFirstName();
-		String fileContent = readFile("classpath:approval_request.html");
+		String fileContent = readFile("approval_request.html");
+		//ClassLoader classLoader = getClass().getClassLoader();
 		valuesMap.put("responseEndpoint", "approvalResponse");
 		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
 		String mailContent = StrSubstitutor.replace(fileContent);
@@ -134,7 +138,7 @@ public class CustomMailService {
 	public boolean sendReqCreationMail(Visitor visitor) {
 		boolean status = false;
 		String subjectLine = "Visit Request created for " + visitor.getFirstName();
-		String fileContent = readFile("classpath:v_req_created_notice.html");
+		String fileContent = readFile("v_req_created_notice.html");
 		valuesMap.put("responseEndpoint", "approvalResponse");
 		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
 		String mailContent = StrSubstitutor.replace(fileContent);
@@ -178,7 +182,7 @@ public class CustomMailService {
 
 		new Thread(() -> {// notify visitor for his/her visit
 			final String sub = "Your visit request created for Accolite office ";
-			String fileContent = readFile("classpath:notify_to_visitor_req_creation.html");
+			String fileContent = readFile("notify_to_visitor_req_creation.html");
 			StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
 			String mailContent = StrSubstitutor.replace(fileContent);
 			if (sendMail(visitor.getEmailId(), sub, mailContent))
@@ -221,7 +225,7 @@ public class CustomMailService {
 		valuesMap.put("responseEndpoint", "notifyResponse");
 
 		String subjectLine = "Visitor " + visitor.getFirstName() + " is waiting at Reception";
-		String fileContent = readFile("classpath:visitor_arrival_notification.html");
+		String fileContent = readFile("visitor_arrival_notification.html");
 		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
 		String mailContent = StrSubstitutor.replace(fileContent);
 		if (sendMail(visitor.getVisitSummary().get(0).getContactPersonEmailId(), subjectLine, mailContent)) {
@@ -265,7 +269,7 @@ public class CustomMailService {
 	public void sendApproveOnBehalf(Visitor visitor) {
 		VisitSummary visitSummary=visitor.getVisitSummary().get(0);
 		String subjectLine = "One Visitor Request Approved on Behalf of You" ;
-		String fileContent = readFile("classpath:approval_on_behalf.html");
+		String fileContent = readFile("approval_on_behalf.html");
 		visitor.setVisitSummary(Arrays.asList(visitSummary));
 		valuesMap.put("responseEndpoint", "approvalResponse");
 		valuesMap = mapPlaceHolders(visitor);
