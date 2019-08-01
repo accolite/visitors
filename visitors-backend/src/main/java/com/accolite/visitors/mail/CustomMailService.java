@@ -1,11 +1,9 @@
 package com.accolite.visitors.mail;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import com.accolite.visitors.db.VisitorsMongoData;
 import com.accolite.visitors.enums.VisitorStatus;
