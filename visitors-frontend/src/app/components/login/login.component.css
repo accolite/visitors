@@ -1,0 +1,51 @@
+.loginScreenBgImg {
+  background-image: url('../../../assets/images/accolite-bg.png');
+  background-size: 100% 100vh;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.centerDiv {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    width: 300px;
+    height: 200px;
+    margin: auto;
+    border-radius: 20px;
+    border:1px solid grey;
+  }
+  
+  .loginInner {
+    padding: 30px;
+  }
+  
+  .googleLoginBtn {
+    width: 240px;
+    height: 25px;
+    background-color: #6ca3d8;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    margin-top: 40px;
+  }
+  
+  .googleLoginBtn:hover {
+    cursor: pointer;
+  }
+  
+  .accoliteLogoImg {
+    width:180px;
+    height:54px;
+    display:block;
+    margin:auto;
+    margin-top: 10px;
+  }
+
+  
+
+  

@@ -1,20 +1,26 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LoginComponent } from './components/login/login.component';
 import { ReportComponent } from './modules/report/report.component';
 import { VisitorComponent } from './modules/visitor-form/visitor-home/visitor-home.component';
-import { loginComponent } from '../app/components/login.component'
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
-
-  { path: '', pathMatch: 'full', component: VisitorComponent },
-  // { path: 'login', pathMatch: 'full', component: loginComponent },
-  { path: 'visitor', pathMatch: 'full', component: VisitorComponent },
-  { path: 'report', pathMatch: 'full', component: ReportComponent },
-
+  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+  {
+    path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService],
+    children: [
+      { path: '', redirectTo: 'report', pathMatch: 'full' },
+      { path: 'report', component: ReportComponent, canActivate: [AuthGuardService] },
+      { path: 'visitor', component: VisitorComponent, canActivate: [AuthGuardService] }
+    ]
+  },
+  { path: 'login', component: LoginComponent },
 ];
 
-@NgModule( {
-  imports: [ RouterModule.forRoot( routes ) ],
-  exports: [ RouterModule ]
-} )
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
 export class AppRoutingModule { }
