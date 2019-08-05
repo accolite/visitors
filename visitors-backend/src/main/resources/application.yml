@@ -37,3 +37,13 @@ logging:  level:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
 applicationURL: http://13.233.40.37:8081
+
+# Message constants
+NEW: Visit entry is created for <VisitorName>
+PENDING: Status is Pending for <VisitorName>
+SCHEDULED: Visit is scheduled for <VisitorName> by <ContactPerson>
+APPROVED: Visit is approved for <VisitorName> by <ContactPerson>
+DECLINED: Visit is declined for <VisitorName> by <ContactPerson>
+CANCELLED: Visit is cancelled for <VisitorName> by <LoggedUser>
+COMPLETED: <VisitorName> has completed his/her visit
+FAILED: Visit is failed for <VisitorName> due to some internal issues
