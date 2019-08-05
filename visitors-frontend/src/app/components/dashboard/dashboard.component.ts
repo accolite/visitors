@@ -3,48 +3,50 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { accoliteLocation } from 'src/app/helpers/static-data';
 
-@Component({
+@Component( {
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
-})
+  styleUrls: [ './dashboard.component.css' ]
+} )
 export class DashboardComponent implements OnInit {
   active: any;
   title = 'visitor-frontend';
   location: any = accoliteLocation;
   val: string = 'Bangalore';
+  showToggle: boolean = false;
+  showNotification: boolean = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute,
-    private auth: AuthService) {
-    if (window.location.href.indexOf('?loc') > -1) {
-      this.val = window.location.href.split("=")[1];
+  constructor( private router: Router, private activatedRoute: ActivatedRoute,
+    private auth: AuthService ) {
+    if ( window.location.href.indexOf( '?loc' ) > -1 ) {
+      this.val = window.location.href.split( "=" )[ 1 ];
     } else {
       this.val = 'Bangalore';
-      this.selectedValue(this.val)
+      this.selectedValue( this.val )
     }
   }
 
   ngOnInit() {
-    this.auth.subject$.subscribe((data) => this.active = data)
-    console.log(window.location.href);
-    if (window.location.href.indexOf('login') > -1) {
-      console.log("login route")
-      this.auth.subject$.next(false);
+    this.auth.subject$.subscribe( ( data ) => this.active = data )
+    console.log( window.location.href );
+    if ( window.location.href.indexOf( 'login' ) > -1 ) {
+      console.log( "login route" )
+      this.auth.subject$.next( false );
     }
     else {
-      this.auth.subject$.next(true);
+      this.auth.subject$.next( true );
     }
   }
 
-  selectedValue(selectedval: string) {
+  selectedValue( selectedval: string ) {
     this.val = selectedval;
-    this.router.navigate([],
+    this.router.navigate( [],
       {
         relativeTo: this.activatedRoute,
         queryParams: { loc: this.val },
         queryParamsHandling: 'merge',
 
-      })
+      } )
   }
 
 }
