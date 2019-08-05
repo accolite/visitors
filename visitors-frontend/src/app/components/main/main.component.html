@@ -10,13 +10,13 @@
 <mat-sidenav-container id="sidenavContainer" fullscreen>
     <mat-sidenav mode="side" #sidenav id="sidenav" opened>
         <mat-nav-list class="matNavList">
-            <a mat-list-item [routerLink]="['visitor']" routerLinkActive="active" [queryParams]="{ loc: val }">
+            <a mat-list-item [routerLink]="['/visitor']" routerLinkActive="active" [queryParams]="{ loc: val }">
                 <div class="icon-content">
                     <mat-icon>group</mat-icon>
                     <span>Visitor</span>
                 </div>
             </a>
-            <a mat-list-item [routerLink]="['report']" routerLinkActive="active" [queryParams]="{ loc: val }">
+            <a mat-list-item [routerLink]="['/report']" routerLinkActive="active" [queryParams]="{ loc: val }">
                 <div class="icon-content">
                     <mat-icon>insert_invitation</mat-icon>
                     <span>Report</span>
