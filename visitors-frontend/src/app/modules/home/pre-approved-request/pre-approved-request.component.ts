@@ -26,9 +26,10 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   pagination = false;
   searchObj: any;
   visitorSummaryObj: any;
-  visitor: any;
+  visitorData: any;
   badge: any;
   visitorSummaryObj2: any;
+  visitor: any;
 
   @Input()
   approved: ApprovedRequestComponent;
@@ -101,35 +102,65 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       });
   }
   assignBadge(event) {
-    this.visitor = {
-      firstName: event.firstName,
-      lastName: event.lastName,
-      badgeNo: event.visitSummary.badgeNo,
-      phoneNumber: event.phoneNumber,
-      contactPerson: event.visitSummary.contactPerson,
-      comingFrom: event.visitSummary.comingFrom,
-      purpose: event.visitSummary.purpose,
-      inTime: event.visitSummary.inTime,
-      scheduledTime: event.visitSummary.scheduledTime,
-      emailId: event.emailId
-    };
     const dialogRef = this.dialog.open(DialogOverviewComponent, {
       width: "500px",
-      data: this.visitor
+      data: event
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let dialogRefModel = new dataModel(result.data);
+      this.visitorData = {
+        badgeNo: result.data.visitSummary.badgeNo,
 
-      let putVisitor = this.visitors.filter(
-        (data: any) => dialogRefModel.phoneNumber == data.phoneNumber
-      )[0];
+        contactPerson: result.data.visitSummary.contactPerson,
+        comingFrom: result.data.visitSummary.comingFrom,
+        purpose: result.data.visitSummary.purpose,
+        inTime: result.data.visitSummary.inTime,
+        scheduledTime: result.data.visitSummary.scheduledTime,
+        remarks: result.data.visitSummary.remarks,
+        status: "PENDING",
+        outTime: result.data.visitSummary.outTime,
+        officeLocation: result.data.visitSummary.officeLocation,
+        contactPersonEmailId: result.data.visitSummary.contactPersonEmailId,
+        contactPersonPhone: result.data.visitSummary.contactPersonPhone,
+        visitNumber: result.data.visitSummary.visitNumber
+      };
 
-      putVisitor.visitSummary.badgeNo = dialogRefModel.badgeNo;
-      // this.visitorService
-      //   .updateVisitSummary(putVisitor.id, putVisitor.visitSummary)
-      //   .subscribe();
-      this.visitorService.sendNotifyMail(putVisitor).subscribe();
+      this.visitor = {
+        // badgeNo: result.data.visitSummary.badgeNo,
+        visitSummary: [result.data.visitSummary],
+
+        // contactPerson: result.data.visitSummary.contactPerson,
+        // comingFrom: result.data.visitSummary.comingFrom,
+        // purpose: result.data.visitSummary.purpose,
+        // inTime: result.data.visitSummary.inTime,
+        // scheduledTime: result.data.visitSummary.scheduledTime,
+        // remarks: result.data.visitSummary.remarks,
+        // status: "PENDING",
+        // outTime: result.data.visitSummary.outTime,
+        // officeLocation: result.data.visitSummary.officeLocation,
+        // contactPersonEmailId: result.data.visitSummary.contactPersonEmailId,
+        // contactPersonPhone: result.data.visitSummary.contactPersonPhone,
+        // visitNumber: result.data.visitSummary.visitNumber,
+        firstName: result.data.firstName,
+        lastName: result.data.lastName,
+        id: result.data.id,
+        idType: result.data.idType,
+        emailId: result.data.emailId,
+
+        idNumber: result.data.idNumber,
+        visitorType: result.data.visitorType,
+        phoneNumber: result.data.phoneNumber
+      };
+      console.log(result.data);
+      this.visitorService
+        .updateVisitSummary(result.data.id, this.visitorData)
+        .subscribe(() => {
+          this.visitorService.sendNotifyMail(this.visitor).subscribe();
+          this.refreshData();
+          if (this.pending) {
+            this.pending.refreshData();
+          }
+        });
     });
   }
   applyFilter(filterValue: string) {

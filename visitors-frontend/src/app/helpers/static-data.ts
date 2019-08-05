@@ -21,7 +21,7 @@ export const accoliteSnackbarMessages = {
     },
     error: {
       "create-visitors": "Failed to create Visitor details",
-      "successfully-approved": "Failed to approve visitor",
+      // "successfully-approved": "Failed to approve visitor",
       "successfully-exited": "Failed to exit"
     }
   }

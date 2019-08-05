@@ -5,7 +5,7 @@ import { VisitorService } from "src/app/services/visitor.service";
 import { ServiceSearchParamsInputModel } from "src/app/helpers/models/service-search-params-input.model";
 import { PreApprovedRequestComponent } from "../pre-approved-request/pre-approved-request.component";
 import { ApprovedRequestComponent } from "../approved-request/approved-request.component";
-import { tap } from "rxjs/operators";
+
 import { RestService } from "src/app/services/base/rest.service";
 
 @Component({
@@ -18,7 +18,8 @@ export class PendingRequestComponent extends DataObtainer<any>
   visitors: any;
   pagination = false;
   searchObj: any;
-  visitorSummaryObj: any;
+  visitorObj: any;
+  visitor: any;
 
   @Input()
   approved: ApprovedRequestComponent;
@@ -63,39 +64,45 @@ export class PendingRequestComponent extends DataObtainer<any>
   }
 
   approveVisitor(event) {
-    // this.visitorSummaryObj = {
-    //   visitNumber: event["visitSummary"].visitNumber, // Existing one no need to change
-    //   badgeNo: event["visitSummary"].badgeNo,
-    //   comingFrom: event["visitSummary"].comingFrom,
-    //   contactPerson: event["visitSummary"].contactPerson,
-    //   contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
-    //   contactPersonPhone: event["visitSummary"].contactPersonPhone,
-    //   purpose: event["visitSummary"].purpose,
-    //   officeLocation: event["visitSummary"].officeLocation,
-    //   inTime: event["visitSummary"].inTime,
-    //   outTime: event["visitSummary"].outTime,
-    //   status: "APPROVED",
-    //   scheduledTime: event["visitSummary"].scheduledTime,
-    //   remarks: event["visitSummary"].remarks
-    // };
-    // this.visitorService
-    //   .updateVisitSummary(event.id, this.visitorSummaryObj)
-    //   .pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
-    //   .subscribe(() => {
-    //     this.refreshData();
-    //     if (this.approved) {
-    //       this.approved.refreshData();
-    //     }
-    //   });
-    console.log(event);
+    this.visitorObj = {
+      visitNumber: event["visitSummary"].visitNumber, // Existing one no need to change
+      badgeNo: event["visitSummary"].badgeNo,
+      comingFrom: event["visitSummary"].comingFrom,
+      contactPerson: event["visitSummary"].contactPerson,
+      contactPersonEmailId: event["visitSummary"].contactPersonEmailId,
+      contactPersonPhone: event["visitSummary"].contactPersonPhone,
+      purpose: event["visitSummary"].purpose,
+      officeLocation: event["visitSummary"].officeLocation,
+      inTime: event["visitSummary"].inTime,
+      outTime: event["visitSummary"].outTime,
+      status: "APPROVED",
+      scheduledTime: event["visitSummary"].scheduledTime,
+      remarks: event["visitSummary"].remarks
+    };
+    this.visitor = {
+      firstName: event.firstName,
+      lastName: event.lastName,
+      emailId: event.emailId,
+      idType: event.idType,
+      idNumber: event.idNumber,
+      id: event.id,
+      visitorType: event.visitorType,
+      phoneNumber: event.phoneNumber,
+      imageId: "",
+      visitSummary: [this.visitorObj]
+    };
+
     this.visitorService
-      .approveOnBehalf(event)
-      .pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
+      .updateVisitSummary(event.id, this.visitorObj)
       .subscribe(() => {
         this.refreshData();
         if (this.approved) {
           this.approved.refreshData();
         }
+        this.visitorService
+          .approveOnBehalf(this.visitor)
+          //.pipe(tap(this.rest.createNotifySnackbar("successfully-approved")))
+          .subscribe(() => {});
       });
   }
 
