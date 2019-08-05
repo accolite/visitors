@@ -10,11 +10,12 @@ import { ReportModule } from "./modules/report/report.module";
 import { VisitorsModule } from "./modules/visitor-form/visitors.module";
 import { HomeModule } from "./modules/home/home.module";
 import { DialogOverviewComponent } from "./modules/home/dialog-overview/dialog-overview.component";
-import { loginComponent } from './components/login.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule( {
-  declarations: [ AppComponent, loginComponent ],
+  declarations: [ AppComponent, LoginComponent, DashboardComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
