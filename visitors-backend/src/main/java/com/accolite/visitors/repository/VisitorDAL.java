@@ -12,10 +12,24 @@ import com.accolite.visitors.model.Visitor;
 
 public interface VisitorDAL {
 
-	long updateEndTime(String id, Map<String, String> requestData);
+	/**
+	 * @param id
+	 * @param requestData
+	 * @return
+	 */
+	public long updateEndTime(String id, Map<String, String> requestData);
 
-	long addVisitSummary(String id, VisitSummary visitor);
+	/**
+	 * @param id
+	 * @param visitor
+	 * @return
+	 */
+	public long addVisitSummary(String id, VisitSummary visitor);
 
+	/**
+	 * @param email
+	 * @return
+	 */
 	public Optional<Visitor> findByEmailId(String email);
 
 	/**
@@ -29,11 +43,16 @@ public interface VisitorDAL {
 
 	/**
 	 * @param id
-	 * @param visitSummary
+	 * @param visitSummaryMap
 	 * @return
 	 */
-	public long updateVisitSummary(String id, VisitSummary visitSummary);
+	public long updateVisitSummary(String id, Map<String, Object> visitSummaryMap);
 
+	/**
+	 * @param searchParams
+	 * @param pageable
+	 * @return
+	 */
 	public CustomPage searchVisitors(Map<VisitorSearchCriteria, Object> searchParams, Pageable pageable);
 
 }

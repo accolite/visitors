@@ -1,6 +1,5 @@
 package com.accolite.visitors.service;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -46,24 +45,12 @@ public interface VisitorService {
 	public void exitVisitor(String id, Map<String, String> requestData) throws VisitorNotFoundException;
 
 	/**
-	 * @return
-	 */
-	public List<Visitor> getVisitors();
-
-	/**
 	 * delete visitor by id
 	 * 
 	 * @param id
 	 * @return
 	 */
 	public boolean deleteVisitor(String id);
-
-	/**
-	 * @param searchParams
-	 * @return
-	 */
-	// public List<Visitor> searchVisitor(Map<VisitorSearchCriteria, Object>
-	// searchParams);
 
 	/**
 	 * @param id
@@ -89,9 +76,9 @@ public interface VisitorService {
 
 	/**
 	 * @param id
-	 * @param visitSummary
+	 * @param visitSummaryMap
 	 */
-	public void updateVisitSummary(String id, VisitSummary visitSummary);
+	public void updateVisitSummary(String id, @Valid Map<String, Object> visitSummaryMap);
 
 	/**
 	 * 
@@ -123,7 +110,8 @@ public interface VisitorService {
 	 * @param visitNumber
 	 * @param approval
 	 */
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval,String remarks, String visitorMail);
+	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remarks,
+			String visitorMail);
 
 	/**
 	 * 
@@ -131,14 +119,14 @@ public interface VisitorService {
 	 * @param visitNumber
 	 * @param niticed
 	 */
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,String visitorMail);
+	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,
+			String visitorMail);
 
 	/**
 	 * 
 	 * @param id
 	 * @param visitSummary
 	 */
-	//public void approveOnBehalf(String id, @Valid VisitSummary visitSummary);
 	public void approveOnBehalf(@Valid Visitor visitor);
 
 }

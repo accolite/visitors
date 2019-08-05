@@ -93,19 +93,20 @@ public class VisitorDALImpl implements VisitorDAL {
 	}
 
 	@Override
-	public long updateVisitSummary(String id, VisitSummary visitSummary) {
+	public long updateVisitSummary(String id, Map<String, Object> visitSummaryMap) {
 
 		Update update = new Update();
-		update.set("visitSummary.$", visitSummary);
+		visitSummaryMap.forEach((a, b) -> update.set("visitSummary.$." + a, b));
 
 		return mongoTemplate.updateFirst(
 				query(where("id").is(id)
-						.andOperator(where("visitSummary.visitNumber").is(visitSummary.getVisitNumber()))),
+						.andOperator(where("visitSummary.visitNumber").is(visitSummaryMap.get("visitNumber")))),
 				update, Visitor.class).getModifiedCount();
 	}
 
 	@Override
 	public CustomPage searchVisitors(Map<VisitorSearchCriteria, Object> searchParams, Pageable pageable) {
+
 		Criteria visitorCriteria = new Criteria();
 		Criteria visitSummaryCriteria = new Criteria();
 		if (searchParams != null) {
@@ -147,6 +148,7 @@ public class VisitorDALImpl implements VisitorDAL {
 		aggregationList.add(match(visitorCriteria.andOperator(visitSummaryCriteria)));
 		aggregationList.add(unwind("visitSummary"));
 		aggregationList.add(match(visitSummaryCriteria));
+
 		if (pageable.getSort().isSorted())
 			aggregationList.add(sort(pageable.getSort()));
 		aggregationList.add(group().count().as("total").addToSet(pageable.getPageNumber()).as("pageNumber")
@@ -155,12 +157,14 @@ public class VisitorDALImpl implements VisitorDAL {
 				.sliceArrayOf("data").offset((int) pageable.getOffset()).itemCount(pageable.getPageSize())).as("data"));
 		CustomPage page = mongoTemplate.aggregate(newAggregation(aggregationList), Visitor.class, CustomPage.class)
 				.getUniqueMappedResult();
+
 		if (page == null) {
 			page = new CustomPage();
 			page.setTotal(0);
 			page.setPageNumber(pageable.getPageNumber());
 			page.setPageSize(pageable.getPageSize());
 		}
+
 		return page;
 	}
 
