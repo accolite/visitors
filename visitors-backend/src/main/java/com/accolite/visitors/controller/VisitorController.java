@@ -89,11 +89,11 @@ public class VisitorController {
 	 * @param id
 	 * @return
 	 */
-	@PutMapping(value = "/updateVisitSummary/{id}")
-	public ResponseEntity<Visitor> updateVisitSummary(@Valid @RequestBody VisitSummary visitSummary,
+	@PatchMapping(value = "/updateVisitSummary/{id}")
+	public ResponseEntity<Visitor> updateVisitSummary(@Valid @RequestBody Map<String, Object> visitSummaryMap,
 			@PathVariable("id") String id) {
 
-		visitorService.updateVisitSummary(id, visitSummary);
+		visitorService.updateVisitSummary(id, visitSummaryMap);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -185,7 +185,6 @@ public class VisitorController {
 		}
 		return new ResponseEntity<String>(notification.toString(), HttpStatus.OK);
 	}
-
 
 	/**
 	 * @param visitorId
