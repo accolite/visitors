@@ -13,6 +13,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,7 +52,10 @@ public class VisitorController {
 	 * @return
 	 */
 	@GetMapping(value = "/email/{email}")
-	public ResponseEntity<?> getVisitorByEmail(@PathVariable("email") String email) {
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> getVisitorByEmail(@PathVariable("email") String email,
+			@AuthenticationPrincipal OidcUser oidc) {
+		logger.info("OIDC" + oidc.toString());
 
 		Visitor visitor = visitorService.getVisitorByEmail(email);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);

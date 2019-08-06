@@ -30,7 +30,7 @@ spring:  data:    mongodb:      database: visitors-dev
         registration:
           google:
              client-id: 978462556205-2l4sdcobrd4htrcrdmnuokktuuca8ms1.apps.googleusercontent.com
-             client-secret: IShDppijVj4UuXWT2PWyMk3x
+             client-secret: <client-secret>
 
 logging:  level:
     com.accolite.visitor: DEBUG  pattern:
