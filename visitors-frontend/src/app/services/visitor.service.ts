@@ -3,57 +3,60 @@ import { Injectable } from "@angular/core";
 import { tap, catchError } from "rxjs/operators";
 import { urls } from "../../config/constants";
 import { RestService } from "./base/rest.service";
-import { Observable, of } from 'rxjs';
+import { Observable, of } from "rxjs";
 
-@Injectable( {
+@Injectable({
   providedIn: "root"
-} )
+})
 export class VisitorService {
-  constructor( private restService: RestService ) { }
+  constructor(private restService: RestService) {}
 
-
-  getVisitorByEmailId( emailId: string ) {
-    return this.restService.get( urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId ).pipe( catchError( ( err ) => {
-      console.log( err );
-      return of( null )
-    } ) );
-  }
-
-  createNewVisitor( visitorObj: any ) {
+  getVisitorByEmailId(emailId: string) {
     return this.restService
-      .jsonPost( urls.BASE_URL + urls.CREATE_NEW_VISITOR, visitorObj )
-      .pipe( tap( this.restService.createNotifySnackbar( "create-visitors" ) ) );
+      .get(urls.BASE_URL + urls.GET_VISITOR_BY_EMAIL + emailId)
+      .pipe(
+        catchError(err => {
+          console.log(err);
+          return of(null);
+        })
+      );
   }
 
-  addVisitorSummary( visitorId: string, visitorSummaryObj: any ) {
+  createNewVisitor(visitorObj: any) {
+    return this.restService
+      .jsonPost(urls.BASE_URL + urls.CREATE_NEW_VISITOR, visitorObj)
+      .pipe(tap(this.restService.createNotifySnackbar("create-visitors")));
+  }
+
+  addVisitorSummary(visitorId: string, visitorSummaryObj: any) {
     return this.restService.jsonPost(
       urls.BASE_URL + urls.ADD_VISIT_SUMMARY + visitorId,
       visitorSummaryObj
     );
   }
 
-  updateVisitorDetails( visitorId: string, visitorObj: any ) {
+  updateVisitorDetails(visitorId: string, visitorObj: any) {
     return this.restService.jsonPost(
       urls.BASE_URL + urls.UPDATE_VISITOR_DETAILS + visitorId,
       visitorObj
     );
   }
 
-  updateVisitSummary( visitorId: string, visitSummaryObj: any ) {
+  updateVisitSummary(visitorId: string, visitSummaryObj: any) {
     return this.restService.jsonPut(
       urls.BASE_URL + urls.UPDATE_VISITOR_SUMMARY + visitorId,
       visitSummaryObj
     );
   }
 
-  sendApprovalMail( reqObj: any ) {
+  sendApprovalMail(reqObj: any) {
     return this.restService.jsonPost(
       urls.BASE_URL + urls.SEND_APPROVAL_MAIL,
       reqObj
     );
   }
 
-  sendNotifyMail( reqObj: any ) {
+  sendNotifyMail(reqObj: any) {
     return this.restService.jsonPost(
       urls.BASE_URL + urls.SEND_NOTIFY_MAIL,
       reqObj
@@ -61,19 +64,19 @@ export class VisitorService {
   }
 
   fetchAllVisitors() {
-    return this.restService.get( urls.BASE_URL );
+    return this.restService.get(urls.BASE_URL);
   }
 
-  fetchVisitorsByInTime( startDate: string, endDate: string ) {
+  fetchVisitorsByInTime(startDate: string, endDate: string) {
     let params = new HttpParams();
-    params.set( "startDate", startDate );
-    params.set( "endDate", endDate );
-    return this.restService.get( urls.BASE_URL + urls.GET_VISITORS_BY_IN_TIME, {
+    params.set("startDate", startDate);
+    params.set("endDate", endDate);
+    return this.restService.get(urls.BASE_URL + urls.GET_VISITORS_BY_IN_TIME, {
       params: params
-    } );
+    });
   }
 
-  updateExitTime( visitorId: string, visitNumber: number, remarks: string ) {
+  updateExitTime(visitorId: string, visitNumber: number, remarks: string) {
     const reqObj = {
       visitNumber: visitNumber,
       remarks: remarks
@@ -84,20 +87,24 @@ export class VisitorService {
     );
   }
 
-  fetchVisitor( id: string ) {
-    return this.restService.get( urls.BASE_URL + id );
+  fetchVisitor(id: string) {
+    return this.restService.get(urls.BASE_URL + id);
   }
 
-  searchVisitor( searchObj: any, page: number = 0, pageSize: number = 10 ) {
-    let searchURL = urls.BASE_URL + urls.SEARCH + `?page=${ page }&size=${ pageSize }`;
-    return this.restService.jsonPost( searchURL, searchObj );
+  searchVisitor(searchObj: any, page: number = 0, pageSize: number = 10) {
+    let searchURL =
+      urls.BASE_URL + urls.SEARCH + `?page=${page}&size=${pageSize}`;
+    return this.restService.jsonPost(searchURL, searchObj);
   }
 
-  deleteVisitorSummary( visitSummaryId: string ) {
-    return this.restService.get( urls.BASE_URL + visitSummaryId );
+  deleteVisitorSummary(visitSummaryId: string) {
+    return this.restService.get(urls.BASE_URL + visitSummaryId);
   }
 
   approveOnBehalf(reqObj: any) {
-    return this.restService.jsonPost(urls.BASE_URL + urls.APPROVE_ON_BEHALF, reqObj);
+    return this.restService.jsonPost(
+      urls.BASE_URL + urls.APPROVE_ON_BEHALF,
+      reqObj
+    );
   }
 }
