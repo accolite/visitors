@@ -1,0 +1,129 @@
+.example-container {
+  height: 50%;
+  margin: 10px;
+}
+.mat-sidenav-content{
+  height: 100% !important;
+  padding: 1.5rem;
+}
+
+.mat-toolbar-row {
+  background: #000;
+}
+
+.initial-title{
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.notification-popup {
+  color: #000;
+  position: absolute;
+  border-radius: 4px;
+  right: 1rem;
+  z-index: 5;
+  background: #fff;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.20);
+  max-width: 250px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: #ddd 1px solid;
+  cursor: pointer;
+}
+
+.notification-subject {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.notification-comment {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: italic;
+}
+/* .set-position{
+  position: absolute;
+  right: 2rem;
+} */
+
+.nav-section-left {
+  flex: 7;
+}
+
+.nav-section-right{
+  flex:3;
+  text-align: right;
+  padding-right: 2rem;
+  position: relative;
+}
+
+.nav-section-right .toolbar-icon{
+  vertical-align: bottom;
+}
+
+/* .mat-toolbar-row, .mat-toolbar-single-row {
+height: 81px;
+margin-top: 9px;
+} */
+
+.span-img{
+  display: inline-block;
+  
+}
+.icon-content{
+  padding-left: 0.5rem;
+}
+.icon-content mat-icon{
+  vertical-align: bottom;
+}
+
+.icon-content span{
+  padding-left: 0.5rem;
+  font-size: 17px;
+  color: #696969;
+}
+
+#img {
+  width: 11rem !important;
+  margin: 0px 1rem;
+  padding-top: 0.65rem;
+  vertical-align: bottom;
+}
+
+.nav-section{
+  width: 100%;
+  display: flex;
+}
+
+.active{
+  font-weight: 700;
+  color: #ff3d00!important;
+  background: rgba(0,0,0,.04);
+}
+.active span{
+  color: #ff3d00!important;
+
+}
+
+mat-toolbar-row{
+margin: 0 !important;
+}
+
+.mat-drawer.mat-drawer-side{
+z-index: 1 !important;
+}
+
+.matNavList{
+  height: 86%;
+}
+
+.locSelect{
+  margin-top: 5px !important;
+}

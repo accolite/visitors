@@ -10,11 +10,13 @@ import { ReportModule } from "./modules/report/report.module";
 import { VisitorsModule } from "./modules/visitor-form/visitors.module";
 import { HomeModule } from "./modules/home/home.module";
 import { DialogOverviewComponent } from "./modules/home/dialog-overview/dialog-overview.component";
-import { loginComponent } from './components/login.component';
+import { LoginComponent } from './components/login/login.component';
+import { MainComponent } from './components/main/main.component';
+import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
 
 
 @NgModule( {
-  declarations: [ AppComponent, loginComponent ],
+  declarations: [ AppComponent, LoginComponent, MainComponent, NoPageFoundComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

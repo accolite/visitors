@@ -36,14 +36,14 @@ export class VisitorService {
   }
 
   updateVisitorDetails(visitorId: string, visitorObj: any) {
-    return this.restService.jsonPost(
+    return this.restService.jsonPatch(
       urls.BASE_URL + urls.UPDATE_VISITOR_DETAILS + visitorId,
       visitorObj
     );
   }
 
   updateVisitSummary(visitorId: string, visitSummaryObj: any) {
-    return this.restService.jsonPut(
+    return this.restService.jsonPatch(
       urls.BASE_URL + urls.UPDATE_VISITOR_SUMMARY + visitorId,
       visitSummaryObj
     );
