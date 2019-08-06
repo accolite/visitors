@@ -30,6 +30,10 @@ export class RestService {
     return this.http.put( url, body, options )
   }
 
+  jsonPatch( url: string, body?: any, options: { params?: HttpParams, headers?: HttpHeaders } = {} ) {
+    return this.http.patch( url, body, options )
+  }
+
   delete( url: string, options: { params?: HttpParams, headers?: HttpHeaders } = {} ) {
     return this.http.delete( url, options )
   }
