@@ -73,11 +73,7 @@ export class VisitorService {
     } );
   }
 
-  updateExitTime( visitorId: string, visitNumber: number, remarks: string ) {
-    const reqObj = {
-      visitNumber: visitNumber,
-      remarks: remarks
-    };
+  updateExitTime( visitorId: string, reqObj: any ) {
     return this.restService.jsonPut(
       urls.BASE_URL + urls.EXIT_TIME + visitorId,
       reqObj
