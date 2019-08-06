@@ -28,6 +28,7 @@ import com.accolite.visitors.db.VisitorsMongoData;
 import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
+import com.accolite.visitors.util.WebSocketHelper;
 import com.google.common.io.CharStreams;
 
 @Service
@@ -38,6 +39,9 @@ public class CustomMailService {
 
 	@Autowired
 	private VisitorsMongoData visitorsMongoData;
+
+	@Autowired
+	private WebSocketHelper webSocketHelper;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -77,9 +81,9 @@ public class CustomMailService {
 
 	public String readFile(String filePath) {
 		try {
-			 InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
-			 Reader reader = new InputStreamReader(resourceAsStream);
-			 String data = CharStreams.toString(reader);			
+			InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
+			Reader reader = new InputStreamReader(resourceAsStream);
+			String data = CharStreams.toString(reader);
 			return data;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -89,19 +93,23 @@ public class CustomMailService {
 
 	public Map<String, String> mapPlaceHolders(Visitor visitor) {
 		Map<String, String> valuesMap = new HashMap<>();
-	
+
 		valuesMap.put("appURL", env.getProperty("applicationURL"));
 		valuesMap.put("visitor.firstName", String.valueOf(visitor.getFirstName()));
 		valuesMap.put("visitor.lastName", String.valueOf(visitor.getLastName()));
-		valuesMap.put("visitor.visitSummary.contactPerson", String.valueOf(visitor.getVisitSummary().get(0).getContactPerson()));
+		valuesMap.put("visitor.visitSummary.contactPerson",
+				String.valueOf(visitor.getVisitSummary().get(0).getContactPerson()));
 		valuesMap.put("visitor.email", String.valueOf(visitor.getEmailId()));
 		valuesMap.put("visitor.phone", String.valueOf(visitor.getPhoneNumber()));
-		valuesMap.put("visitor.visitSummary.comingFrom",String.valueOf( visitor.getVisitSummary().get(0).getComingFrom()));
+		valuesMap.put("visitor.visitSummary.comingFrom",
+				String.valueOf(visitor.getVisitSummary().get(0).getComingFrom()));
 		valuesMap.put("visitor.visitSummary.purpose", String.valueOf(visitor.getVisitSummary().get(0).getPurpose()));
-		valuesMap.put("visitor.id",String.valueOf( visitor.getId()));
-		valuesMap.put("visitor.visitSummary.visitNumber", String.valueOf(visitor.getVisitSummary().get(0).getVisitNumber()));
+		valuesMap.put("visitor.id", String.valueOf(visitor.getId()));
+		valuesMap.put("visitor.visitSummary.visitNumber",
+				String.valueOf(visitor.getVisitSummary().get(0).getVisitNumber()));
 		valuesMap.put("visitor.visitSummary.inTime", String.valueOf(visitor.getVisitSummary().get(0).getInTime()));
-		valuesMap.put("visitor.visitSummary.scheduledTime",String.valueOf(visitor.getVisitSummary().get(0).getScheduledTime()));
+		valuesMap.put("visitor.visitSummary.scheduledTime",
+				String.valueOf(visitor.getVisitSummary().get(0).getScheduledTime()));
 		valuesMap.put("visitor.statusDeclined", VisitorStatus.DECLINED.toString());
 		valuesMap.put("visitor.statusApproved", VisitorStatus.APPROVED.toString());
 		return valuesMap;
@@ -110,7 +118,7 @@ public class CustomMailService {
 	public boolean sendApprovalReqMail(Visitor visitor) {
 		String subjectLine = "Visitor Approval Required for " + visitor.getFirstName();
 		String fileContent = readFile("approval_request.html");
-		//ClassLoader classLoader = getClass().getClassLoader();
+		// ClassLoader classLoader = getClass().getClassLoader();
 		valuesMap.put("responseEndpoint", "approvalResponse");
 		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
 		String mailContent = StrSubstitutor.replace(fileContent);
@@ -122,6 +130,7 @@ public class CustomMailService {
 					"Approval Mail Sent");
 			logger.info("Status Updated to PENDING for visitNumber: "
 					+ visitor.getVisitSummary().get(0).getVisitNumber() + " of visitorID: " + visitor.getId() + "!!");
+			webSocketHelper.pushData(visitor, VisitorStatus.PENDING);
 			return true;
 		} else {
 			logger.info("Unable to Send Approval mail to" + visitor.getVisitSummary().get(0).getContactPersonEmailId()
@@ -131,6 +140,7 @@ public class CustomMailService {
 					"Unable to send Approval Mail");
 			logger.info("Status Updated to Failed for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
 					+ " of visitorID: " + visitor.getId() + "!!");
+			webSocketHelper.pushData(visitor, VisitorStatus.FAILED);
 			return false;
 		}
 	}
@@ -156,6 +166,7 @@ public class CustomMailService {
 				"Request Created by: " + visitor.getVisitSummary().get(0).getContactPersonEmailId());
 		logger.info("Status Updated to SCHEDULED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
 				+ " of visitorID: " + visitor.getId() + "!!");
+		webSocketHelper.pushData(visitor, VisitorStatus.SCHEDULED);
 		return status;
 	}
 
@@ -221,7 +232,7 @@ public class CustomMailService {
 
 		logger.info("INSIDE sendVisitorArrivalMail()");
 		JSONObject status = new JSONObject();
-	valuesMap = mapPlaceHolders(visitor);
+		valuesMap = mapPlaceHolders(visitor);
 		valuesMap.put("responseEndpoint", "notifyResponse");
 
 		String subjectLine = "Visitor " + visitor.getFirstName() + " is waiting at Reception";
@@ -236,7 +247,8 @@ public class CustomMailService {
 					"Arrival notification Mail Sent");
 			logger.info("Status Updated to PENDING for visitNumber: "
 					+ visitor.getVisitSummary().get(0).getVisitNumber() + " of visitorID: " + visitor.getId() + "!!");
-			
+			webSocketHelper.pushData(visitor, VisitorStatus.PENDING);
+
 			new Thread(() -> {// notify Visitor
 				final String sub = "Your POC " + visitor.getVisitSummary().get(0).getContactPerson()
 						+ " has been notified for your visit @ Accolite office ";
@@ -257,6 +269,7 @@ public class CustomMailService {
 					+ " of visitorID: " + visitor.getId() + "!!");
 			status.put("fail", "true");
 			status.put("status", "unable to send Approval Mail");
+			webSocketHelper.pushData(visitor, VisitorStatus.FAILED);
 			return status;
 		}
 
@@ -267,8 +280,8 @@ public class CustomMailService {
 	}
 
 	public void sendApproveOnBehalf(Visitor visitor) {
-		VisitSummary visitSummary=visitor.getVisitSummary().get(0);
-		String subjectLine = "One Visitor Request Approved on Behalf of You" ;
+		VisitSummary visitSummary = visitor.getVisitSummary().get(0);
+		String subjectLine = "One Visitor Request Approved on Behalf of You";
 		String fileContent = readFile("approval_on_behalf.html");
 		visitor.setVisitSummary(Arrays.asList(visitSummary));
 		valuesMap.put("responseEndpoint", "approvalResponse");
@@ -276,22 +289,20 @@ public class CustomMailService {
 		StrSubstitutor StrSubstitutor = new StrSubstitutor(valuesMap);
 		String mailContent = StrSubstitutor.replace(fileContent);
 		if (sendMail(visitSummary.getContactPersonEmailId(), subjectLine, mailContent)) {
-			logger.info(visitSummary.getContactPersonEmailId()
-					+ " is Notified for Approval on behalf of him/her !!");
+			logger.info(visitSummary.getContactPersonEmailId() + " is Notified for Approval on behalf of him/her !!");
 		} else {
 			logger.info(visitSummary.getContactPersonEmailId()
 					+ " is unable to Notified for Approval on behalf of him/her !!");
 		}
-		String remarks="Approved on behalf of POC";
-		if(visitSummary.getRemarks()!=null && ! visitSummary.getRemarks().isEmpty()) {
-			remarks=visitSummary.getRemarks();
+		String remarks = "Approved on behalf of " + visitSummary.getContactPerson();
+		if (visitSummary.getRemarks() != null && !visitSummary.getRemarks().isEmpty()) {
+			remarks = visitSummary.getRemarks();
 		}
 		visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
-				visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.APPROVED.toString(),
-				remarks);
+				visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.APPROVED.toString(), remarks);
 
-		logger.info("Status Updated to APPROVED for visitNumber: "
-				+ visitor.getVisitSummary().get(0).getVisitNumber() + " of visitorID: " + visitor.getId() + "!!");
-
+		logger.info("Status Updated to APPROVED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
+				+ " of visitorID: " + visitor.getId() + "!!");
+		webSocketHelper.pushData(visitor, VisitorStatus.APPROVED);
 	}
 }
