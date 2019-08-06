@@ -1,6 +1,7 @@
 package com.accolite.visitors.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -10,12 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.accolite.visitors.enums.VisitorSearchCriteria;
+import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.mail.CustomMailService;
 import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.repository.VisitorRepository;
+import com.accolite.visitors.util.WebSocketHelper;
 
 /**
  * @author Lavanya
@@ -31,6 +34,9 @@ public class VisitorServiceImpl implements VisitorService {
 	@Autowired
 	private CustomMailService customMailService;
 
+	@Autowired
+	private WebSocketHelper webSocketHelper;
+
 	@Override
 	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {
 		return visitorRepository.findByEmailId(email)
@@ -43,11 +49,14 @@ public class VisitorServiceImpl implements VisitorService {
 	@Override
 	public Visitor createVisitor(Visitor visitor) {
 
-		if (visitor.getVisitSummary() != null && visitor.getVisitSummary().size() == 1) {
-			visitor.getVisitSummary().get(0).setInTime(new Date());
-			visitor.getVisitSummary().get(0).setVisitNumber(1);
+		List<VisitSummary> visitSummary = visitor.getVisitSummary();
+		if (visitSummary != null && visitSummary.size() == 1) {
+			visitSummary.get(0).setInTime(new Date());
+			visitSummary.get(0).setVisitNumber(1);
+			visitSummary.get(0).setStatus(VisitorStatus.NEW);
 		}
 		Visitor visitorResult = visitorRepository.save(visitor);
+		webSocketHelper.pushData(visitor, VisitorStatus.NEW);
 		if (visitor != null) {
 			new Thread(() -> {
 				customMailService.sendApprovalMail(visitor);
@@ -74,6 +83,7 @@ public class VisitorServiceImpl implements VisitorService {
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
+		// TODO status changed to COMPLETED
 	}
 
 	@Override
