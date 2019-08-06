@@ -67,12 +67,13 @@ export class ApprovedRequestComponent extends DataObtainer<any>
     this.dataSource.sort = this.sort;
   }
   exit(data) {
-    this.visitorService
-      .updateExitTime(
-        data.id,
-        data.visitSummary.visitNumber,
-        data.visitSummary.remarks
-      )
+    const reqObj = {
+      'firstName': data.firstName,
+      'lastName': data.lastName,
+      'visitNumber': data.visitSummary.visitNumber,
+      'remarks': data.visitSummary.remarks
+    }
+    this.visitorService.updateExitTime(data.id, reqObj)
       .pipe(tap(this.rest.createNotifySnackbar("successfully-exited")))
       .subscribe(val => {
         this.refreshData();
