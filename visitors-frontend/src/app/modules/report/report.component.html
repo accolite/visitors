@@ -1,8 +1,9 @@
 <card cardTitle='Report'>
-<div class="mat-elevation-z8">
+
     <div class="report-loading-shade"   *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-</div>
+    </div>
+    <div class="mat-elevation-z8">   
 <table mat-table matSort [dataSource]="dataSource">
 
  <!--- Note that these columns can be defined in any order.
@@ -109,6 +110,7 @@
    <tr mat-header-row *matHeaderRowDef="displayedSearchBoxes" ></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="openDialog(row)"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="[2,5,10,15]"  [length]="resultsLength" [pageSize]="pageSize"  showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSizeOptions]="[5,10,15]"  [length]="resultsLength" [pageSize]="pageSize"  showFirstLastButtons></mat-paginator>
 </div>
 </card>
+<br>
