@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, NgZone } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, NgZone, SimpleChanges } from "@angular/core";
 import { DataObtainer } from "src/app/components/base/data-obtainer.component";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { VisitorService } from "src/app/services/visitor.service";
@@ -35,6 +35,7 @@ export class PendingRequestComponent extends DataObtainer<any> {
   dataSource: MatTableDataSource<any>;
 
   displayedColumns = [ "Name", "badgeNo", "inTime", "actions", "remarks" ];
+  @Input()
   ofcLocation: any;
 
   constructor(
@@ -43,6 +44,12 @@ export class PendingRequestComponent extends DataObtainer<any> {
     private rest: RestService
   ) {
     super( zone );
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes.ofcLocation ) {
+      this.refreshData()
+    }
   }
 
   getDataObservable( params: ServiceSearchParamsInputModel ) {

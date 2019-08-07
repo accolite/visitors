@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, NgZone } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, NgZone, SimpleChanges } from "@angular/core";
 import { DataObtainer } from "src/app/components/base/data-obtainer.component";
 import {
   MatPaginator,
@@ -46,6 +46,7 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   dataSource: MatTableDataSource<any>;
 
   displayedColumns = [ "Name", "badgeNo", "contactPerson", "actions", "remarks" ];
+  @Input()
   ofcLocation: any;
 
   constructor(
@@ -55,6 +56,13 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
     public dialog: MatDialog
   ) {
     super( zone );
+
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes.ofcLocation ) {
+      this.refreshData()
+    }
   }
 
   ngOnInit() {
