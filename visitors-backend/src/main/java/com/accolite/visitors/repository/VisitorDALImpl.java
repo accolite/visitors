@@ -132,7 +132,11 @@ public class VisitorDALImpl implements VisitorDAL {
 					break;
 				case status:
 				case officeLocation:
-					visitSummaryCriteria.and("visitSummary." + key).is(value);
+					@SuppressWarnings("unchecked")
+					List<String> locations = (ArrayList<String>) value;
+					Criteria locationCriteria = new Criteria();
+					locationCriteria = where("visitSummary." + key).in(locations);
+					visitSummaryCriteria.andOperator(locationCriteria);
 					break;
 				case inTime:
 					LocalDate inTime = LocalDate.parse(value.toString());
@@ -144,6 +148,7 @@ public class VisitorDALImpl implements VisitorDAL {
 				}
 			}
 		}
+
 		List<AggregationOperation> aggregationList = new ArrayList<>();
 		aggregationList.add(match(visitorCriteria.andOperator(visitSummaryCriteria)));
 		aggregationList.add(unwind("visitSummary"));
