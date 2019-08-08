@@ -131,6 +131,7 @@ public class VisitorDALImpl implements VisitorDAL {
 					visitSummaryCriteria.and("visitSummary." + key).regex("^" + value, "i");
 					break;
 				case status:
+					visitSummaryCriteria.and("visitSummary." + key).is(value);
 				case officeLocation:
 					@SuppressWarnings("unchecked")
 					List<String> locations = (ArrayList<String>) value;
