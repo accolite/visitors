@@ -29,12 +29,11 @@ spring:  data:    mongodb:      database: visitors-dev
       client:
         registration:
           google:
-             client-id: 978462556205-2l4sdcobrd4htrcrdmnuokktuuca8ms1.apps.googleusercontent.com
-             client-secret: IShDppijVj4UuXWT2PWyMk3x
-
+            client-id: 978462556205-2l4sdcobrd4htrcrdmnuokktuuca8ms1.apps.googleusercontent.com
+            client-secret: <client-secret>
 logging:  level:
     com.accolite.visitor: DEBUG  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %C{1.} %msg%n"
 
 applicationURL: http://13.233.40.37:8081
 
@@ -47,3 +46,14 @@ DECLINED: Visit is declined for <VisitorName> by <ContactPerson>
 CANCELLED: Visit is cancelled for <VisitorName> by <LoggedUser>
 COMPLETED: <VisitorName> has completed his/her visit
 FAILED: Visit is failed for <VisitorName> due to some internal issues
+
+app:
+  security:
+    token:
+      alias: visitor
+      expireSeconds: 200000
+      path: visitor.jks
+      type: JKS
+      password: <password>
+#    cookie:
+#      age: 180
