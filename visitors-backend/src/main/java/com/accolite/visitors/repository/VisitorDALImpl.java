@@ -132,12 +132,11 @@ public class VisitorDALImpl implements VisitorDAL {
 					break;
 				case status:
 					visitSummaryCriteria.and("visitSummary." + key).is(value);
+					break;
 				case officeLocation:
 					@SuppressWarnings("unchecked")
 					List<String> locations = (ArrayList<String>) value;
-					Criteria locationCriteria = new Criteria();
-					locationCriteria = where("visitSummary." + key).in(locations);
-					visitSummaryCriteria.andOperator(locationCriteria);
+					visitSummaryCriteria.and("visitSummary." + key).in(locations);
 					break;
 				case inTime:
 					LocalDate inTime = LocalDate.parse(value.toString());
