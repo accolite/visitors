@@ -105,27 +105,35 @@ public interface VisitorService {
 	public JSONObject sendNotifyMail(Visitor visitorApprovalData);
 
 	/**
-	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @param contactPerson
 	 * @param visitorId
 	 * @param visitNumber
 	 * @param approval
+	 * @param remarks
+	 * @param visitorMail
+	 * @return
 	 */
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remarks,
-			String visitorMail);
+	public JSONObject approvalResponse(String firstName, String lastName, String contactPerson, String visitorId,
+			String visitNumber, String approval, String remarks, String visitorMail);
 
 	/**
-	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @param contactPerson
 	 * @param visitorId
 	 * @param visitNumber
 	 * @param niticed
+	 * @param remarks
+	 * @param visitorMail
+	 * @return
 	 */
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,
-			String visitorMail);
+	public JSONObject notifyResponse(String firstName, String lastName, String contactPerson, String visitorId,
+			String visitNumber, String niticed, String remarks, String visitorMail);
 
 	/**
-	 * 
-	 * @param id
-	 * @param visitSummary
+	 * @param visitor
 	 */
 	public void approveOnBehalf(@Valid Visitor visitor);
 

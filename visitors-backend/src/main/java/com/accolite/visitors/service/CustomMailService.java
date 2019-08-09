@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -218,8 +220,8 @@ public class CustomMailService {
 		return status;
 	}
 
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remarks,
-			String visitorEmail) {
+	public JSONObject approvalResponse(String firstName, String lastName, String contactPerson, String visitorId,
+			String visitNumber, String approval, String remarks, String visitorEmail) {
 
 		JSONObject response = new JSONObject();
 		String status = "Unable to Update Status for visitorId: " + visitorId + " visitNumber: " + visitNumber
@@ -229,11 +231,21 @@ public class CustomMailService {
 			logger.info("Status Updated to " + approval + " for visit number:" + visitNumber + "of visitorID :"
 					+ visitorId + "remarks" + remarks + "!!");
 			status = "Your Response is Recorded,  Thank you !!";
+
+			// Web socket data - need to be re-factored
 			VisitorStatus approvalStatus = VisitorStatus.DECLINED;
 			if (approval.equalsIgnoreCase(VisitorStatus.APPROVED.toString())) {
 				approvalStatus = VisitorStatus.APPROVED;
 			}
-			// webSocketHelper.pushData(visitor, approvalStatus);
+			Visitor visitor = new Visitor();
+			visitor.setFirstName(firstName);
+			visitor.setLastName(lastName);
+			List<VisitSummary> visitSummaryList = new ArrayList<>();
+			VisitSummary visitSummary = new VisitSummary();
+			visitSummary.setContactPerson(contactPerson);
+			visitSummaryList.add(visitSummary);
+			visitor.setVisitSummary(visitSummaryList);
+			webSocketHelper.pushData(visitor, approvalStatus);
 
 			new Thread(() -> { // update visitor for his/her visit status
 				final String sub = "Update for your visit @ Accolite office ";
