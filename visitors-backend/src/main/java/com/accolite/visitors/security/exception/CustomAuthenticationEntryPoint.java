@@ -19,7 +19,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 	@Override
 	public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			AuthenticationException e) throws IOException, ServletException {
-		log.info("Sent 401: Unauthorized");
+		log.debug("Sent 401: Unauthorized");
 		httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 }

@@ -30,11 +30,10 @@ spring:  data:    mongodb:      database: visitors-dev
         registration:
           google:
              client-id: 978462556205-2l4sdcobrd4htrcrdmnuokktuuca8ms1.apps.googleusercontent.com
-             client-secret: <client-secret>
-
+             client-secret: <client-secret>             
 logging:  level:
-    com.accolite.visitor: DEBUG  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %C{1.} %msg%n"
+    com.accolite.visitors: DEBUG  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %C{1} %msg%n"
 
 applicationURL: http://13.233.40.37:8081
 
@@ -56,5 +55,3 @@ app:
       path: visitor.jks
       type: JKS
       password: <password>
-#    cookie:
-#      age: 180

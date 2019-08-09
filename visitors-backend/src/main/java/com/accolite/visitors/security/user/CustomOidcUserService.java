@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
 import com.accolite.visitors.security.enums.RoleType;
-import com.accolite.visitors.security.respository.UserRepository;
+import com.accolite.visitors.security.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class CustomOidcUserService extends OidcUserService {
 	public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
 
 		OidcUser oidcUser = super.loadUser(userRequest);
-		log.info("OAuth2 Oidc User: {}", oidcUser);
+		log.debug("OAuth2 Oidc User: {}", oidcUser);
 		Optional<User> user = userRepository.findByEmail(oidcUser.getEmail());
 		if (!user.isPresent()) {
 			User newUser = new User();

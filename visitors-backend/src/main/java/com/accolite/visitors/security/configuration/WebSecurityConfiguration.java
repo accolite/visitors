@@ -9,6 +9,7 @@ import java.security.cert.CertificateException;
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -20,6 +21,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -32,6 +34,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableConfigurationProperties(TokenProperties.class)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -39,6 +42,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationSuccessHandler successHandler;
+
+	@Autowired
+	private AuthenticationFailureHandler failureHandler;
 
 	@Autowired
 	private Filter tokenAuthenticationFilter;
@@ -64,14 +70,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				//
 				.and().exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
 				//
-				.and().authorizeRequests().antMatchers("/oauth2/**", "/favicon.ico").permitAll().anyRequest()
-				.authenticated()
+				.and().authorizeRequests()
+				.antMatchers("/oauth2/**", "/favicon.ico", "/error", "/v2/api-docs", "/configuration/ui",
+						"/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
+				.permitAll().anyRequest().authenticated()
 				//
 				.and().oauth2Login()
 				//
 				.authorizationEndpoint().authorizationRequestRepository(requestRepository)
 				//
 				.and().userInfoEndpoint().oidcUserService(oidcUserService).and().successHandler(successHandler)
+				.failureHandler(failureHandler)
 				//
 				.and().addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}

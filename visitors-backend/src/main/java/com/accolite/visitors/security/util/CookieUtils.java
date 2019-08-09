@@ -17,11 +17,10 @@ public class CookieUtils {
 				.filter(cookie -> cookie.getName().equals(name)).findFirst();
 	}
 
-	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
+	public static void addCookie(HttpServletResponse response, String name, String value) {
 		Cookie cookie = new Cookie(name, value);
 		cookie.setPath("/");
 		cookie.setHttpOnly(true);
-		cookie.setMaxAge(maxAge);
 		response.addCookie(cookie);
 	}
 

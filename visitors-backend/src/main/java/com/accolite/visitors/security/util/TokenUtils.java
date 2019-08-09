@@ -38,7 +38,7 @@ public class TokenUtils {
 
 	public String createToken(Authentication authentication) throws JOSEException {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		log.info("Principal " + authentication);
+		log.debug("Principal {}", authentication);
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + tokenProperties.getExpireSeconds());
 		JWTClaimsSet claims = new JWTClaimsSet.Builder().subject(userPrincipal.getSubject()).issueTime(new Date())
