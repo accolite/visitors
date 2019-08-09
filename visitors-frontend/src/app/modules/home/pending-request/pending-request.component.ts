@@ -64,6 +64,7 @@ export class PendingRequestComponent extends DataObtainer<any>
   }
 
   approveVisitor( event ) {
+
     this.visitorObj = {
       visitNumber: event[ "visitSummary" ].visitNumber, // Existing one no need to change
       badgeNo: event[ "visitSummary" ].badgeNo,

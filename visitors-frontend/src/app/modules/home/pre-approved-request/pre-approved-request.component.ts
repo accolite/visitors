@@ -108,39 +108,13 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
     } );
 
     dialogRef.afterClosed().subscribe( result => {
-      this.visitorData = {
-        badgeNo: result.data.visitSummary.badgeNo,
 
-        contactPerson: result.data.visitSummary.contactPerson,
-        comingFrom: result.data.visitSummary.comingFrom,
-        purpose: result.data.visitSummary.purpose,
-        inTime: result.data.visitSummary.inTime,
-        scheduledTime: result.data.visitSummary.scheduledTime,
-        remarks: result.data.visitSummary.remarks,
-        status: "PENDING",
-        outTime: result.data.visitSummary.outTime,
-        officeLocation: result.data.visitSummary.officeLocation,
-        contactPersonEmailId: result.data.visitSummary.contactPersonEmailId,
-        contactPersonPhone: result.data.visitSummary.contactPersonPhone,
-        visitNumber: result.data.visitSummary.visitNumber
-      };
-
+      result.data.visitSummary.status = "PENDING";
       this.visitor = {
         // badgeNo: result.data.visitSummary.badgeNo,
         visitSummary: [ result.data.visitSummary ],
 
-        // contactPerson: result.data.visitSummary.contactPerson,
-        // comingFrom: result.data.visitSummary.comingFrom,
-        // purpose: result.data.visitSummary.purpose,
-        // inTime: result.data.visitSummary.inTime,
-        // scheduledTime: result.data.visitSummary.scheduledTime,
-        // remarks: result.data.visitSummary.remarks,
-        // status: "PENDING",
-        // outTime: result.data.visitSummary.outTime,
-        // officeLocation: result.data.visitSummary.officeLocation,
-        // contactPersonEmailId: result.data.visitSummary.contactPersonEmailId,
-        // contactPersonPhone: result.data.visitSummary.contactPersonPhone,
-        // visitNumber: result.data.visitSummary.visitNumber,
+
         firstName: result.data.firstName,
         lastName: result.data.lastName,
         id: result.data.id,
@@ -153,7 +127,7 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       };
       console.log( result.data );
       this.visitorService
-        .updateVisitSummary( result.data.id, this.visitorData )
+        .updateVisitSummary( result.data.id, result.data.visitSummary )
         .subscribe( () => {
           this.visitorService.sendNotifyMail( this.visitor ).subscribe();
           this.refreshData();
