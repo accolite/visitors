@@ -12,15 +12,20 @@
 <p>&nbsp;</p>
 <form action="${appURL}/api-dev/visitor/${responseEndpoint}"
 	method="get">
+	<input type="hidden" name="firstName" value="${visitor.firstName}">
+	<input type="hidden" name="lastName" value="${visitor.lastName}">
+	<input type="hidden" name="contactPerson" value="${visitor.visitSummary.contactPerson}">
 	<input type="hidden" name="visitorId" value="${visitor.id}">
 	<input type="hidden" name="visitNumber" value="${visitor.visitSummary.visitNumber}">
 	<input type="hidden" name="visitorEmail" value="${visitor.email}"> 
 	<input
 		type="radio" name="approval" value="${visitor.statusApproved}" checked><label
-		style="color: Green; font-weight: bold;"> Approve</label> <input
+		style="color: Green; font-weight: bold;"> Approve</label> 
+	<input
 		type="radio" name="approval" value="${visitor.statusDeclined}"><label
 		style="color: Red; font-weight: bold;"> Decline</label><br />
-	<br /> Comment / Remarks: <input required type="text" name="remarks"
+	<br /> 
+	Comment / Remarks: <input required type="text" name="remarks"
 		value="Wait for 10 minutes !"><br />
 	<br />
 	<button type="submit">Submit</button>
