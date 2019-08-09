@@ -9,19 +9,19 @@ import { NoPageFoundComponent } from './components/no-page-found/no-page-found.c
 
 const routes: Routes = [
   {
-    path: '', component: MainComponent, canActivate: [AuthGuardService],
+    path: '', component: MainComponent, canActivate: [ AuthGuardService ],
     children: [
-      { path: '', redirectTo: 'report', pathMatch: 'full' },
-      { path: 'report', component: ReportComponent, canActivate: [AuthGuardService] },
-      { path: 'visitor', component: VisitorComponent, canActivate: [AuthGuardService] }
+      { path: '', redirectTo: 'report', pathMatch: 'full', canActivate: [ AuthGuardService ] },
+      { path: 'report', component: ReportComponent, canActivate: [ AuthGuardService ] },
+      { path: 'visitor', component: VisitorComponent, canActivate: [ AuthGuardService ] }
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: '**', component: NoPageFoundComponent, canActivate: [AuthGuardService] }
+  { path: '**', component: NoPageFoundComponent, canActivate: [ AuthGuardService ] }
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
+@NgModule( {
+  imports: [ RouterModule.forRoot( routes ) ],
+  exports: [ RouterModule ]
+} )
 export class AppRoutingModule { }

@@ -14,4 +14,6 @@ export const urls = {
     'SEND_APPROVAL_MAIL': 'sendApprovalMail/',
     'SEND_NOTIFY_MAIL': 'sendNotifyMail',
     'APPROVE_ON_BEHALF': 'approveOnBehalf/',
+    'LOGIN': "http://visitor-dev.com:8081/oauth2/authorization/google",
+    'GET_USER_DETAILS': ''
 };
