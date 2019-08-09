@@ -2,51 +2,42 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { accoliteLocation } from 'src/app/helpers/static-data';
+import { ArrayUtil } from 'src/app/helpers/array.util';
 
 @Component( {
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: [ './main.component.css' ]
 } )
-export class MainComponent implements OnInit {
+export class MainComponent {
   active: any;
   title = 'visitor-frontend';
-  location: any = accoliteLocation;
-  val: string = 'Bangalore';
+  location: string[] = accoliteLocation;
+  val: string[] = [ 'Bangalore' ];
   showToggle: boolean = false;
   showNotification: boolean = false;
+  accLocation: any;
 
   constructor( private router: Router, private activatedRoute: ActivatedRoute,
     private auth: AuthService ) {
+    this.accLocation = this.val
     if ( window.location.href.indexOf( '?loc' ) > -1 ) {
-      this.val = window.location.href.split( "=" )[ 1 ];
+      let value: string = window.location.href.split( "=" )[ 1 ];
+      this.accLocation = this.val = value.split( ',' );
     } else {
-      this.val = 'Bangalore';
-      this.selectedValue( this.val )
+      this.val[ 0 ] = 'Bangalore';
+      this.selectedValue( [ this.val[ 0 ] ] )
     }
   }
 
-  ngOnInit() {
-    this.auth.subject$.subscribe( ( data ) => this.active = data )
-    console.log( window.location.href );
-    if ( window.location.href.indexOf( 'login' ) > -1 ) {
-      console.log( "login route" )
-      this.auth.subject$.next( false );
-    }
-    else {
-      this.auth.subject$.next( true );
-    }
-  }
-
-  selectedValue( selectedval: string ) {
-    this.val = selectedval;
+  selectedValue( selectedval: any ) {
     this.router.navigate( [],
-      {
+      ArrayUtil.isNotEmpty( selectedval ) ? {
         relativeTo: this.activatedRoute,
-        queryParams: { loc: this.val },
+        queryParams: { loc: selectedval.toString() },
         queryParamsHandling: 'merge',
 
-      } )
+      } : {} )
   }
 
 }

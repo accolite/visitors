@@ -1,10 +1,16 @@
 # Application configuration
-server:  port: 8081
+server:
+  port: 8081
 
-spring:  data:    mongodb:      database: visitors-dev
+spring:
+  data:
+    mongodb:
+      database: visitors-dev
       host: localhost
       port: 27017
-    web:      pageable:        default-page-size: 10
+    web:
+      pageable:
+        default-page-size: 10
   mail:
     host: smtp.gmail.com
     username: tempaccolite@gmail.com
@@ -32,13 +38,16 @@ spring:  data:    mongodb:      database: visitors-dev
              client-id: 978462556205-2l4sdcobrd4htrcrdmnuokktuuca8ms1.apps.googleusercontent.com
              client-secret: <client-secret>
 
-logging:  level:
-    com.accolite.visitor: DEBUG  pattern:
+logging:
+  level:
+    com.accolite.visitor: DEBUG
+  pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %C{1.} %msg%n"
 
 applicationURL: http://13.233.40.37:8081
 
-# Message constants
+
+# Web Socket Message constants
 NEW: Visit entry is created for <VisitorName>
 PENDING: Status is Pending for <VisitorName>
 SCHEDULED: Visit is scheduled for <VisitorName> by <ContactPerson>
@@ -47,7 +56,6 @@ DECLINED: Visit is declined for <VisitorName> by <ContactPerson>
 CANCELLED: Visit is cancelled for <VisitorName> by <LoggedUser>
 COMPLETED: <VisitorName> has completed his/her visit
 FAILED: Visit is failed for <VisitorName> due to some internal issues
-
 app:
   security:
     token:

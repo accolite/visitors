@@ -8,6 +8,7 @@ import { ArrayUtil } from '../../array.util';
 
 export class VisitorModel {
 
+  id: string;
   firstName: string;
   lastName: string;
   phoneNumber: number;
