@@ -42,15 +42,23 @@
                   <span>Visitor</span>
               </div>
           </a>
-          <a mat-list-item [routerLink]="['/report']" routerLinkActive="active" [queryParams]="{ loc: val }">
+          <a mat-list-item [routerLink]="['/report']" routerLinkActive="active" [queryParams]="{ loc:val }">
               <div class="icon-content">
                   <mat-icon>insert_invitation</mat-icon>
                   <span>Report</span>
               </div>
           </a>
       </mat-nav-list>
-      <drop-down class="locSelect" [data]="location" label="Location" [selectedValue]="val"
-          (selectedValueChange)="selectedValue($event)"></drop-down>
+      <!-- <drop-down class="locSelect" [data]="location" label="Location" [selectedValue]="val"
+          (selectedValueChange)="selectedValue($event)"></drop-down> -->
+
+          <mat-form-field>
+              <mat-label>Location</mat-label>
+              <mat-select [ngModel]="accLocation" (ngModelChange)="accLocation = $event;selectedValue($event)" name="val"  multiple>
+                <mat-option *ngFor="let accLocation of location" [value]="accLocation">{{accLocation}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
   </mat-sidenav>
   <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }">
       <router-outlet></router-outlet>

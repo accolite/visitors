@@ -1,10 +1,16 @@
 # Application configuration
-server:  port: 8081
+server:
+  port: 8081
 
-spring:  data:    mongodb:      database: visitors-dev
+spring:
+  data:
+    mongodb:
+      database: visitors-dev
       host: localhost
       port: 27017
-    web:      pageable:        default-page-size: 10
+    web:
+      pageable:
+        default-page-size: 10
   mail:
     host: smtp.gmail.com
     username: tempaccolite@gmail.com

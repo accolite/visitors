@@ -4,6 +4,7 @@
 package com.accolite.visitors.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import com.accolite.visitors.enums.VisitorStatus;
+import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 
 /**
@@ -32,27 +34,29 @@ public class WebSocketHelper {
 
 	public void pushData(Visitor visitor, VisitorStatus visitorStatus) {
 
-		String message = env.getProperty(visitorStatus.toString());
-		Map<String, Object> data = new HashMap<>();
-		data.put("message", constructMessage(visitor, message));
-		data.put("action", visitorStatus);
-
+		Map<String, Object> data = constructData(visitor, visitorStatus);
 		messagingTemplate.convertAndSend(WEB_SOCKET_SUBSCRIBER, data);
 	}
 
 	/**
 	 * @param visitor
-	 * @param message
+	 * @param visitorStatus
 	 * @return
 	 */
-	public String constructMessage(Visitor visitor, String message) {
+	public Map<String, Object> constructData(Visitor visitor, VisitorStatus visitorStatus) {
 
+		Map<String, Object> data = new HashMap<>();
+		String message = env.getProperty(visitorStatus.toString());
 		String name = visitor.getFirstName() + " " + visitor.getLastName();
-		String contactPerson = visitor.getVisitSummary().get(0).getContactPerson();
 		message = message.replace("<VisitorName>", name);
-		message = message.replace("<ContactPerson>", contactPerson);
+		List<VisitSummary> visitSummary = visitor.getVisitSummary();
+		if ((visitSummary != null) && (!visitSummary.isEmpty())) {
+			message = message.replace("<ContactPerson>", visitSummary.get(0).getContactPerson());
+		}
+		data.put("message", message);
+		data.put("action", visitorStatus);
 
-		return message;
+		return data;
 	}
 
 	@MessageExceptionHandler

@@ -5,8 +5,8 @@
 
 export class VisitSummaryModel {
 
-  badgeNo: string;
-  comingFrom: string
+  badgeNo: number;
+  comingFrom: string;
   contactPerson: string;
   contactPersonEmailId: string;
   contactPersonPhone: string;
@@ -19,7 +19,7 @@ export class VisitSummaryModel {
   remarks: string;
 
   constructor( jsonObj?: {} ) {
-    Object.assign( this, jsonObj )
+    Object.assign( this, jsonObj );
   }
 
 }

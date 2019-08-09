@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.exception.VisitorNotFoundException;
-import com.accolite.visitors.mail.CustomMailService;
 import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
@@ -83,7 +82,11 @@ public class VisitorServiceImpl implements VisitorService {
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
-		// TODO status changed to COMPLETED
+
+		Visitor visitor = new Visitor();
+		visitor.setFirstName(requestData.get("firstName"));
+		visitor.setLastName(requestData.get("lastName"));
+		webSocketHelper.pushData(visitor, VisitorStatus.COMPLETED);
 	}
 
 	@Override
