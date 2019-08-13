@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class TokenProperties {
 
-	private int expireSeconds;
+	private int expireMillis;
 	private String alias;
 	private String path;
 	private String type;

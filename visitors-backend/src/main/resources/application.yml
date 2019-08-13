@@ -57,7 +57,7 @@ app:
   security:
     token:
       alias: visitor
-      expireMilliSeconds: 86400000
+      expireMillis: 86400000
       path: visitor.jks
       type: JKS
       password: <password>
