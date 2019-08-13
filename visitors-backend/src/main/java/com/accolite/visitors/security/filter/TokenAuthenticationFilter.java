@@ -31,13 +31,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		log.debug("In TokenAuthenticationFilter");
+
 		String bearer = request.getHeader("Authorization");
+		log.debug("Token received: {}", bearer);
 		if (bearer != null && bearer.length() > 7 && bearer.startsWith("Bearer ")) {
 			bearer = bearer.substring(7);
-			log.debug("Token received: {}", bearer);
 			try {
 				UserDetails userDetails = tokenUtils.getPrincipalFromToken(bearer);
+				log.debug("Principal from token: {}", userDetails);
 				if (userDetails != null) {
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 							userDetails, null, userDetails.getAuthorities());

@@ -41,9 +41,14 @@ public class TokenUtils {
 		log.debug("Principal {}", authentication);
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + tokenProperties.getExpireSeconds());
-		JWTClaimsSet claims = new JWTClaimsSet.Builder().subject(userPrincipal.getSubject()).issueTime(new Date())
-				.expirationTime(expiryDate).claim("roles", userPrincipal.getAuthorities().stream()
-						.map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
+		JWTClaimsSet claims = new JWTClaimsSet.Builder()
+				.subject(userPrincipal.getSubject())
+				.issueTime(now)
+				.expirationTime(expiryDate)
+				.claim("roles", userPrincipal.getAuthorities()
+						.stream()
+						.map(GrantedAuthority::getAuthority)
+						.collect(Collectors.joining(",")))
 				.build();
 		SignedJWT token = new SignedJWT(new JWSHeader(JWSAlgorithm.RS256), claims);
 		token.sign(signer);
@@ -58,8 +63,10 @@ public class TokenUtils {
 		JWTClaimsSet claims = token.getJWTClaimsSet();
 		if (claims.getExpirationTime().before(new Date()))
 			throw new JOSEException("Expired");
-		return new UserPrincipal(claims.getSubject(), Arrays.stream(claims.getClaim("roles").toString().split(","))
-				.map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+		return new UserPrincipal(claims.getSubject(),
+				Arrays.stream(claims.getClaim("roles").toString().split(","))
+						.map(SimpleGrantedAuthority::new)
+						.collect(Collectors.toList()));
 	}
 
 }

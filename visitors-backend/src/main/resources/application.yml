@@ -39,7 +39,7 @@ spring:
              client-secret: <client-secret>             
 logging:  level:
     com.accolite.visitors: DEBUG  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %C{1} %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} %.-1level - %-40.40logger{40} : %msg%n"
 
 applicationURL: http://13.233.40.37:8081
 
@@ -57,7 +57,7 @@ app:
   security:
     token:
       alias: visitor
-      expireSeconds: 200000
+      expireMilliSeconds: 86400000
       path: visitor.jks
       type: JKS
       password: <password>

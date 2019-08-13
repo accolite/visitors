@@ -30,8 +30,13 @@ public class CustomOidcUserService extends OidcUserService {
 		Optional<User> user = userRepository.findByEmail(oidcUser.getEmail());
 		if (!user.isPresent()) {
 			User newUser = new User();
+//			newUser.setId(oidcUser.getName());
+			newUser.setFirstName(oidcUser.getGivenName());
+			newUser.setLastName(oidcUser.getFamilyName());
 			newUser.setEmail(oidcUser.getEmail());
 			newUser.setRoles(Arrays.asList(RoleType.ROLE_USER));
+			newUser.setPhoneNumber(oidcUser.getPhoneNumber());
+			newUser.setPhotoUrl(oidcUser.getPicture());
 			userRepository.save(newUser);
 			user = Optional.of(newUser);
 		}

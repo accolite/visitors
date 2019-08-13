@@ -33,7 +33,7 @@ import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.RSAKey;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableConfigurationProperties(TokenProperties.class)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -58,31 +58,30 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.cors().disable()
-				//
+		http
+				.cors()
+				.and()
 				.csrf().disable()
-				//
 				.formLogin().disable()
-				//
 				.httpBasic().disable()
-				//
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				//
-				.and().exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-				//
-				.and().authorizeRequests()
+				.and()
+				.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+				.and()
+				.authorizeRequests()
 				.antMatchers("/oauth2/**", "/favicon.ico", "/error", "/v2/api-docs", "/configuration/ui",
 						"/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
 				.permitAll().anyRequest().authenticated()
-				//
-				.and().oauth2Login()
-				//
+				.and()
+				.oauth2Login()
 				.authorizationEndpoint().authorizationRequestRepository(requestRepository)
-				//
-				.and().userInfoEndpoint().oidcUserService(oidcUserService).and().successHandler(successHandler)
+				.and()
+				.userInfoEndpoint().oidcUserService(oidcUserService)
+				.and()
+				.successHandler(successHandler)
 				.failureHandler(failureHandler)
-				//
-				.and().addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+				.and()
+				.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Bean
