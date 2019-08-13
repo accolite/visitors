@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, NgZone } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, NgZone, SimpleChanges } from "@angular/core";
 import { DataObtainer } from "src/app/components/base/data-obtainer.component";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 import { VisitorService } from "src/app/services/visitor.service";
@@ -37,6 +37,7 @@ export class PendingRequestComponent extends DataObtainer<any>
   dataSource: MatTableDataSource<any>;
 
   displayedColumns = [ "Name", "badgeNo", "inTime", "actions", "remarks" ];
+  @Input()
   ofcLocation: any;
 
   constructor(
@@ -48,6 +49,12 @@ export class PendingRequestComponent extends DataObtainer<any>
   }
   ngOnInit() { }
 
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes.ofcLocation ) {
+      this.refreshData()
+    }
+  }
+
   getDataObservable( params: ServiceSearchParamsInputModel ) {
     this.searchObj = {
       status: "PENDING",
@@ -58,6 +65,18 @@ export class PendingRequestComponent extends DataObtainer<any>
 
   onAfterUpdateData( data: any ) {
     this.visitors = data.data;
+    for ( let item in this.visitors ) {
+      if ( this.visitors[ item ].visitSummary.remarks == null ) {
+
+      }
+      else if ( this.visitors[ item ].visitSummary.remarks.includes( "|" ) ) {
+        let index = this.visitors[ item ].visitSummary.remarks.lastIndexOf( "|" );
+        this.visitors[ item ].visitSummary.remarks = this.visitors[ item ].visitSummary.remarks.slice( index + 1 )
+      }
+
+
+
+    }
     this.dataSource = new MatTableDataSource( this.visitors );
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -65,21 +84,8 @@ export class PendingRequestComponent extends DataObtainer<any>
 
   approveVisitor( event ) {
 
-    this.visitorObj = {
-      visitNumber: event[ "visitSummary" ].visitNumber, // Existing one no need to change
-      badgeNo: event[ "visitSummary" ].badgeNo,
-      comingFrom: event[ "visitSummary" ].comingFrom,
-      contactPerson: event[ "visitSummary" ].contactPerson,
-      contactPersonEmailId: event[ "visitSummary" ].contactPersonEmailId,
-      contactPersonPhone: event[ "visitSummary" ].contactPersonPhone,
-      purpose: event[ "visitSummary" ].purpose,
-      officeLocation: event[ "visitSummary" ].officeLocation,
-      inTime: event[ "visitSummary" ].inTime,
-      outTime: event[ "visitSummary" ].outTime,
-      status: "APPROVED",
-      scheduledTime: event[ "visitSummary" ].scheduledTime,
-      remarks: event[ "visitSummary" ].remarks
-    };
+
+    event.visitSummary.status = "APPROVED";
     this.visitor = {
       firstName: event.firstName,
       lastName: event.lastName,
@@ -90,11 +96,11 @@ export class PendingRequestComponent extends DataObtainer<any>
       visitorType: event.visitorType,
       phoneNumber: event.phoneNumber,
       imageId: "",
-      visitSummary: [ this.visitorObj ]
+      visitSummary: [ event.visitSummary ]
     };
 
     this.visitorService
-      .updateVisitSummary( event.id, this.visitorObj )
+      .updateVisitSummary( event.id, event.visitSummary )
       .subscribe( () => {
         this.refreshData();
         if ( this.approved ) {

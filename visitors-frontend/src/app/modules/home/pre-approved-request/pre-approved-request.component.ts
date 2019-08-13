@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, NgZone } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, NgZone, SimpleChanges } from "@angular/core";
 import { DataObtainer } from "src/app/components/base/data-obtainer.component";
 import {
   MatPaginator,
@@ -47,6 +47,7 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
   dataSource: MatTableDataSource<any>;
 
   displayedColumns = [ "Name", "badgeNo", "contactPerson", "actions", "remarks" ];
+  @Input()
   ofcLocation: any;
 
   constructor(
@@ -56,6 +57,13 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
     public dialog: MatDialog
   ) {
     super( zone );
+
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes.ofcLocation ) {
+      this.refreshData()
+    }
   }
 
   ngOnInit() {
@@ -91,7 +99,8 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       inTime: event[ "visitSummary" ].inTime,
       outTime: event[ "visitSummary" ].outTime,
       status: "CANCELLED",
-      scheduledTime: event[ "visitSummary" ].scheduledTime,
+      scheduledStartDate: event[ "visitSummary" ].scheduledStartDate,
+      scheduledEndDate: event[ "visitSummary" ].scheduledEndDate,
       remarks: event[ "visitSummary" ].remarks
     };
     this.visitorService
@@ -102,6 +111,7 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       } );
   }
   assignBadge( event ) {
+    console.log( event );
     const dialogRef = this.dialog.open( DialogOverviewComponent, {
       width: "500px",
       data: event

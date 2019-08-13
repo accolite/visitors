@@ -56,9 +56,9 @@ export class RestService {
     let message = ( key ) => ( accoliteSnackbarMessages[ 'rest' ] )[ key ];
     let observer: Observer<any> = {
       next: ( data ) => {
-        this.createSnackbar( message( 'success' )[ key ], action, durationMS, "success" )
+        this.createSnackbar( message( 'success' )[ key ] ? message( 'success' )[ key ] : key, action, durationMS, "success" )
       }, error: ( error ) => {
-        this.createSnackbar( message( 'error' )[ key ], action, durationMS, "error" )
+        this.createSnackbar( message( 'error' )[ key ] ? message( 'error' )[ key ] : key, action, durationMS, "error" )
       }, complete: () => {
       }
     }

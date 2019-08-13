@@ -10,10 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.accolite.visitors.db.VisitorsMongoData;
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.exception.VisitorNotFoundException;
-import com.accolite.visitors.mail.CustomMailService;
 import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
@@ -36,6 +36,9 @@ public class VisitorServiceImpl implements VisitorService {
 
 	@Autowired
 	private WebSocketHelper webSocketHelper;
+
+	@Autowired
+	private VisitorsMongoData visitorsMongoData;
 
 	@Override
 	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException {
@@ -83,7 +86,11 @@ public class VisitorServiceImpl implements VisitorService {
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
-		// TODO status changed to COMPLETED
+
+		Visitor visitor = new Visitor();
+		visitor.setFirstName(requestData.get("firstName"));
+		visitor.setLastName(requestData.get("lastName"));
+		webSocketHelper.pushData(visitor, VisitorStatus.COMPLETED);
 	}
 
 	@Override
@@ -94,6 +101,8 @@ public class VisitorServiceImpl implements VisitorService {
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
 		}
+		Visitor visitor = visitorsMongoData.getVisitorByIdAndVisitNumber(id, visitSummary.getVisitNumber());
+		webSocketHelper.pushData(visitor, VisitorStatus.NEW);
 	}
 
 	@Override
@@ -134,17 +143,19 @@ public class VisitorServiceImpl implements VisitorService {
 	}
 
 	@Override
-	public JSONObject approvalResponse(String visitorId, String visitNumber, String approval, String remaarks,
-			String visitorEmail) {
+	public JSONObject approvalResponse(String firstName, String lastName, String contactPerson, String visitorId,
+			String visitNumber, String approval, String remaarks, String visitorEmail) {
 
-		return customMailService.approvalResponse(visitorId, visitNumber, approval, remaarks, visitorEmail);
+		return customMailService.approvalResponse(firstName, lastName, contactPerson, visitorId, visitNumber, approval,
+				remaarks, visitorEmail);
 	}
 
 	@Override
-	public JSONObject notifyResponse(String visitorId, String visitNumber, String niticed, String remarks,
-			String visitorEmail) {
+	public JSONObject notifyResponse(String firstName, String lastName, String contactPerson, String visitorId,
+			String visitNumber, String niticed, String remarks, String visitorEmail) {
 
-		return customMailService.approvalResponse(visitorId, visitNumber, niticed, remarks, visitorEmail);
+		return customMailService.approvalResponse(firstName, lastName, contactPerson, visitorId, visitNumber, niticed,
+				remarks, visitorEmail);
 	}
 
 	@Override

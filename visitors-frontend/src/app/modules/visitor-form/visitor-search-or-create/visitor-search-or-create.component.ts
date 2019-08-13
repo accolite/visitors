@@ -3,97 +3,169 @@
  * gives flexibility to search or create visitor details
  */
 
-import { Component, ViewChild } from "@angular/core";
-import { Subject } from "rxjs";
-import {
-  debounceTime,
-  switchMap,
-  distinctUntilChanged,
-  filter
-} from "rxjs/operators";
-import { idType } from "src/app/helpers/static-data";
-import { VisitorModel } from "src/app/helpers/models/visitors/visitors.model";
-import { VisitorService } from "src/app/services/visitor.service";
-import { VisitSummaryModel } from "src/app/helpers/models/visitors/visit-summary.model";
-import { NgForm, FormControl } from "@angular/forms";
-import { MatStep } from "@angular/material";
-import { Router } from "@angular/router";
-@Component({
-  selector: "visitor-search-or-create",
-  templateUrl: "visitor-search-or-create.component.html",
-  styleUrls: ["visitor-search-or-create.component.css"]
-})
+
+import { Component, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, switchMap, distinctUntilChanged, filter } from 'rxjs/operators';
+import { idType, visitPurposes, addVisitStatus } from 'src/app/helpers/static-data';
+import { VisitorModel } from 'src/app/helpers/models/visitors/visitors.model';
+import { VisitorService } from 'src/app/services/visitor.service';
+import { VisitSummaryModel } from 'src/app/helpers/models/visitors/visit-summary.model';
+import { NgForm, FormControl } from '@angular/forms';
+import { MatStep } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
+
+@Component( {
+  selector: 'visitor-search-or-create',
+  templateUrl: 'visitor-search-or-create.component.html',
+  styleUrls: [ 'visitor-search-or-create.component.css' ],
+} )
 export class VisitorSearchOrCreateComponent {
-  search$: Subject<string> = new Subject<string>();
+  searchVisitor$: Subject<string> = new Subject<string>();
   user: VisitorModel;
   data: any;
   search: string;
-  model: { [propName: string]: any } = {};
+  model: { [ propName: string ]: any } = {};
   idTypes: Array<string> = idType;
-  showLoading: boolean = false;
+  visitPurposes: Array<string> = visitPurposes;
+  addVisitStatus: Array<string> = addVisitStatus;
+  showLoading = false;
+  officeLocation = 'Bangalore';
 
-  @ViewChild("heroForm", { static: true })
+  @ViewChild( "heroForm", { static: true } )
   heroForm: NgForm;
 
-  isEmailPresent: boolean = true;
+  isEmailPresent = true;
 
-  @ViewChild("step", { static: true })
+  @ViewChild( 'step', { static: true } )
   step: MatStep;
+  isAddVisit = false;
+  visitStatus: string;
+  checked = false;
+  @ViewChild( 'ref', { static: true } ) ref;
 
-  constructor(private visitorService: VisitorService, private router: Router) {
+  constructor( private visitorService: VisitorService, private router: Router,
+    private route: ActivatedRoute ) {
     this.createUser();
   }
 
   ngOnInit() {
-    this.search$
-      .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        filter(data => data != ""),
-        switchMap(data => {
-          this.showLoading = true;
-          return this.visitorService.getVisitorByEmailId(data);
-        })
-      )
-      .subscribe(data => {
-        this.data = data;
-        if (data) {
-          this.user = new VisitorModel(data);
-          this.isEmailPresent = true;
-          this.showLoading = false;
-        } else {
-          this.createUser();
-          this.user.emailId = this.search;
-          this.isEmailPresent = false;
-          this.showLoading = false;
-        }
-      });
+    this.route.queryParams.subscribe( params => {
+      this.officeLocation = params.loc;
+    } );
+    this.searchVisitor$.pipe(
+      debounceTime( 1000 ),
+      distinctUntilChanged(),
+      filter( ( data ) => data != '' ),
+      switchMap( ( data ) => {
+        this.showLoading = true;
+        return this.visitorService.getVisitorByEmailId( data );
+      } )
+    ).subscribe( ( data ) => {
+      this.data = data;
+      console.log( this.data );
+      this.isAddVisit = false;
+      if ( data && data.visitSummary[ 0 ] && addVisitStatus.indexOf( data.visitSummary[ 0 ].status ) !== -1 ) {
+        this.user = new VisitorModel( data );
+        this.isEmailPresent = true;
+        this.isAddVisit = true;
+        this.visitStatus = 'NEW';
+      } else if ( data ) {
+        this.user = new VisitorModel( data );
+        this.isEmailPresent = true;
+        this.visitStatus = data.visitSummary[ 0 ].status;
+      } else {
+        this.createUser();
+        this.user.emailId = this.search;
+        this.isEmailPresent = false;
+        this.visitStatus = 'NEW';
+      }
+      this.showLoading = false;
+    } );
   }
 
   createUser() {
     this.user = new VisitorModel();
     this.user.visitSummary = [];
-    let visitSummary = new VisitSummaryModel();
-    visitSummary.officeLocation =
-      window.location.href.indexOf("?loc") > -1
-        ? window.location.href.split("=")[1]
-        : "Bangalore";
-    this.user.visitSummary.push(visitSummary);
+    const visitSummary = new VisitSummaryModel();
+    visitSummary.officeLocation = this.officeLocation;
+    this.user.visitSummary.push( visitSummary );
+  }
+  onClick( event ) {
+    event.preventDefault();
+    // console.log( 'onClick this.ref._checked ' + this.ref._checked );
+    this.ref._checked = !this.ref._checked;
   }
 
-  searchValues(value: string, type: string) {
+  addVisitSummary() {
+    let visitSummary = {
+      ...this.user.visitSummary[ 0 ],
+      officeLocation: this.officeLocation,
+      visitNumber: this.data.visitSummary[ 0 ].visitNumber + 1,
+      status: 'PENDING',
+      outTime: null,
+      remarks: null
+    };
+    this.user.visitSummary = [];
+    this.user.visitSummary.push( visitSummary );
+  }
+  updateVisitSummary() {
+    console.log( 'visit Summary', this.user.visitSummary );
+    let visitSummary = {
+      ...this.user.visitSummary[ 0 ],
+      officeLocation: this.officeLocation,
+    };
+    this.user.visitSummary = [];
+    this.user.visitSummary.push( visitSummary );
+  }
+  searchValues( value: string, type: string ) {
     this.search = value;
-    let regex = type === "phoneNumber" ? `[0-9]+` : `[^@]+@[^\.]+\..+`;
-    let data = value.match(regex);
-    if (type === "email" && data) {
-      this.search$.next(value);
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const data = regex.test( value.toLowerCase() );
+
+    if ( type === 'email' && data === true ) {
+      this.searchVisitor$.next( value );
     }
   }
 
   onSubmit() {
-    this.visitorService.createNewVisitor(this.user).subscribe(() => {
+
+    if ( this.ref._checked === false ) {
+      this.user.visitSummary[ "scheduledEndDate" ] = null;
+      this.user.visitSummary[ "scheduledStartDate" ] = null;
+      this.user.visitSummary[ "status" ] = null;
+
+    }
+    else {
+      this.user.visitSummary[ "status" ] = "SCHEDULED";
+    }
+
+    this.visitorService.createNewVisitor( this.user ).subscribe( () => {
       this.createUser();
-      this.router.navigateByUrl("/visitor");
-    });
+      this.router.navigateByUrl( '/visitor' );
+    } );
   }
+
+  onAddVisit() {
+
+    this.addVisitSummary();
+    this.visitorService.addVisitorSummary( this.user.id, this.user.visitSummary[ 0 ] ).subscribe( () => {
+      this.router.navigateByUrl( '/visitor' );
+    } );
+  }
+
+  onUpdateVisit() {
+    this.updateVisitSummary();
+    console.log( this.user.id, this.user.visitSummary[ 0 ] );
+    this.visitorService.updateVisitSummary( this.user.id, this.user.visitSummary[ 0 ] ).subscribe( () => {
+      this.router.navigateByUrl( '/visitor' );
+    } );
+  }
+
+  onNotify() {
+    this.visitorService.sendNotifyMail( this.user ).subscribe( () => {
+      this.router.navigateByUrl( '/visitor' );
+    } );
+  }
+
 }

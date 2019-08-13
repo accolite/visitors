@@ -9,10 +9,11 @@ export class dataModel {
   contactPerson: string;
   purpose: string;
   inTime: string;
-  scheduledTime: string;
-  [propName: string]: any;
+  scheduledStartDate: string
+  scheduledEndDate: string;
 
-  constructor(jsonObj?: {}) {
-    Object.assign(this, jsonObj);
+
+  constructor( jsonObj?: {} ) {
+    Object.assign( this, jsonObj );
   }
 }

@@ -93,20 +93,20 @@
       <td>
         <mat-form-field class="column">
           <input
-            name="inTime"
-            [(ngModel)]="data.visitSummary.inTime"
+            name="scheduledStartTime"
+            [(ngModel)]="data.visitSummary.scheduledStartDate"
             matInput
-            placeholder="In Time"
+            placeholder="Start Date"
           />
         </mat-form-field>
       </td>
       <td>
         <mat-form-field class="column column_margin ">
           <input
-            name="scheduledTime"
-            [(ngModel)]="data.visitSummary.scheduledTime"
+            name="scheduledEndTime"
+            [(ngModel)]="data.visitSummary.scheduledEndDate"
             matInput
-            placeholder="Scheduled time"
+            placeholder="End Date"
           />
         </mat-form-field>
       </td>
