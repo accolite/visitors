@@ -40,7 +40,7 @@ public class TokenUtils {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		log.debug("Principal {}", authentication);
 		Date now = new Date();
-		Date expiryDate = new Date(now.getTime() + tokenProperties.getExpireSeconds());
+		Date expiryDate = new Date(now.getTime() + tokenProperties.getExpireMillis());
 		JWTClaimsSet claims = new JWTClaimsSet.Builder()
 				.subject(userPrincipal.getSubject())
 				.issueTime(now)
