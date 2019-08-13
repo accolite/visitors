@@ -5,14 +5,15 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,18 +30,19 @@ import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.service.VisitorService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Lavanya
  *
  */
 @RestController
 @RequestMapping(value = "/api-dev/visitor")
+@Slf4j
 public class VisitorController {
 
 	@Autowired
 	private VisitorService visitorService;
-
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Fetch the visitors detail by emaiIid
@@ -49,7 +51,9 @@ public class VisitorController {
 	 * @return
 	 */
 	@GetMapping(value = "/email/{email}")
-	public ResponseEntity<?> getVisitorByEmail(@PathVariable("email") String email) {
+	public ResponseEntity<?> getVisitorByEmail(@PathVariable("email") String email,
+			@AuthenticationPrincipal OidcUser oidc) {
+		log.info("OIDC" + oidc.toString());
 
 		Visitor visitor = visitorService.getVisitorByEmail(email);
 		return new ResponseEntity<Visitor>(visitor, HttpStatus.OK);
@@ -201,7 +205,7 @@ public class VisitorController {
 			@RequestParam("visitorId") String visitorId, @RequestParam("visitNumber") String visitNumber,
 			@RequestParam("visitorEmail") String visitorEmail, @RequestParam("approval") String approval,
 			@RequestParam("remarks") String remarks) {
-		logger.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:"
+		log.debug("approvalResponse:::  visitorId:" + visitorId + " visitNumber:" + visitNumber + " approval:"
 				+ approval + " remarks:" + remarks + " visitorMail:" + visitorEmail);
 
 		JSONObject approvalResponse = visitorService.approvalResponse(firstName, lastName, contactPerson, visitorId,
@@ -229,7 +233,7 @@ public class VisitorController {
 			@RequestParam("visitorEmail") String visitorEmail, @RequestParam("approval") String approval,
 			@RequestParam("remarks") String remarks) {
 
-		logger.debug("notifyResponse::: visitorId:" + visitorId + " visitNumber:" + visitNumber + " niticed:" + approval
+		log.debug("notifyResponse::: visitorId:" + visitorId + " visitNumber:" + visitNumber + " niticed:" + approval
 				+ " remarks: " + remarks + "visitorMail: " + visitorEmail);
 
 		JSONObject notifyResponse = visitorService.notifyResponse(firstName, lastName, contactPerson, visitorId,
