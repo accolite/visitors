@@ -16,8 +16,8 @@ export class AuthService {
 
   constructor( private restService: RestService ) { }
 
-  getUserDetailsByToken( token: string ) {
-    return this.restService.get( `${ urls.GET_USER_DETAILS }/${ token }` )
+  getUserDetailsByToken( token?: string ) {
+    return this.restService.get( `${ urls.GET_USER_DETAILS }` )
   }
 
 }

@@ -20,10 +20,8 @@ export class VisitorComponent {
 
   constructor( private notification: NotificationService, private restService: RestService ) { }
 
-
-
   showSnackbarAndRefreshData( data: NotificationModel ) {
-    console.clear();
+    // console.clear();
     this.restService.createSnackbar( data.message, 'close', 2000, 'success', 'info' )
     switch ( data.action ) {
       case 'PENDING':

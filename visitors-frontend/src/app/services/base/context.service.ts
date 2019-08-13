@@ -6,6 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { User } from 'src/app/helpers/models/user.model';
 
 
 @Injectable( {
@@ -13,19 +14,16 @@ import { AuthService } from '../auth.service';
 } )
 
 export class ContextService {
-  user: any = null;
+  user: User;
 
-  constructor( private authService: AuthService ) {
-    this.setUser()
-  }
+  constructor( private authService: AuthService ) { }
 
   setUser() {
     let token = window.sessionStorage.getItem( 'token' ) ? window.sessionStorage.getItem( 'token' ) : null;
-    console.log( `In Context - ${ token }` )
     if ( token ) {
-      // this.authService.getUserDetailsByToken( token ).subscribe( ( data ) => {
-      //   this.user = data;
-      // } )
+      this.authService.getUserDetailsByToken().subscribe( ( data ) => {
+        this.user = new User( data );
+      } )
     }
   }
 

@@ -16,10 +16,10 @@ export class RestInterceptor implements HttpInterceptor {
   constructor( private contextService: ContextService, private router: Router ) { }
 
   intercept( request: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-    if ( this.contextService.hasUser || window.sessionStorage.getItem( 'token' ) ) {
+    if ( this.contextService && this.contextService.hasUser || window.sessionStorage.getItem( 'token' ) ) {
       request = request.clone( {
         setHeaders: {
-          Authorization: `Bearer${ window.sessionStorage.getItem( 'token' ) }`
+          Authorization: `Bearer ${ window.sessionStorage.getItem( 'token' ) }`
         }
       } )
       return next.handle( request );

@@ -3,8 +3,8 @@
  * Basic authentication rule for all routers
  */
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, RouterModule } from '@angular/router';
+import { Injectable, NgZone } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, RouterModule, Router } from '@angular/router';
 import { ContextService } from './base/context.service';
 import { AuthService } from './auth.service';
 
@@ -13,23 +13,20 @@ import { AuthService } from './auth.service';
 } )
 export class AuthGuardService implements CanActivate {
 
-  constructor( private router: RouterModule, private authService: AuthService, private contextService: ContextService ) { }
+  constructor( private router: Router, private authService: AuthService, private contextService: ContextService, private zone: NgZone ) { }
 
   canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): boolean {
-    let token: string = route.queryParams.token ? route.queryParams.token : window.sessionStorage.getItem( 'token' );
-    let user = this.contextService.user ? this.contextService.user : null;
+    let token: string = route.queryParams.token ? route.queryParams.token : window.sessionStorage.getItem( 'token' ) ? window.sessionStorage.getItem( 'token' ) : null;
 
-    if ( !( route.queryParams.token && window.sessionStorage.getItem( 'token' ) ) ) {
-      window.sessionStorage.setItem( 'token', token );
+    if ( token == 'null' || token ) {
+      window.sessionStorage.setItem( 'token', token )
     }
-
-    // if ( !user ) {
-    //   this.contextService.setUser()
-    // }
-
-    // return !!token && this.contextService.user;
-    return true;
-
+    let condition = !!token || this.contextService.hasUser;
+    if ( !condition ) {
+      this.router.navigateByUrl( 'login' );
+    }
+    return condition;
+    // return true;
   }
 
 }
