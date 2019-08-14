@@ -56,13 +56,4 @@ public class VisitorsMongoData {
 		return false;
 	}
 
-	public Visitor getVisitorByIdAndVisitNumber(String visitorId, int visitNumber) {
-
-		Query whereQuery = new Query();
-		ObjectId id = new ObjectId(visitorId);
-		whereQuery.addCriteria(where("_id").is(id)).addCriteria(where("visitSummary.visitNumber").is(visitNumber));
-
-		return mongoTemplate.findOne(whereQuery, Visitor.class, COLLECTION_NAME);
-	}
-
 }
