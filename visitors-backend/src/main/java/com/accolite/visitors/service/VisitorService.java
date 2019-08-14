@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import com.accolite.visitors.enums.VisitorSearchCriteria;
 import com.accolite.visitors.exception.VisitorNotFoundException;
 import com.accolite.visitors.model.CustomPage;
-import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 
 /**
@@ -29,10 +28,10 @@ public interface VisitorService {
 	public Visitor getVisitorByEmail(String email) throws VisitorNotFoundException;
 
 	/**
-	 * @param visitorBO
+	 * @param visitor
 	 * @return
 	 */
-	public Visitor createVisitor(Visitor visitorBO);
+	public Visitor createVisitor(Visitor visitor);
 
 	/**
 	 * update exit/out time of the visitor
@@ -60,11 +59,11 @@ public interface VisitorService {
 	public Visitor getVisitorById(String id) throws VisitorNotFoundException;
 
 	/**
-	 * @param id
+	 * @param visitor
 	 * @return
 	 * @throws VisitorNotFoundException
 	 */
-	public void addVisitSummary(String id, VisitSummary visitSummary) throws VisitorNotFoundException;
+	public void addVisitSummary(Visitor visitor) throws VisitorNotFoundException;
 
 	/**
 	 * 
@@ -136,5 +135,15 @@ public interface VisitorService {
 	 * @param visitor
 	 */
 	public void approveOnBehalf(@Valid Visitor visitor);
+
+	/**
+	 * 
+	 */
+	public void getAndUpdateUnVisitedScheduledVisits();
+
+	/**
+	 * 
+	 */
+	public void getAndUpdateUnCompletedVisits();
 
 }

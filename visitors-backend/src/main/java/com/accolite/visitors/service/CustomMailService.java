@@ -116,8 +116,10 @@ public class CustomMailService {
 		valuesMap.put("visitor.visitSummary.visitNumber",
 				String.valueOf(visitor.getVisitSummary().get(0).getVisitNumber()));
 		valuesMap.put("visitor.visitSummary.inTime", String.valueOf(visitor.getVisitSummary().get(0).getInTime()));
-		valuesMap.put("visitor.visitSummary.scheduledTime",
-				String.valueOf(visitor.getVisitSummary().get(0).getScheduledTime()));
+		valuesMap.put("visitor.visitSummary.scheduledStartDate",
+				String.valueOf(visitor.getVisitSummary().get(0).getScheduledStartDate()));
+		valuesMap.put("visitor.visitSummary.scheduledEndDate",
+				String.valueOf(visitor.getVisitSummary().get(0).getScheduledEndDate()));
 		valuesMap.put("visitor.statusDeclined", VisitorStatus.DECLINED.toString());
 		valuesMap.put("visitor.statusApproved", VisitorStatus.APPROVED.toString());
 
