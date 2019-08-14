@@ -51,6 +51,16 @@ public interface VisitorDAL {
 	public long updateVisitSummary(String id, Map<String, Object> visitSummaryMap);
 
 	/**
+	 * @param visitorId
+	 * @param visitNumber
+	 * @param approval
+	 * @param remarks
+	 * @return
+	 */
+	public boolean updateVisitSummaryRemarksAndStatus(String visitorId, int visitNumber, String approval,
+			String remarks);
+
+	/**
 	 * @param searchParams
 	 * @param pageable
 	 * @return
