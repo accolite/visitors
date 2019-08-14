@@ -26,10 +26,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import com.accolite.visitors.db.VisitorsMongoData;
 import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
+import com.accolite.visitors.repository.VisitorRepository;
 import com.accolite.visitors.util.StrSubstitutor;
 import com.accolite.visitors.util.WebSocketHelper;
 import com.google.common.io.CharStreams;
@@ -41,7 +41,7 @@ public class CustomMailService {
 	private Environment env;
 
 	@Autowired
-	private VisitorsMongoData visitorsMongoData;
+	private VisitorRepository visitorRepository;
 
 	@Autowired
 	private WebSocketHelper webSocketHelper;
@@ -137,7 +137,7 @@ public class CustomMailService {
 		if (sendMail(visitor.getVisitSummary().get(0).getContactPersonEmailId(), subjectLine, mailContent)) {
 			logger.info(visitor.getVisitSummary().get(0).getContactPersonEmailId()
 					+ " is Notified for new visitor request Creation !!");
-			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+			visitorRepository.updateVisitSummaryRemarksAndStatus(visitor.getId(),
 					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.PENDING.toString(),
 					"Approval Mail Sent");
 			logger.info("Status Updated to PENDING for visitNumber: "
@@ -147,7 +147,7 @@ public class CustomMailService {
 		} else {
 			logger.info("Unable to Send Approval mail to" + visitor.getVisitSummary().get(0).getContactPersonEmailId()
 					+ "  !!");
-			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+			visitorRepository.updateVisitSummaryRemarksAndStatus(visitor.getId(),
 					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.FAILED.toString(),
 					"Unable to send Approval Mail");
 			logger.info("Status Updated to Failed for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
@@ -175,7 +175,7 @@ public class CustomMailService {
 					+ "  for request Creation !!");
 			status = false;
 		}
-		visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+		visitorRepository.updateVisitSummaryRemarksAndStatus(visitor.getId(),
 				visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.SCHEDULED.toString(),
 				"Request Created by: " + visitor.getVisitSummary().get(0).getContactPersonEmailId());
 		logger.info("Status Updated to SCHEDULED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
@@ -228,7 +228,7 @@ public class CustomMailService {
 		JSONObject response = new JSONObject();
 		String status = "Unable to Update Status for visitorId: " + visitorId + " visitNumber: " + visitNumber
 				+ " approval: " + approval + "remarks: " + remarks + "remarks: " + visitorEmail;
-		if (visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitorId, Integer.parseInt(visitNumber), approval,
+		if (visitorRepository.updateVisitSummaryRemarksAndStatus(visitorId, Integer.parseInt(visitNumber), approval,
 				remarks)) {
 			logger.info("Status Updated to " + approval + " for visit number:" + visitNumber + "of visitorID :"
 					+ visitorId + "remarks" + remarks + "!!");
@@ -251,7 +251,7 @@ public class CustomMailService {
 
 			new Thread(() -> { // update visitor for his/her visit status
 				final String sub = "Update for your visit @ Accolite office ";
-				final String msg = "<p>Your vsit request is <strong>" + approval + "<br /> Comments:" + remarks
+				final String msg = "<p>Your visit request is <strong>" + approval + "<br /> Comments:" + remarks
 						+ "</strong><br /><br /><br /><br /> this is a system generated mail please do not reply to this mail !<br /> Thank you for visiting @ Accolite";
 				if (sendMail(visitorEmail, sub, msg)) {
 					logger.info(visitorEmail + " is updated for his/her visit @ Accolite" + "!!");
@@ -278,7 +278,7 @@ public class CustomMailService {
 		if (sendMail(visitor.getVisitSummary().get(0).getContactPersonEmailId(), subjectLine, mailContent)) {
 			logger.info(visitor.getVisitSummary().get(0).getContactPersonEmailId()
 					+ " is Notified for new visitor's Arrival !!");
-			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+			visitorRepository.updateVisitSummaryRemarksAndStatus(visitor.getId(),
 					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.PENDING.toString(),
 					"Arrival notification Mail Sent");
 			logger.info("Status Updated to PENDING for visitNumber: "
@@ -298,7 +298,7 @@ public class CustomMailService {
 			}).start();
 			return status.put("status", "POC notified for visitor Arrival !!");
 		} else {
-			visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+			visitorRepository.updateVisitSummaryRemarksAndStatus(visitor.getId(),
 					visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.FAILED.toString(),
 					"Unable to send visitor Arrival notification Mail");
 			logger.info("Status Updated to FAILED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
@@ -308,11 +308,6 @@ public class CustomMailService {
 			webSocketHelper.pushData(visitor, VisitorStatus.FAILED);
 			return status;
 		}
-
-	}
-
-	public void notifyVisitor(String to, String subject, String Content) {
-
 	}
 
 	public void sendApproveOnBehalf(Visitor visitor) {
@@ -337,7 +332,7 @@ public class CustomMailService {
 		if (visitSummary.getRemarks() != null && !visitSummary.getRemarks().isEmpty()) {
 			remarks = visitSummary.getRemarks();
 		}
-		visitorsMongoData.updateVisitSummaryRemarksAndStatus(visitor.getId(),
+		visitorRepository.updateVisitSummaryRemarksAndStatus(visitor.getId(),
 				visitor.getVisitSummary().get(0).getVisitNumber(), VisitorStatus.APPROVED.toString(), remarks);
 
 		logger.info("Status Updated to APPROVED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
