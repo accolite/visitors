@@ -35,6 +35,7 @@ import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
+import com.accolite.visitors.model.VisitorsView;
 
 public class VisitorDALImpl implements VisitorDAL {
 
@@ -171,6 +172,42 @@ public class VisitorDALImpl implements VisitorDAL {
 		}
 
 		return page;
+	}
+
+	@Override
+	public List<VisitorsView> getUnVisitedScheduledVisits() {
+
+		List<AggregationOperation> aggregationList = new ArrayList<>();
+
+		Criteria unVisitedVisitCriteria = new Criteria();
+		unVisitedVisitCriteria.and("visitSummary.status").is(VisitorStatus.SCHEDULED);
+		unVisitedVisitCriteria.and("visitSummary.scheduledEndDate").ne(null);
+		unVisitedVisitCriteria.andOperator(where("visitSummary.scheduledEndDate").lt(new Date()));
+
+		aggregationList.add(match(unVisitedVisitCriteria));
+		aggregationList.add(unwind("visitSummary"));
+		aggregationList.add(match(unVisitedVisitCriteria));
+
+		return mongoTemplate.aggregate(newAggregation(aggregationList), Visitor.class, VisitorsView.class)
+				.getMappedResults();
+	}
+
+	@Override
+	public List<VisitorsView> getUnCompletedVisits() {
+
+		List<AggregationOperation> aggregationList = new ArrayList<>();
+
+		Criteria unCompletedVisitCriteria = new Criteria();
+		unCompletedVisitCriteria.and("visitSummary.status").in(VisitorStatus.PENDING, VisitorStatus.FAILED,
+				VisitorStatus.APPROVED);
+		unCompletedVisitCriteria.and("visitSummary.inTime").lt(new Date());
+
+		aggregationList.add(match(unCompletedVisitCriteria));
+		aggregationList.add(unwind("visitSummary"));
+		aggregationList.add(match(unCompletedVisitCriteria));
+
+		return mongoTemplate.aggregate(newAggregation(aggregationList), Visitor.class, VisitorsView.class)
+				.getMappedResults();
 	}
 
 }

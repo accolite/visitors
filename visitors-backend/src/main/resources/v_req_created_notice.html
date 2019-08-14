@@ -4,11 +4,13 @@
 <p>New visitor request is created.</p>
 <p>Visitor Details:</p>
 <p>
-	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />Email:
-	<strong>${visitor.email}</strong><br />Contact Number: <strong>${visitor.phone}</strong><br />Coming
-	From: <strong>${visitor.visitSummary.comingFrom}</strong><br />Purpose:
-	<strong>${visitor.visitSummary.purpose}</strong><br />Scheduled Time:
-	<strong>${visitor.visitSummary.scheduledTime}</strong>
+	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />
+	Email: <strong>${visitor.email}</strong><br />
+	Contact Number: <strong>${visitor.phone}</strong><br />
+	Coming From: <strong>${visitor.visitSummary.comingFrom}</strong><br />
+	Purpose: <strong>${visitor.visitSummary.purpose}</strong><br />
+	Scheduled Start Date: <strong>${visitor.visitSummary.scheduledStartDate}</strong><br />
+	Scheduled End Date: <strong>${visitor.visitSummary.scheduledEndDate}</strong><br />
 </p>
 <p>Respond back if you want to cancel the request.</p>
 <form action="${appURL}/api-dev/visitor/${responseEndpoint}" method="get">
