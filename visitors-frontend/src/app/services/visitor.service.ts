@@ -24,9 +24,9 @@ export class VisitorService {
       .pipe( tap( this.restService.createNotifySnackbar( "create-visitors" ) ) );
   }
 
-  addVisitorSummary( visitorId: string, visitorSummaryObj: any ) {
+  addVisitorSummary( visitorObj: any ) {
     return this.restService
-      .jsonPut( urls.BASE_URL + urls.ADD_VISIT_SUMMARY + visitorId, visitorSummaryObj )
+      .jsonPut( urls.BASE_URL + urls.ADD_VISIT_SUMMARY, visitorObj )
       .pipe( tap( this.restService.createNotifySnackbar( "add-visit" ) ) );
 
   }

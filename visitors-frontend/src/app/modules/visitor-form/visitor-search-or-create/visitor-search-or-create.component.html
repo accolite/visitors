@@ -215,13 +215,15 @@
               [(ngModel)]="user.visitSummary[0].scheduledEndDate"
               matInput
               placeholder="End Date"
+              disabled
               required
+              [min]="minDate"
             />
             <mat-datepicker-toggle
               matSuffix
               [for]="picker2"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
+            <mat-datepicker touchUi #picker2 disabled="false"></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="flex-container">

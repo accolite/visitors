@@ -14,6 +14,7 @@ import { VisitSummaryModel } from 'src/app/helpers/models/visitors/visit-summary
 import { NgForm, FormControl } from '@angular/forms';
 import { MatStep } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ArrayUtil } from 'src/app/helpers/array.util';
 
 @Component( {
   selector: 'visitor-search-or-create',
@@ -31,6 +32,7 @@ export class VisitorSearchOrCreateComponent {
   addVisitStatus: Array<string> = addVisitStatus;
   showLoading = false;
   officeLocation = 'Bangalore';
+  minDate: any;
 
   @ViewChild( "heroForm", { static: true } )
   heroForm: NgForm;
@@ -147,11 +149,21 @@ export class VisitorSearchOrCreateComponent {
   }
 
   onAddVisit() {
+    let visitSummary;
+    if ( ArrayUtil.isNotEmpty( this.user.visitSummary ) ) {
+      visitSummary = this.user.visitSummary[ this.user.visitSummary.length - 1 ]
+      let visitorObj = new VisitorModel( JSON.parse( JSON.stringify( this.user ) ) );
+      visitorObj.visitSummary = [];
+      visitorObj.visitSummary.push( visitSummary )
 
+    } else {
+      visitSummary = this.user.visitSummary[ 0 ]
+    }
     this.addVisitSummary();
-    this.visitorService.addVisitorSummary( this.user.id, this.user.visitSummary[ 0 ] ).subscribe( () => {
-      this.router.navigateByUrl( '/visitor' );
-    } );
+    console.log( this.user )
+    // this.visitorService.addVisitorSummary( this.user ).subscribe( () => {
+    //   this.router.navigateByUrl( '/visitor' );
+    // } );
   }
 
   onUpdateVisit() {
