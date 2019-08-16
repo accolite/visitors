@@ -58,6 +58,13 @@
                 <mat-option *ngFor="let accLocation of location" [value]="accLocation">{{accLocation}}</mat-option>
               </mat-select>
             </mat-form-field>
+            <mat-card>
+              <mat-card-header>
+                <div mat-card-avatar class="avatar" [style.backgroundImage]="'url('+ contextService?.user?.photoUrl +')'"></div>
+                <mat-card-title>{{contextService?.user?.fullName ? contextService?.user?.fullName : '-'}}</mat-card-title>
+                <mat-card-subtitle>{{contextService?.user?.role ? contextService?.user?.role : '-'}}</mat-card-subtitle>
+              </mat-card-header>
+            </mat-card>
 
   </mat-sidenav>
   <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }">

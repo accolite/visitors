@@ -62,7 +62,6 @@ export class VisitorSearchOrCreateComponent {
       } )
     ).subscribe( ( data ) => {
       this.data = data;
-      console.log( this.data );
       this.isAddVisit = false;
       if ( data && data.visitSummary[ 0 ] && addVisitStatus.indexOf( data.visitSummary[ 0 ].status ) !== -1 ) {
         this.user = new VisitorModel( data );
