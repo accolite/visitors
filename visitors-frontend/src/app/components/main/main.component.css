@@ -121,9 +121,13 @@ z-index: 1 !important;
 }
 
 .matNavList{
-  height: 86%;
+  height: 73.9% !important;
 }
 
 .locSelect{
   margin-top: 5px !important;
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 14px !important;
 }

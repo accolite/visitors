@@ -5,17 +5,31 @@ export class User {
 
   email: string;
 
-  FirstName: string;
+  firstName: string;
 
-  LastName: string;
+  lastName: string;
 
   photoUrl: string;
 
   phoneNumber: string;
 
-  roles: Array<ROLETYPE> = [];
+  roles: Array<string> = [];
 
   constructor( jsonObj: any ) {
     Object.assign( this, jsonObj );
+  }
+
+  get fullName(){
+    return `${this.firstName} ${this.lastName}`
+  }
+
+  get role(){
+    if(this.roles.includes('ROLE_ADMIN')){
+      return 'Admin'
+    } else if(this.roles.includes('ROLE_RECEPTION')){
+      return 'Reception'
+    } else {
+      return 'User'
+    }
   }
 }

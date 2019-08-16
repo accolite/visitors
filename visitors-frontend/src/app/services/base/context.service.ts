@@ -15,20 +15,26 @@ import { User } from 'src/app/helpers/models/user.model';
 
 export class ContextService {
   user: User;
+  token: string;
 
   constructor( private authService: AuthService ) { }
 
   setUser() {
     let token = window.sessionStorage.getItem( 'token' ) ? window.sessionStorage.getItem( 'token' ) : null;
-    if ( token ) {
+    if ( token && token != null) {
       this.authService.getUserDetailsByToken().subscribe( ( data ) => {
         this.user = new User( data );
+        this.token = window.sessionStorage.getItem( 'token' )
       } )
     }
   }
 
   get hasUser(): boolean {
     return !!this.user
+  }
+
+  get hasToken():boolean {
+    return !!this.token
   }
 
 }

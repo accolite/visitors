@@ -8,6 +8,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS
 import { Observable } from 'rxjs';
 import { ContextService } from './context.service';
 import { Router } from '@angular/router';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 
@@ -22,7 +23,7 @@ export class RestInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${ window.sessionStorage.getItem( 'token' ) }`
         }
       } )
-      return next.handle( request );
+      return next.handle( request ).pipe(retry(5));
     } else {
       this.router.navigateByUrl( '/login' );
       return next.handle( null );

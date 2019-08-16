@@ -20,7 +20,7 @@ export class MainComponent {
   accLocation: any;
 
   constructor( private router: Router, private activatedRoute: ActivatedRoute,
-    private auth: AuthService, private contextService: ContextService ) {
+    private auth: AuthService, public contextService: ContextService ) {
     this.accLocation = this.val
     if ( window.location.href.indexOf( '?loc' ) > -1 ) {
       let value: string = window.location.href.split( "=" )[ 1 ];
@@ -33,12 +33,10 @@ export class MainComponent {
 
   ngOnInit() {
     if ( window.sessionStorage.getItem( 'token' ) ) {
-      this.contextService.setUser();
       this.router.navigateByUrl( '/report' )
     } else {
       this.router.navigateByUrl( '/login' )
     }
-
   }
 
   selectedValue( selectedval: any ) {
@@ -49,10 +47,6 @@ export class MainComponent {
         queryParamsHandling: 'merge',
 
       } : {} )
-  }
-
-  ngAfterViewInit() {
-    console.log( this.contextService.hasUser )
   }
 
 }
