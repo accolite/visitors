@@ -133,15 +133,15 @@ export class VisitorSearchOrCreateComponent {
   onSubmit() {
 
     if ( this.ref._checked === false ) {
-      this.user.visitSummary[ "scheduledEndDate" ] = null;
-      this.user.visitSummary[ "scheduledStartDate" ] = null;
-      this.user.visitSummary[ "status" ] = null;
+      this.user.visitSummary[ 0 ].scheduledEndDate = null;
+      this.user.visitSummary[ 0 ].scheduledStartDate = null;
+      this.user.visitSummary[ 0 ].status = null;
 
     }
     else {
-      this.user.visitSummary[ "status" ] = "SCHEDULED";
+      this.user.visitSummary[ 0 ].status = "SCHEDULED";
     }
-
+    console.log( this.user );
     this.visitorService.createNewVisitor( this.user ).subscribe( () => {
       this.createUser();
       this.router.navigateByUrl( '/visitor' );
