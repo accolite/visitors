@@ -3,6 +3,7 @@ package com.accolite.visitors.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 import com.accolite.visitors.enums.VisitorStatus;
@@ -28,6 +29,7 @@ public class VisitSummary implements Serializable {
 	@Size(max = 50)
 	private String contactPerson;
 
+	@Email
 	private String contactPersonEmailId;
 
 	private Long contactPersonPhone;
@@ -44,7 +46,9 @@ public class VisitSummary implements Serializable {
 
 	private VisitorStatus status;
 
-	private Date scheduledTime;
+	private Date scheduledStartDate;
+
+	private Date scheduledEndDate;
 
 	private String remarks;
 

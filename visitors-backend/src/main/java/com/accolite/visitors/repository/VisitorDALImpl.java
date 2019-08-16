@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -28,6 +29,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperationCon
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import com.accolite.visitors.enums.VisitorSearchCriteria;
@@ -35,11 +37,14 @@ import com.accolite.visitors.enums.VisitorStatus;
 import com.accolite.visitors.model.CustomPage;
 import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
+import com.accolite.visitors.model.VisitorsView;
 
 public class VisitorDALImpl implements VisitorDAL {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
+
+	public static final String COLLECTION_NAME = "visitor";
 
 	@Override
 	public long updateEndTime(String id, Map<String, String> requestData) {
@@ -102,6 +107,31 @@ public class VisitorDALImpl implements VisitorDAL {
 				query(where("id").is(id)
 						.andOperator(where("visitSummary.visitNumber").is(visitSummaryMap.get("visitNumber")))),
 				update, Visitor.class).getModifiedCount();
+	}
+
+	@Override
+	public boolean updateVisitSummaryRemarksAndStatus(String visitorId, int visitNumber, String approval,
+			String remarks) {
+
+		Query whereQuery = new Query();
+		ObjectId id = new ObjectId(visitorId);
+		whereQuery.addCriteria(where("_id").is(id)).addCriteria(where("visitSummary.visitNumber").is(visitNumber));
+
+		Visitor visitor = mongoTemplate.findOne(whereQuery, Visitor.class, COLLECTION_NAME);
+
+		Update update = new Update();
+		String prevRemarks = visitor.getVisitSummary().get(visitNumber - 1).getRemarks();
+		if (prevRemarks != null) {
+			remarks = prevRemarks + " | " + remarks;
+		}
+		update.set("visitSummary.$.remarks", remarks);
+		update.set("visitSummary.$.status", approval);
+
+		long modifiedCount = mongoTemplate.updateFirst(whereQuery, update, Visitor.class).getModifiedCount();
+		if (modifiedCount > 0)
+			return true;
+
+		return false;
 	}
 
 	@Override
@@ -171,6 +201,42 @@ public class VisitorDALImpl implements VisitorDAL {
 		}
 
 		return page;
+	}
+
+	@Override
+	public List<VisitorsView> getUnVisitedScheduledVisits() {
+
+		List<AggregationOperation> aggregationList = new ArrayList<>();
+
+		Criteria unVisitedVisitCriteria = new Criteria();
+		unVisitedVisitCriteria.and("visitSummary.status").is(VisitorStatus.SCHEDULED);
+		unVisitedVisitCriteria.and("visitSummary.scheduledEndDate").ne(null);
+		unVisitedVisitCriteria.andOperator(where("visitSummary.scheduledEndDate").lt(new Date()));
+
+		aggregationList.add(match(unVisitedVisitCriteria));
+		aggregationList.add(unwind("visitSummary"));
+		aggregationList.add(match(unVisitedVisitCriteria));
+
+		return mongoTemplate.aggregate(newAggregation(aggregationList), Visitor.class, VisitorsView.class)
+				.getMappedResults();
+	}
+
+	@Override
+	public List<VisitorsView> getUnCompletedVisits() {
+
+		List<AggregationOperation> aggregationList = new ArrayList<>();
+
+		Criteria unCompletedVisitCriteria = new Criteria();
+		unCompletedVisitCriteria.and("visitSummary.status").in(VisitorStatus.PENDING, VisitorStatus.FAILED,
+				VisitorStatus.APPROVED);
+		unCompletedVisitCriteria.and("visitSummary.inTime").lt(new Date());
+
+		aggregationList.add(match(unCompletedVisitCriteria));
+		aggregationList.add(unwind("visitSummary"));
+		aggregationList.add(match(unCompletedVisitCriteria));
+
+		return mongoTemplate.aggregate(newAggregation(aggregationList), Visitor.class, VisitorsView.class)
+				.getMappedResults();
 	}
 
 }

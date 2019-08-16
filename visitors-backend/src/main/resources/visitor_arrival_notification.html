@@ -4,12 +4,15 @@
 <p>The visitor scheduled by you, is waiting at reception.</p>
 <p>Visitor Details:</p>
 <p>
-	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />Email:
-	<strong>${visitor.email}</strong><br />Contact Number: <strong>${visitor.phone}</strong><br />Coming
-	From: <strong>${visitor.visitSummary.comingFrom}</strong><br />Purpose:
-	<strong>${visitor.visitSummary.purpose}<br /></strong>Scheduled Time:
-	<strong>${visitor.visitSummary.scheduledTime}</strong><br />In Time: <strong>${visitor.visitSummary.inTime}<br />
-		<br /></strong>
+	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />
+	Email: <strong>${visitor.email}</strong><br />
+	Contact Number: <strong>${visitor.phone}</strong><br />
+	Coming From: <strong>${visitor.visitSummary.comingFrom}</strong><br />
+	Purpose: <strong>${visitor.visitSummary.purpose}</strong><br />
+	Scheduled Start Date: <strong>${visitor.visitSummary.scheduledStartDate}</strong><br />
+	Scheduled End Date: <strong>${visitor.visitSummary.scheduledEndDate}</strong><br />
+	In Time: <strong>${visitor.visitSummary.inTime}</strong>
+	<br /><br />
 </p>
 <p>Please Provide Your Response below:</p>
 <form action="${appURL}/api-dev/visitor/${responseEndpoint}" method="get">
