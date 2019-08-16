@@ -28,7 +28,7 @@ export class NotificationService {
     this.stompClient.connect( {}, function ( frame ) {
       // console.clear();
       _this.stompClient.subscribe( "/visit/status", ( message ) => {
-        //console.clear();
+        // console.clear();
         _this.messages$.next( message );
       } );
     } );

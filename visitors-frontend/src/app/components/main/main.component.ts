@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { accoliteLocation } from 'src/app/helpers/static-data';
 import { ArrayUtil } from 'src/app/helpers/array.util';
+import { ContextService } from 'src/app/services/base/context.service';
 
 @Component( {
   selector: 'app-main',
@@ -19,7 +20,7 @@ export class MainComponent {
   accLocation: any;
 
   constructor( private router: Router, private activatedRoute: ActivatedRoute,
-    private auth: AuthService ) {
+    private auth: AuthService, public contextService: ContextService ) {
     this.accLocation = this.val
     if ( window.location.href.indexOf( '?loc' ) > -1 ) {
       let value: string = window.location.href.split( "=" )[ 1 ];
@@ -27,6 +28,14 @@ export class MainComponent {
     } else {
       this.val[ 0 ] = 'Bangalore';
       this.selectedValue( [ this.val[ 0 ] ] )
+    }
+  }
+
+  ngOnInit() {
+    if ( window.sessionStorage.getItem( 'token' ) ) {
+      this.router.navigateByUrl( '/report' )
+    } else {
+      this.router.navigateByUrl( '/login' )
     }
   }
 

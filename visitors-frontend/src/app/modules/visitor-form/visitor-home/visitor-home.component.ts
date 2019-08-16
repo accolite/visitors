@@ -1,3 +1,8 @@
+/**
+ * @author M.Shashikant(shashikant.mittapelli@accoliteindia.com)
+ * Home page for visitor component
+ */
+
 import { Component } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ApprovedRequestComponent } from '../../home/approved-request/approved-request.component';
@@ -5,6 +10,7 @@ import { PendingRequestComponent } from '../../home/pending-request/pending-requ
 import { PreApprovedRequestComponent } from '../../home/pre-approved-request/pre-approved-request.component';
 import { NotificationModel } from 'src/app/helpers/models/notification.model';
 import { RestService } from 'src/app/services/base/rest.service';
+import { ContextService } from 'src/app/services/base/context.service';
 
 @Component( {
   selector: 'visitor-home',
@@ -18,12 +24,10 @@ export class VisitorComponent {
   preApproved: PreApprovedRequestComponent;
   notificationData: NotificationModel;
 
-  constructor( private notification: NotificationService, private restService: RestService ) { }
-
-
+  constructor( private notification: NotificationService, private restService: RestService, private contextService: ContextService ) { }
 
   showSnackbarAndRefreshData( data: NotificationModel ) {
-    console.clear();
+    // console.clear();
     this.restService.createSnackbar( data.message, 'close', 2000, 'success', 'info' )
     switch ( data.action ) {
       case 'PENDING':

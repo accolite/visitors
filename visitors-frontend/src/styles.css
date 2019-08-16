@@ -32,18 +32,23 @@ body {
 
 #sidenav {
   width: 240px;
+  /* border: 1px solid; */
 }
 
 #sidenav.menu-close {
-  width: 70px
+  width: 70px;
+}
+
+#sidenav mat-card {
+  border: 1px solid #ddd;
 }
 
 #sidenav.menu-open {
-  width: 240px
+  width: 240px;
 }
 
 #sidenav .avatar {
-  background-image: url('http://i.pravatar.cc/300');
+  /* background-image: url('http://i.pravatar.cc/300'); */
   background-size: cover;
 }
 

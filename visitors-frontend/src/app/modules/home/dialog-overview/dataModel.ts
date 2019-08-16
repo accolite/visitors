@@ -11,7 +11,7 @@ export class dataModel {
   inTime: string;
   scheduledStartDate: string
   scheduledEndDate: string;
-
+  [ propName: string ]: any;
 
   constructor( jsonObj?: {} ) {
     Object.assign( this, jsonObj );
