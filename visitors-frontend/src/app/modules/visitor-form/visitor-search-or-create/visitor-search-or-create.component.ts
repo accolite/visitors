@@ -137,8 +137,10 @@ export class VisitorSearchOrCreateComponent {
       this.user.visitSummary[ 0 ].scheduledStartDate = null;
       this.user.visitSummary[ 0 ].status = null;
 
+
     }
     else {
+
       this.user.visitSummary[ 0 ].status = "SCHEDULED";
     }
     console.log( this.user );
