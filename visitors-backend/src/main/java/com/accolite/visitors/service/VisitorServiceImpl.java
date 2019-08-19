@@ -215,7 +215,8 @@ public class VisitorServiceImpl implements VisitorService {
 		boolean isScheduled = false;
 		if (visitSummaryList != null && visitSummaryList.size() == 1) {
 			VisitSummary visitSummary = visitSummaryList.get(0);
-			isScheduled = visitSummary.getStatus().equals(VisitorStatus.SCHEDULED);
+			isScheduled = ((visitSummary.getStatus() != null)
+					&& (visitSummary.getStatus().equals(VisitorStatus.SCHEDULED)));
 			if (!isScheduled) {
 				visitSummary.setStatus(VisitorStatus.NEW);
 				visitSummary.setInTime(new Date());
