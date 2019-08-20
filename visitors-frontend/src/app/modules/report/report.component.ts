@@ -49,8 +49,7 @@ export class ReportComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe( params => {
-      this.filterValues[ 'officeLocation' ] = params.loc;
-      console.log( "ll" + params.loc );
+      this.filterValues[ 'officeLocation' ] = [ params.loc ];
       this.paginator.pageIndex = 0;
     } );
 

@@ -60,6 +60,7 @@
       <a
         mat-list-item
         [routerLink]="['/visitor']"
+        [queryParams]="{ loc: queryLocation }"
         routerLinkActive="active"
         [queryParams]="{ loc: val }"
       >
@@ -71,6 +72,7 @@
       <a
         mat-list-item
         [routerLink]="['/report']"
+        [queryParams]="{ loc: queryLocation }"
         routerLinkActive="active"
         [queryParams]="{ loc: val }"
       >
