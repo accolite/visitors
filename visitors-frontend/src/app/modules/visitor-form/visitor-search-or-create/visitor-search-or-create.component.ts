@@ -54,6 +54,7 @@ export class VisitorSearchOrCreateComponent {
   ngOnInit() {
     this.route.queryParams.subscribe( params => {
       this.officeLocation = params.loc;
+      //this.officeLocation = this.officeLocation.toString();
     } );
     this.searchVisitor$.pipe(
       debounceTime( 1000 ),
@@ -90,8 +91,10 @@ export class VisitorSearchOrCreateComponent {
     this.user = new VisitorModel();
     this.user.visitSummary = [];
     const visitSummary = new VisitSummaryModel();
-    visitSummary.officeLocation = this.officeLocation;
+    visitSummary.officeLocation = this.officeLocation.toString();
+
     this.user.visitSummary.push( visitSummary );
+
   }
   onClick( event ) {
     event.preventDefault();
@@ -143,12 +146,26 @@ export class VisitorSearchOrCreateComponent {
 
       this.user.visitSummary[ 0 ].status = "SCHEDULED";
     }
+    // const visitSummary = new VisitSummaryModel( this.user.visitSummary );
+    // visitSummary[ 0 ].officeLocation = this.officeLocation.toString();
+    // this.user.visitSummary[ "officelocation" ] = visitSummary.officeLocation;
+    // console.log( this.user.visitSummary[ "officelocation" ] );
+    this.user.visitSummary[ 0 ].scheduledStartDate = this.convert( this.user.visitSummary[ 0 ].scheduledStartDate );
+    this.user.visitSummary[ 0 ].scheduledEndDate = this.convert( this.user.visitSummary[ 0 ].scheduledEndDate );
     console.log( this.user );
     this.visitorService.createNewVisitor( this.user ).subscribe( () => {
       this.createUser();
       this.router.navigateByUrl( '/visitor' );
     } );
   }
+  convert( str ) {
+    var date = new Date( str ),
+      mnth = ( "0" + ( date.getMonth() + 1 ) ).slice( -2 ),
+      day = ( "0" + date.getDate() ).slice( -2 );
+    return [ date.getFullYear(), mnth, day ].join( "-" );
+  }
+
+
 
   onAddVisit() {
     let visitSummary;

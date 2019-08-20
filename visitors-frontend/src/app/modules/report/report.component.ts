@@ -50,6 +50,7 @@ export class ReportComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe( params => {
       this.filterValues[ 'officeLocation' ] = params.loc;
+      console.log( "ll" + params.loc );
       this.paginator.pageIndex = 0;
     } );
 
@@ -120,6 +121,7 @@ export class ReportComponent implements OnDestroy, OnInit {
           // }
         } ),
         map( data => {
+
           // Flip flag to show that loading has finished.
           this.resultsLength = data[ 'total' ];
           return data;

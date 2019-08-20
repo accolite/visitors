@@ -23,7 +23,8 @@ export class RestInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${ window.sessionStorage.getItem( 'token' ) }`
         }
       } )
-      return next.handle( request ).pipe(retry(5));
+      return next.handle( request )
+      // .pipe(retry(5));
     } else {
       this.router.navigateByUrl( '/login' );
       return next.handle( null );

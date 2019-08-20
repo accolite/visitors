@@ -52,14 +52,17 @@ export class PendingRequestComponent extends DataObtainer<any>
   ngOnChanges( changes: SimpleChanges ) {
     if ( changes.ofcLocation ) {
       this.refreshData()
+      console.log( this.ofcLocation );
     }
   }
 
   getDataObservable( params: ServiceSearchParamsInputModel ) {
+
     this.searchObj = {
       status: "PENDING",
       officeLocation: this.ofcLocation
     };
+    //console.log( "first" + this.searchObj )
     return this.visitorService.searchVisitor( this.searchObj );
   }
 
