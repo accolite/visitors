@@ -3,30 +3,30 @@
  * Basic authentication rule for all routers
  */
 
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
-
+import * as jwtDecode from 'jwt-decode';
 
 @Injectable( {
   providedIn: 'root'
 } )
 export class AuthGuardService implements CanActivate {
 
-  constructor( private router: Router) { }
+  constructor( private router: Router ) { }
 
   canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): boolean {
     let token: string = route.queryParams.token ? route.queryParams.token : window.sessionStorage.getItem( 'token' ) ? window.sessionStorage.getItem( 'token' ) : null;
 
-    if ( token != 'null' && token ) {
-      if(!window.sessionStorage.getItem('token')){
+    let condition = !!( token && token != 'null' && jwtDecode( token ) );
+
+    if ( condition ) {
+      if ( !window.sessionStorage.getItem( 'token' ) ) {
         window.sessionStorage.setItem( 'token', token )
       }
     }
-    let condition = !!token && token != 'null';
     if ( !condition ) {
       this.router.navigateByUrl( 'login' );
     }
     return condition;
   }
-
 }

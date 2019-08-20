@@ -21,7 +21,7 @@ export class ContextService {
 
   setUser() {
     let token = window.sessionStorage.getItem( 'token' ) ? window.sessionStorage.getItem( 'token' ) : null;
-    if ( token && token != null) {
+    if ( token && token != null ) {
       this.authService.getUserDetailsByToken().subscribe( ( data ) => {
         this.user = new User( data );
         this.token = window.sessionStorage.getItem( 'token' )
@@ -33,7 +33,7 @@ export class ContextService {
     return !!this.user
   }
 
-  get hasToken():boolean {
+  get hasToken(): boolean {
     return !!this.token
   }
 
