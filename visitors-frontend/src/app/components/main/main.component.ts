@@ -19,8 +19,7 @@ export class MainComponent {
 
   constructor( private router: Router, private activatedRoute: ActivatedRoute, public contextService: ContextService ) {
     this.activatedRoute.queryParams.subscribe( ( data ) => {
-      this.queryLocation = data.loc;
-      this.accLocation = this.queryLocation ? this.queryLocation.split( ',' ) : [ 'Bangalore' ]
+      this.selectedValue( data )
     } )
   }
 
@@ -30,6 +29,23 @@ export class MainComponent {
     } else {
       this.router.navigateByUrl( '/login' )
     }
+  }
+
+  ngDoCheck() {
+
+  }
+
+  selectedValue( data ) {
+    this.queryLocation = data.loc ? data.loc : data.toString();
+    this.accLocation = this.queryLocation ? this.queryLocation.split( ',' ) : [ 'Bangalore' ];
+    this.router.navigate( [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          loc: this.queryLocation && this.queryLocation != 'null' ? this.queryLocation : 'Bangalore',
+        },
+        queryParamsHandling: 'merge'
+      } )
   }
 
 }
