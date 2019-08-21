@@ -14,6 +14,8 @@ import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
 import { RestInterceptor } from './services/base/rest.interceptor';
+import { WebcamModule } from 'ngx-webcam';
+
 
 
 @NgModule( {
@@ -28,6 +30,7 @@ import { RestInterceptor } from './services/base/rest.interceptor';
     ReactiveFormsModule,
     VisitorsModule,
     ReportModule,
+    WebcamModule,
     HttpClientModule,
     HomeModule
   ],
