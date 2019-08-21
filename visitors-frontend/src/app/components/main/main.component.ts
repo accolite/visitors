@@ -31,10 +31,6 @@ export class MainComponent {
     }
   }
 
-  ngDoCheck() {
-
-  }
-
   selectedValue( data ) {
     this.queryLocation = data.loc ? data.loc : data.toString();
     this.accLocation = this.queryLocation ? this.queryLocation.split( ',' ) : [ 'Bangalore' ];
