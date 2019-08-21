@@ -27,7 +27,7 @@ public class ScheduledTasks {
 
 	private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd:mm:yyyy HH:mm:ss");
 
-	@Scheduled(cron = "0 50 11 * * ?")
+	@Scheduled(cron = "0 50 23 * * ?")
 	public void getAndUpdateUnVisitedScheduledVisitJob() {
 
 		log.info("Cron Task :: getAndUpdateUnVisitedScheduledVisit job -> Execution Time - {}",
@@ -35,7 +35,7 @@ public class ScheduledTasks {
 		visitorService.getAndUpdateUnVisitedScheduledVisits();
 	}
 
-	@Scheduled(cron = "0 50 11 * * ?")
+	@Scheduled(cron = "0 50 23 * * ?")
 	public void getAndUpdateUnCompletedVisitJob() {
 
 		log.info("Cron Task :: getAndUpdateUnCompletedVisit job -> Execution Time - {}",
