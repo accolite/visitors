@@ -20,6 +20,7 @@ import com.accolite.visitors.model.VisitSummary;
 import com.accolite.visitors.model.Visitor;
 import com.accolite.visitors.model.VisitorsView;
 import com.accolite.visitors.repository.VisitorRepository;
+import com.accolite.visitors.util.DateUtils;
 import com.accolite.visitors.util.WebSocketHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -116,6 +117,9 @@ public class VisitorServiceImpl implements VisitorService {
 	public void updateVisitSummary(String id, Map<String, Object> visitSummaryMap) throws VisitorNotFoundException {
 
 		visitSummaryMap.put("inTime", new Date());
+		/* scheduledStartDate and scheduledEndDate should not be updated */
+		visitSummaryMap.remove("scheduledStartDate");
+		visitSummaryMap.remove("scheduledEndDate");
 		long count = visitorRepository.updateVisitSummary(id, visitSummaryMap);
 		if (count == 0) {
 			throw new VisitorNotFoundException("Visitor not found");
@@ -221,12 +225,12 @@ public class VisitorServiceImpl implements VisitorService {
 				visitSummary.setStatus(VisitorStatus.NEW);
 				visitSummary.setInTime(new Date());
 			} else {
-				if (visitSummary.getScheduledStartDate() == null) {
-					visitSummary.setScheduledStartDate(new Date());
-				}
-				if (visitSummary.getScheduledEndDate() == null) {
-					visitSummary.setScheduledEndDate(new Date());
-				}
+				Date startDate = visitSummary.getScheduledStartDate();
+				Date endDate = visitSummary.getScheduledEndDate();
+				startDate = (startDate == null) ? new Date() : startDate;
+				endDate = (endDate == null) ? new Date() : endDate;
+				visitSummary.setScheduledStartDate(DateUtils.atStartOfDay(startDate));
+				visitSummary.setScheduledEndDate(DateUtils.atSpecificTimeOfDay(endDate));
 			}
 			if (visitSummary.getVisitNumber() == 0) {
 				visitSummary.setVisitNumber(1);
