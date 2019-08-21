@@ -12,6 +12,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -70,6 +71,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		errorResponse.setStatus(HttpStatus.BAD_REQUEST);
 		errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(AccessDeniedException.class)
+	protected ResponseEntity<Object> handleAccessDenied(RuntimeException ex, WebRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setTimestamp(LocalDateTime.now());
+		errorResponse.setStatus(HttpStatus.FORBIDDEN);
+		errorResponse.setMessage(ex.getMessage());
+		return new ResponseEntity<Object>(errorResponse, HttpStatus.FORBIDDEN);
 	}
 
 	@Override
