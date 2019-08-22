@@ -32,7 +32,7 @@ export class VisitorSearchOrCreateComponent {
   addVisitStatus: Array<string> = addVisitStatus;
   showLoading = false;
   officeLocation = 'Bangalore';
-  minDate: any;
+  minDate = new Date()
 
   @ViewChild( "heroForm", { static: true } )
   heroForm: NgForm;
@@ -172,7 +172,7 @@ export class VisitorSearchOrCreateComponent {
     if ( ArrayUtil.isNotEmpty( this.user.visitSummary ) ) {
       visitSummary = this.user.visitSummary[ this.user.visitSummary.length - 1 ]
       let visitorObj = new VisitorModel( JSON.parse( JSON.stringify( this.user ) ) );
-      visitorObj.visitSummary = [];
+      //visitorObj.visitSummary = [];
       visitorObj.visitSummary.push( visitSummary )
 
     } else {
@@ -180,9 +180,9 @@ export class VisitorSearchOrCreateComponent {
     }
     this.addVisitSummary();
     console.log( this.user )
-    // this.visitorService.addVisitorSummary( this.user ).subscribe( () => {
-    //   this.router.navigateByUrl( '/visitor' );
-    // } );
+    this.visitorService.addVisitorSummary( this.user ).subscribe( () => {
+      this.router.navigateByUrl( '/visitor' );
+    } );
   }
 
   onUpdateVisit() {

@@ -31,6 +31,7 @@
             matInput
             placeholder="Badge No"
             autocomplete="off"
+            required
           />
         </mat-form-field>
       </td>
@@ -41,6 +42,7 @@
             [(ngModel)]="data.visitSummary.comingFrom"
             matInput
             placeholder="Coming From"
+            required
           />
         </mat-form-field>
       </td>
@@ -53,6 +55,9 @@
             [(ngModel)]="data.phoneNumber"
             matInput
             placeholder="Phone Number"
+            minlength="10"
+            maxlength="10"
+            required
           />
         </mat-form-field>
       </td>
@@ -89,28 +94,7 @@
         </mat-form-field>
       </td>
     </tr>
-    <tr>
-      <td>
-        <mat-form-field class="column">
-          <input
-            name="scheduledStartTime"
-            [(ngModel)]="data.visitSummary.scheduledStartDate"
-            matInput
-            placeholder="Start Date"
-          />
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field class="column column_margin ">
-          <input
-            name="scheduledEndTime"
-            [(ngModel)]="data.visitSummary.scheduledEndDate"
-            matInput
-            placeholder="End Date"
-          />
-        </mat-form-field>
-      </td>
-    </tr>
+
     <tr>
       <td>
         <button mat-raised-button (click)="onNoClick(data)" color="primary">

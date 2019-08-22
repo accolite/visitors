@@ -155,7 +155,7 @@
           </mat-form-field>
           <mat-form-field>
             <input
-              [readonly]="data"
+              
               matInput
               type="number"
               placeholder="Mobile number"
@@ -201,12 +201,14 @@
               matInput
               placeholder="Start Date"
               required
+              [min]="minDate"
+              #pic
             />
             <mat-datepicker-toggle
               matSuffix
               [for]="picker"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker touchUi disabled="false"></mat-datepicker>
           </mat-form-field>
           <mat-form-field>
             <input
@@ -215,15 +217,19 @@
               [(ngModel)]="user.visitSummary[0].scheduledEndDate"
               matInput
               placeholder="End Date"
-              disabled
+              [min]="pic.value"
               required
-              [min]="minDate"
             />
             <mat-datepicker-toggle
               matSuffix
               [for]="picker2"
             ></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker2 disabled="false"></mat-datepicker>
+            <mat-datepicker
+              touchUi
+              #picker2
+              disabled="false"
+              [startAt]="pic.value"
+            ></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="flex-container">
