@@ -33,6 +33,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 			throws IOException, ServletException {
 
 		String bearer = request.getHeader("Authorization");
+		log.debug("Path: {}", request.getRequestURI());
 		log.debug("Token received: {}", bearer);
 		if (bearer != null && bearer.length() > 7 && bearer.startsWith("Bearer ")) {
 			bearer = bearer.substring(7);
