@@ -3,6 +3,7 @@
  */
 package com.accolite.visitors.advice;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -42,9 +43,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler({ VisitorNotFoundException.class, VisitSummaryNotFoundException.class })
-	public final ResponseEntity<Object> handleVisitorNotFoundException(VisitorNotFoundException ex,
-			WebRequest request) {
+	@ExceptionHandler({ VisitorNotFoundException.class, VisitSummaryNotFoundException.class,
+			FileNotFoundException.class })
+	public final ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 		ErrorResponse errorResponse = new ErrorResponse();
