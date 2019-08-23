@@ -24,7 +24,7 @@ export class VisitorComponent {
   preApproved: PreApprovedRequestComponent;
   notificationData: NotificationModel;
 
-  constructor( private notification: NotificationService, private restService: RestService,private contextService:ContextService ) { }
+  constructor( private notification: NotificationService, private restService: RestService, private contextService: ContextService ) { }
 
   showSnackbarAndRefreshData( data: NotificationModel ) {
     // console.clear();

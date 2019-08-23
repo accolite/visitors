@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { tap, catchError } from "rxjs/operators";
 import { urls } from "../../config/constants";
 import { RestService } from "./base/rest.service";
-import { Observable, of } from 'rxjs';
+import { Observable, of } from "rxjs";
 
 @Injectable( {
   providedIn: 'root'
@@ -19,14 +19,15 @@ export class VisitorService {
   }
 
   createNewVisitor( visitorObj: any ) {
+    console.log( visitorObj );
     return this.restService
       .jsonPost( urls.BASE_URL + urls.CREATE_NEW_VISITOR, visitorObj )
       .pipe( tap( this.restService.createNotifySnackbar( "create-visitors" ) ) );
   }
 
-  addVisitorSummary( visitorId: string, visitorSummaryObj: any ) {
+  addVisitorSummary( visitorObj: any ) {
     return this.restService
-      .jsonPut( urls.BASE_URL + urls.ADD_VISIT_SUMMARY + visitorId, visitorSummaryObj )
+      .jsonPut( urls.BASE_URL + urls.ADD_VISIT_SUMMARY, visitorObj )
       .pipe( tap( this.restService.createNotifySnackbar( "add-visit" ) ) );
 
   }
@@ -80,12 +81,17 @@ export class VisitorService {
   }
 
   searchVisitor( searchObj: any, page: number = 0, pageSize: number = 10 ) {
-    let searchURL = urls.BASE_URL + urls.SEARCH + `?page=${ page }&size=${ pageSize }`;
+    let searchURL =
+      urls.BASE_URL + urls.SEARCH + `?page=${ page }&size=${ pageSize }`;
+    console.log( searchObj );
     return this.restService.jsonPost( searchURL, searchObj );
   }
 
   deleteVisitorSummary( visitSummaryId: string ) {
     return this.restService.get( urls.BASE_URL + visitSummaryId );
+  }
+  approveOnBehalf( reqObj: any ) {
+    return this.restService.jsonPost( urls.BASE_URL + urls.APPROVE_ON_BEHALF, reqObj );
   }
 
 }

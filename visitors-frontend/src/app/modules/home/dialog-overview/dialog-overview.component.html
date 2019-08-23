@@ -2,7 +2,7 @@
   <table>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="firstName"
             [(ngModel)]="data.firstName"
@@ -12,7 +12,7 @@
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="lastName"
             [(ngModel)]="data.lastName"
@@ -24,39 +24,45 @@
     </tr>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="badgeNo"
-            [(ngModel)]="data.badgeNo"
+            [(ngModel)]="data.visitSummary.badgeNo"
             matInput
             placeholder="Badge No"
+            autocomplete="off"
+            required
           />
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="comingFrom"
-            [(ngModel)]="data.comingFrom"
+            [(ngModel)]="data.visitSummary.comingFrom"
             matInput
             placeholder="Coming From"
+            required
           />
         </mat-form-field>
       </td>
     </tr>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="phoneNumber"
             [(ngModel)]="data.phoneNumber"
             matInput
             placeholder="Phone Number"
+            minlength="10"
+            maxlength="10"
+            required
           />
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="emailId"
             [(ngModel)]="data.emailId"
@@ -68,50 +74,33 @@
     </tr>
     <tr>
       <td>
-        <mat-form-field>
+        <mat-form-field class="column">
           <input
             name="contactPerson"
-            [(ngModel)]="data.contactPerson"
+            [(ngModel)]="data.visitSummary.contactPerson"
             matInput
             placeholder="Contact Person"
           />
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="column">
+        <mat-form-field class="column column_margin">
           <input
             name="purpose"
-            [(ngModel)]="data.purpose"
+            [(ngModel)]="data.visitSummary.purpose"
             matInput
             placeholder="purpose"
           />
         </mat-form-field>
       </td>
     </tr>
+
     <tr>
       <td>
-        <mat-form-field>
-          <input
-            name="inTime"
-            [(ngModel)]="data.inTime"
-            matInput
-            placeholder="In Time"
-          />
-        </mat-form-field>
+        <button mat-raised-button (click)="onNoClick(data)" color="primary">
+          Submit
+        </button>
       </td>
-      <td>
-        <mat-form-field class="column">
-          <input
-            name="scheduledTime"
-            [(ngModel)]="data.scheduledTime"
-            matInput
-            placeholder="Scheduled time"
-          />
-        </mat-form-field>
-      </td>
-    </tr>
-    <tr>
-      <td><button mat-button (click)="onNoClick(data)">Submit</button></td>
     </tr>
   </table>
 </div>

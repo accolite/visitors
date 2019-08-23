@@ -72,7 +72,6 @@ export class ReportComponent implements OnDestroy, OnInit {
           this.paginator.pageIndex = 0;
         }
         this.filterValues[ 'phoneNumber' ] = phoneNumber;
-
       }
     ); */
     this.purposeFilter.valueChanges.subscribe(
