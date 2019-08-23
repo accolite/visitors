@@ -66,12 +66,28 @@ export class ApprovedRequestComponent extends DataObtainer<any>
 
   onAfterUpdateData( data: any ) {
     this.visitors = data && data.data ? data.data : null;
+
+
+
+    for ( let item in this.visitors ) {
+      if ( this.visitors[ item ].visitSummary.remarks == null ) {
+
+      }
+      else if ( this.visitors[ item ].visitSummary.remarks.includes( "|" ) ) {
+        let index = this.visitors[ item ].visitSummary.remarks.lastIndexOf( "|" );
+        this.visitors[ item ].visitSummary.remarks = this.visitors[ item ].visitSummary.remarks.slice( index + 1 )
+      }
+
+
+
+    }
     this.dataSource = new MatTableDataSource(
       this.visitors ? this.visitors : []
     );
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
   }
   exit( data ) {
     const reqObj = {

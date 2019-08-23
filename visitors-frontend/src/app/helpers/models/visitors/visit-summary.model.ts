@@ -15,7 +15,8 @@ export class VisitSummaryModel {
   inTime: string;
   outTime: string;
   status: string;
-  scheduledTime: string;
+  scheduledStartDate: string;
+  scheduledEndDate: string;
   remarks: string;
 
   constructor( jsonObj?: {} ) {

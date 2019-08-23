@@ -1,3 +1,8 @@
 .column {
+  /* margin-left: 30px; */
+  width: 200px;
+}
+
+.column_margin {
   margin-left: 30px;
 }
