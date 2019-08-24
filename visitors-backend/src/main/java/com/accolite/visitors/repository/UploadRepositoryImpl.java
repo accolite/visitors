@@ -1,5 +1,6 @@
 package com.accolite.visitors.repository;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,48 +24,40 @@ public class UploadRepositoryImpl implements UploadRepository {
 
 	@Autowired
 	private GridFsTemplate gridFsTemplate;
-	
+
 	@Autowired
 	private MongoDbFactory mongoDbFactory;
-	
-	
-	
+
 	@Override
-	public String uploadFile(MultipartFile file, String title, String id) throws IOException {
-		
+	public String uploadFile(MultipartFile file, String id) throws IOException {
+
 		DBObject metaData = new BasicDBObject();
 		metaData.put("type", "image");
 		metaData.put("visitorId", id);
-		
-		Object imageId = gridFsTemplate.store(file.getInputStream(),
-				file.getName(),
-				file.getContentType(),
-				metaData);
-		
+
+		Object imageId = gridFsTemplate.store(file.getInputStream(), file.getName(), file.getContentType(), metaData);
+
 		return imageId.toString();
 	}
-	
-	
+
 	@Override
-	public GridFsResource getFile(String id){
-		
+	public GridFsResource getFile(String id) throws FileNotFoundException {
+
 		GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("metadata.visitorId").is(id)));
-		
-		//GridFsResource gridFsResource = gridFsTemplate.getResource(file);
-		GridFsResource gridFsResource = new GridFsResource(file,
-				getGridFs().openDownloadStream(file.getObjectId()));
-		
+
+		// GridFsResource gridFsResource = gridFsTemplate.getResource(file);
+		if (file == null) {
+			throw new FileNotFoundException("Image not found / Invalid visitor");
+		}
+		GridFsResource gridFsResource = new GridFsResource(file, getGridFs().openDownloadStream(file.getObjectId()));
+
 		return gridFsResource;
-		
 	}
-	
+
 	private GridFSBucket getGridFs() {
+
 		MongoDatabase db = mongoDbFactory.getDb();
 		return GridFSBuckets.create(db);
 	}
-	
-	
-	
 
 }
-
