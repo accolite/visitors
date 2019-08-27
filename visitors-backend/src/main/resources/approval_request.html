@@ -4,9 +4,12 @@
 <p>New visitor request is waiting for your approval.</p>
 <p>Visitor Details:</p>
 <p>
-	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />Email: <strong>${visitor.email}</strong><br />Contact
-	Number: <strong>${visitor.phone}</strong><br />Coming From: <strong>${visitor.visitSummary.comingFrom}</strong><br />Purpose: <strong>${visitor.visitSummary.purpose}</strong><br />In
-	Time: <strong>${visitor.visitSummary.inTime}</strong>
+	Full Name: <strong>${visitor.firstName} ${visitor.lastName}</strong><br />
+	Email: <strong>${visitor.email}</strong><br />
+	Contact Number: <strong>${visitor.phone}</strong><br />
+	Coming From: <strong>${visitor.visitSummary.comingFrom}</strong><br />
+	Purpose: <strong>${visitor.visitSummary.purpose}</strong><br />
+	In Time: <strong>${visitor.visitSummary.inTime}</strong>
 </p>
 <p>Please Provide Your Response below:</p>
 <p>&nbsp;</p>
@@ -25,8 +28,8 @@
 		type="radio" name="approval" value="${visitor.statusDeclined}"><label
 		style="color: Red; font-weight: bold;"> Decline</label><br />
 	<br /> 
-	Comment / Remarks: <input required type="text" name="remarks"
-		value="Wait for 10 minutes !"><br />
+	Comment / Remarks: <input required type="text" name="remarks" value="Wait for 10 minutes !">
+	<br />
 	<br />
 	<button type="submit">Submit</button>
 </form>
