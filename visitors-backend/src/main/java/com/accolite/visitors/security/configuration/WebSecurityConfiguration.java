@@ -58,30 +58,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http
-				.cors()
-				.and()
-				.csrf().disable()
-				.formLogin().disable()
-				.httpBasic().disable()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-				.and()
-				.authorizeRequests()
+		http.cors().and().csrf().disable().formLogin().disable().httpBasic().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
+				.authenticationEntryPoint(new CustomAuthenticationEntryPoint()).and().authorizeRequests()
 				.antMatchers("/oauth2/**", "/favicon.ico", "/error", "/v2/api-docs", "/configuration/ui",
-						"/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
-				.permitAll().anyRequest().authenticated()
-				.and()
-				.oauth2Login()
-				.authorizationEndpoint().authorizationRequestRepository(requestRepository)
-				.and()
-				.userInfoEndpoint().oidcUserService(oidcUserService)
-				.and()
-				.successHandler(successHandler)
-				.failureHandler(failureHandler)
-				.and()
-				.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+						"/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**",
+						"/api-dev/visitor/approvalResponse", "/api-dev/visitor/notifyResponse")
+				.permitAll().anyRequest().authenticated().and().oauth2Login().authorizationEndpoint()
+				.authorizationRequestRepository(requestRepository).and().userInfoEndpoint()
+				.oidcUserService(oidcUserService).and().successHandler(successHandler).failureHandler(failureHandler)
+				.and().addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Bean
