@@ -29,6 +29,8 @@ public class VisitorsView {
 
 	private VisitorType visitorType;
 
+	private String imageId;
+
 	private VisitSummary visitSummary;
 
 }

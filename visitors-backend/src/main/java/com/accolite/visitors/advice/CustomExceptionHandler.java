@@ -6,15 +6,12 @@ package com.accolite.visitors.advice;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,8 +31,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-		List<String> details = new ArrayList<String>();
-		details.add(ex.getLocalizedMessage());
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setTimestamp(LocalDateTime.now());
 		errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,8 +41,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ VisitorNotFoundException.class, VisitSummaryNotFoundException.class,
 			FileNotFoundException.class })
 	public final ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) {
-		List<String> details = new ArrayList<>();
-		details.add(ex.getLocalizedMessage());
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setTimestamp(LocalDateTime.now());
 		errorResponse.setStatus(HttpStatus.NOT_FOUND);
@@ -61,7 +54,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		errorResponse.setTimestamp(LocalDateTime.now());
 		errorResponse.setStatus(HttpStatus.CONFLICT);
 		errorResponse.setMessage("Duplicate key found.");
-		// errorResponse.setMessage(ex.getMessage());
 		return new ResponseEntity<Object>(errorResponse, HttpStatus.CONFLICT);
 	}
 
@@ -86,10 +78,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		List<String> details = new ArrayList<>();
-		for (ObjectError errorResponse : ex.getBindingResult().getAllErrors()) {
-			details.add(errorResponse.getDefaultMessage());
-		}
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setTimestamp(LocalDateTime.now());
 		errorResponse.setStatus(HttpStatus.BAD_REQUEST);
