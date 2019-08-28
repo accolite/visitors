@@ -63,7 +63,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authenticationEntryPoint(new CustomAuthenticationEntryPoint()).and().authorizeRequests()
 				.antMatchers("/oauth2/**", "/favicon.ico", "/error", "/v2/api-docs", "/configuration/ui",
 						"/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**",
-						"/api-dev/visitor/approvalResponse", "/api-dev/visitor/notifyResponse")
+						"/api-dev/visitor/approvalResponse", "/api-dev/visitor/notifyResponse", "/visitor/**")
 				.permitAll().anyRequest().authenticated().and().oauth2Login().authorizationEndpoint()
 				.authorizationRequestRepository(requestRepository).and().userInfoEndpoint()
 				.oidcUserService(oidcUserService).and().successHandler(successHandler).failureHandler(failureHandler)
