@@ -111,7 +111,6 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
       } );
   }
   assignBadge( event ) {
-    console.log( event );
     const dialogRef = this.dialog.open( DialogOverviewComponent, {
       width: "500px",
       data: event
@@ -135,7 +134,6 @@ export class PreApprovedRequestComponent extends DataObtainer<any> {
         visitorType: result.data.visitorType,
         phoneNumber: result.data.phoneNumber
       };
-      console.log( result.data );
       this.visitorService
         .updateVisitSummary( result.data.id, result.data.visitSummary )
         .subscribe( () => {
