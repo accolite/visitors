@@ -52,7 +52,6 @@ export class PendingRequestComponent extends DataObtainer<any>
   ngOnChanges( changes: SimpleChanges ) {
     if ( changes.ofcLocation ) {
       this.refreshData()
-      console.log( this.ofcLocation );
     }
   }
 
@@ -62,7 +61,6 @@ export class PendingRequestComponent extends DataObtainer<any>
       status: "PENDING",
       officeLocation: this.ofcLocation
     };
-    //console.log( "first" + this.searchObj )
     return this.visitorService.searchVisitor( this.searchObj );
   }
 
@@ -76,9 +74,6 @@ export class PendingRequestComponent extends DataObtainer<any>
         let index = this.visitors[ item ].visitSummary.remarks.lastIndexOf( "|" );
         this.visitors[ item ].visitSummary.remarks = this.visitors[ item ].visitSummary.remarks.slice( index + 1 )
       }
-
-
-
     }
     this.dataSource = new MatTableDataSource( this.visitors );
     this.dataSource.paginator = this.paginator;

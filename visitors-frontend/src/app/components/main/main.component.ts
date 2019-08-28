@@ -19,7 +19,7 @@ export class MainComponent {
 
   constructor( private router: Router, private activatedRoute: ActivatedRoute, public contextService: ContextService ) {
     this.activatedRoute.queryParams.subscribe( ( data ) => {
-      this.selectedValue( data )
+      this.selectedValue( data && data.loc ? data : { loc: 'Bangalore' } )
     } )
   }
 
@@ -32,7 +32,7 @@ export class MainComponent {
   }
 
   selectedValue( data ) {
-    this.queryLocation = data.loc ? data.loc : data.toString();
+    this.queryLocation = data && data.toString() == "[object Object]" ? data.loc : data.toString();
     this.accLocation = this.queryLocation ? this.queryLocation.split( ',' ) : [ 'Bangalore' ];
     this.router.navigate( [],
       {
@@ -43,5 +43,4 @@ export class MainComponent {
         queryParamsHandling: 'merge'
       } )
   }
-
 }

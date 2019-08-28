@@ -81,9 +81,7 @@ export class VisitorService {
   }
 
   searchVisitor( searchObj: any, page: number = 0, pageSize: number = 10 ) {
-    let searchURL =
-      urls.BASE_URL + urls.SEARCH + `?page=${ page }&size=${ pageSize }`;
-    console.log( searchObj );
+    let searchURL = urls.BASE_URL + urls.SEARCH + `?page=${ page }&size=${ pageSize }`;
     return this.restService.jsonPost( searchURL, searchObj );
   }
 
