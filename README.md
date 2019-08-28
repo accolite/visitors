@@ -1,124 +1,127 @@
-# visitors
+***Accolite Visitors:***
 
-Accolite Visitors - Phase I
+Visitors Application is created to store the visitor details who comes to the Accolite office for various purposes like interview, client meetings, project discussions, joining, courier delivery etc. The system will store the visitors details such as name, email id, phone number, location, purpose, contact person details, in time, out time, govt. ID number in the database. Also, visitor’s photo has been captured through webcam and stored. Once the visitor record is created, it will automatically trigger the mail to the contact person for approval and to the visitor regarding the status of his/her visit. Approver can either Approve or Decline the request. Once the approver approves the request, then the visitor will be allowed to enter Accolite premises. There is an option to approve on behalf which can be done by either Receptionist or Admin.
 
-Accolite visitors is a web application which will be used for managing the visitor details who are visiting across Accolite offices. The receptionist can set the location of the application using a drop down and create a record for each visitor. Basic details like email, mobile, name, In time, ID details will be captured and stored for reporting purposes. For the guest visitor, the purpose of the visit and contact person is also captured. 
+Accolite employees can also pre-schedule the visit entry for any visitors through this portal. All the status changes of all visitors will be notified to the system in notification panel via websockets. All api requests are authenticated using OAuth 2.0 mechanism. OAuth 2.0 allows a user to grant limited access to their resources without having to expose their credentials.
 
-
-Phase - I:
-
-Set Office Location: User can set the office location in a dropdown.
-
-Create a New Visitor:
-
-Create a record for each visitor. 
-
-2 Types of visitors: Guest and Employee. 
-
-Guest user - purpose of visit, contact person, coming from information also will be captured.
+Swagger UI allows to visualize and interact with the API’s resources without having any of the implementation logic in place. It’s automatically generated based on Swagger Specification, with the visual documentation making it easy for back end implementation and client side consumption. 
 
 
-Report:
+**List of use cases:**
 
-List all the created visitors.
+  >Create visitor
+  
+  >Update visitor
+  
+  >Create visit summary
+  
+  >Update visit summary
+  
+  >Exit visitor
+  
+  >Search visitor based on visitor info, location, date, etc.
+  
+  >Approved/Scheduled/Pending tabs (with pagination)
+  
+  >Reports (with pagination)
+  
+  >Visitor profile view
+  
+  >Pre-schedule visits
+  
+  >Approvals via mail
+  
+  >Approval on behalf by receptionist
+  
+  >Mail to visitor about the status of his/her visit
+  
+  >Notifications via websockets
+  
+  >Capture and store visitor picture
+  
+  >OAuth 2.0
+  
+  >Swagger UI
+  
+  >Scheduler (cron task)
 
-Search based on visited date.
+**AWS details:**
 
-Delete a visitor.
+  >>*Instance IP Address:* 13.233.40.37
+  
+  >>*Username:* ubuntu
+  
+  >>*Contact for access:* Srinivasulu Korrapati- srinivasulu.korrapati@accolitelabs.com
 
-Update the Out Time of a visitor.
+**Dev Env:**
 
-Search based on user information.
+  >>http://visitors-dev.accolitelabs.com
+  
+  >>*S3 bucket:* accolite-visitors-dev-app
 
+**Prod Env:**
 
-AWS details:
+  >>http://visitors.accolitelabs.com/
+  
+  >>*S3 bucket:* accolite-visitors-app
 
-Instance IP Address: 13.233.40.37
+*GIT Repo URL:* https://github.com/accolite/visitors.git
 
-Username: ubuntu
+**Technologies Used:**
 
-Contact for access:  Srinivasulu Korrapati <srinivasulu.korrapati@accolitelabs.com>
-            
-Dev Env:
+>*Front End:* Angular 8
+
+>*Backend:* Java, Mongo-DB
+
+**Mongo DB details:**
+
+*Document:* visitor
+
+>*Fields:* id, firstName*, lastName*, phoneNumber*, emailId*, idType, idNumber, visitorType*, imageId, visitSummary list
+
+>>*VisitSummary fields:* visitNumber, badgeNo, comingFrom, contactPerson, contactPersonEmailId, contactPersonPhone, purpose, officeLocation, inTime, outTime, status, scheduledStartDate, scheduledEndDate, remarks
+
+>*Unique fields:* emailId, idNumber
+
+**Jenkins Integration (backend):**
+
+>*Jenkins Url:* http://13.233.40.37:8080/
+
+>*Job name:* Visitors-Dev-Backend
+
+>*Username:* visitors-app
+
+>*Password:* visitors@123
+
+**Steps done:**
+
+  >>Checkout the code from Github.
+  
+  >>Maven - clean, compile and package.
+  
+  >>Jar (visitors.jar) will be created and automatically placed in jenkins workspace. (i.e., /var/lib/jenkins/workspace/Visitors-Dev-Backend/visitors-backend/target/)
+  
+  >>Then the jar file will be executed using Shell commands.
+
+**Swagger UI:**
+
+http://visitors-dev.accolitelabs.com:8081/swagger-ui.html
+
+**Application URL (Dev):**
 
 http://visitors-dev.accolitelabs.com
 
-S3 bucket:  accolite-visitors-dev-app 
+**Yet to be:**
 
-Prod Env:
-
-http://visitors.accolitelabs.com/
-
-S3 bucket: accolite-visitors-app
-
-GIT Repo URL: https://github.com/accolite/visitors.git
-
-
-Technologies Used:
-
-Front End: AngularJS
-
-Backend: Java, Mongo-DB
+  >Fetch the employee details from an API endpoint using employee Id.
+  
+  >Download the report in PDF or Excel format.
+  
+  >Print ID card template.
+  
+  >Face recognition feature.
+  
+  >Integration with Aadhar data instead of manual visitor data entry.
 
 
-Mongo DB details:           
-
-Collections: 
-
-1.visitor 
-
-id - primary key
-
-   Mandatory fields: firstName, lastName, phoneNumber, emailId, visitorType
-   
-   Unique fields: emailId, idNumber, employeeId
-
-2.visit_summary 
-
-id - primary key
-
-visitor - foreign key
-
-
-Jenkins Integration and deploying the war to Tomcat server:
-
-Jenkins Url: http://13.233.40.37:8080/
-
-Username: visitors-app
-
-Password: visitors@123
-
-
-Steps done:
-
-Checkout the code from Github.
-
-Compile the java code using Maven.
-
-Package it as a war file from the compiled classes using Maven and it will be automatically placed inside Jenkins directory
-(i.e., /var/lib/jenkins/workspace/Visitors-Dev/visitors-backend/target/)
-
-Then the war file will be deployed into /var/lib/tomcat8/webapps/ directory.
-
-
-Below are the jobs created for Dev and Prod Backend deployment:
-
-Visitors-Dev-Backend (visitors-dev branch)
-
-Visitors-Prod-Backend (master branch)
-
-
-Phase - II:
-
-Pagination in the report page.
-
-Soft delete or hard delete of record (yet to decide).
-
-Send email to contact person when a visitor record is created.
-
-Display visitor profile when clicking on the first name or last name (hyperlink of the name).
-
-Fetch the employee details from an API endpoint using employee Id.
-
-Download the report in PDF or Excel format (Soman has to approve).
 
