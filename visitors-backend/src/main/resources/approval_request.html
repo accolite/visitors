@@ -11,7 +11,7 @@
 	Purpose: <strong>${visitor.visitSummary.purpose}</strong><br />
 	In Time: <strong>${visitor.visitSummary.inTime}</strong>
 </p>
-<p>Please Provide Your Response below:</p>
+<p>Please provide your response below:</p>
 <p>&nbsp;</p>
 <form action="${appURL}/api-dev/visitor/${responseEndpoint}"
 	method="get">
@@ -20,7 +20,8 @@
 	<input type="hidden" name="contactPerson" value="${visitor.visitSummary.contactPerson}">
 	<input type="hidden" name="visitorId" value="${visitor.id}">
 	<input type="hidden" name="visitNumber" value="${visitor.visitSummary.visitNumber}">
-	<input type="hidden" name="visitorEmail" value="${visitor.email}"> 
+	<input type="hidden" name="visitorEmail" value="${visitor.email}">
+	<input type="hidden" name="officeLocation" value="${visitor.visitSummary.officeLocation}">
 	<input
 		type="radio" name="approval" value="${visitor.statusApproved}" checked><label
 		style="color: Green; font-weight: bold;"> Approve</label> 

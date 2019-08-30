@@ -111,6 +111,8 @@ public class CustomMailService {
 		valuesMap.put("visitor.phone", String.valueOf(visitor.getPhoneNumber()));
 		valuesMap.put("visitor.visitSummary.comingFrom",
 				String.valueOf(visitor.getVisitSummary().get(0).getComingFrom()));
+		valuesMap.put("visitor.visitSummary.officeLocation",
+				String.valueOf(visitor.getVisitSummary().get(0).getOfficeLocation()));
 		valuesMap.put("visitor.visitSummary.purpose", String.valueOf(visitor.getVisitSummary().get(0).getPurpose()));
 		valuesMap.put("visitor.id", String.valueOf(visitor.getId()));
 		valuesMap.put("visitor.visitSummary.visitNumber",
@@ -223,7 +225,7 @@ public class CustomMailService {
 	}
 
 	public JSONObject approvalResponse(String firstName, String lastName, String contactPerson, String visitorId,
-			String visitNumber, String approval, String remarks, String visitorEmail) {
+			String visitNumber, String approval, String remarks, String visitorEmail, String officeLocation) {
 
 		JSONObject response = new JSONObject();
 		String status = "Unable to Update Status for visitorId: " + visitorId + " visitNumber: " + visitNumber
@@ -245,6 +247,7 @@ public class CustomMailService {
 			List<VisitSummary> visitSummaryList = new ArrayList<>();
 			VisitSummary visitSummary = new VisitSummary();
 			visitSummary.setContactPerson(contactPerson);
+			visitSummary.setOfficeLocation(officeLocation);
 			visitSummaryList.add(visitSummary);
 			visitor.setVisitSummary(visitSummaryList);
 			webSocketHelper.pushData(visitor, approvalStatus);
@@ -337,7 +340,7 @@ public class CustomMailService {
 
 		logger.info("Status Updated to APPROVED for visitNumber: " + visitor.getVisitSummary().get(0).getVisitNumber()
 				+ " of visitorID: " + visitor.getId() + "!!");
-		visitor.getVisitSummary().get(0).setContactPerson("Logged User");
+		visitor.getVisitSummary().get(0).setContactPerson("Receptionist");
 		webSocketHelper.pushData(visitor, VisitorStatus.APPROVED);
 	}
 }

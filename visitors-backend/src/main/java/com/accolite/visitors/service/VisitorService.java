@@ -112,10 +112,11 @@ public interface VisitorService {
 	 * @param approval
 	 * @param remarks
 	 * @param visitorMail
+	 * @param officeLocation
 	 * @return
 	 */
 	public JSONObject approvalResponse(String firstName, String lastName, String contactPerson, String visitorId,
-			String visitNumber, String approval, String remarks, String visitorMail);
+			String visitNumber, String approval, String remarks, String visitorMail, String officeLocation);
 
 	/**
 	 * @param firstName
@@ -126,10 +127,11 @@ public interface VisitorService {
 	 * @param niticed
 	 * @param remarks
 	 * @param visitorMail
+	 * @param officeLocation
 	 * @return
 	 */
 	public JSONObject notifyResponse(String firstName, String lastName, String contactPerson, String visitorId,
-			String visitNumber, String niticed, String remarks, String visitorMail);
+			String visitNumber, String niticed, String remarks, String visitorMail, String officeLocation);
 
 	/**
 	 * @param visitor

@@ -1,5 +1,6 @@
 package com.accolite.visitors.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +92,11 @@ public class VisitorServiceImpl implements VisitorService {
 		Visitor visitor = new Visitor();
 		visitor.setFirstName(requestData.get("firstName"));
 		visitor.setLastName(requestData.get("lastName"));
+		List<VisitSummary> visitSummaryList = new ArrayList<VisitSummary>();
+		VisitSummary visitSummary = new VisitSummary();
+		visitSummary.setOfficeLocation(requestData.get("officeLocation"));
+		visitSummaryList.add(visitSummary);
+		visitor.setVisitSummary(visitSummaryList);
 		webSocketHelper.pushData(visitor, VisitorStatus.COMPLETED);
 	}
 
@@ -155,18 +161,18 @@ public class VisitorServiceImpl implements VisitorService {
 
 	@Override
 	public JSONObject approvalResponse(String firstName, String lastName, String contactPerson, String visitorId,
-			String visitNumber, String approval, String remaarks, String visitorEmail) {
+			String visitNumber, String approval, String remaarks, String visitorEmail, String officeLocation) {
 
 		return customMailService.approvalResponse(firstName, lastName, contactPerson, visitorId, visitNumber, approval,
-				remaarks, visitorEmail);
+				remaarks, visitorEmail, officeLocation);
 	}
 
 	@Override
 	public JSONObject notifyResponse(String firstName, String lastName, String contactPerson, String visitorId,
-			String visitNumber, String niticed, String remarks, String visitorEmail) {
+			String visitNumber, String niticed, String remarks, String visitorEmail, String officeLocation) {
 
 		return customMailService.approvalResponse(firstName, lastName, contactPerson, visitorId, visitNumber, niticed,
-				remarks, visitorEmail);
+				remarks, visitorEmail, officeLocation);
 	}
 
 	@Override
