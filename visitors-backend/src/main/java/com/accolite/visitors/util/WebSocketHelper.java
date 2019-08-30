@@ -50,11 +50,14 @@ public class WebSocketHelper {
 		String name = visitor.getFirstName() + " " + visitor.getLastName();
 		message = message.replace("<VisitorName>", name);
 		List<VisitSummary> visitSummary = visitor.getVisitSummary();
+		String location = null;
 		if ((visitSummary != null) && (!visitSummary.isEmpty())) {
 			message = message.replace("<ContactPerson>", visitSummary.get(0).getContactPerson());
+			location = visitSummary.get(0).getOfficeLocation();
 		}
 		data.put("message", message);
 		data.put("action", visitorStatus);
+		data.put("location", location);
 
 		return data;
 	}

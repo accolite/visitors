@@ -14,14 +14,15 @@
 	In Time: <strong>${visitor.visitSummary.inTime}</strong>
 	<br /><br />
 </p>
-<p>Please Provide Your Response below:</p>
+<p>Please provide your response below:</p>
 <form action="${appURL}/api-dev/visitor/${responseEndpoint}" method="get">
 		<input type="hidden" name="firstName" value="${visitor.firstName}">
 		<input type="hidden" name="lastName" value="${visitor.lastName}">
 		<input type="hidden" name="contactPerson" value="${visitor.visitSummary.contactPerson}">
 		<input name="visitorId" type="hidden" value="${visitor.id}" /> 
 		<input name="visitNumber" type="hidden" value="${visitor.visitSummary.visitNumber}" /> 
-		<input type="hidden" name="visitorEmail" value="${visitor.email}"> 
+		<input type="hidden" name="visitorEmail" value="${visitor.email}">
+		<input type="hidden" name="officeLocation" value="${visitor.visitSummary.officeLocation}">
 		<input checked="checked" name="approval" type="radio" value="${visitor.statusApproved}" />
 		<label style="color: green; font-weight: bold;"> Noticed</label> 
 		<input name="approval" type="radio" value="${visitor.statusDeclined}" />

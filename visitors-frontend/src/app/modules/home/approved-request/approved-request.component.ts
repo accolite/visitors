@@ -94,7 +94,8 @@ export class ApprovedRequestComponent extends DataObtainer<any>
       'firstName': data.firstName,
       'lastName': data.lastName,
       'visitNumber': data.visitSummary.visitNumber,
-      'remarks': data.visitSummary.remarks
+      'remarks': data.visitSummary.remarks,
+      'officeLocation': data.visitSummary.officeLocation
     }
     this.visitorService.updateExitTime( data.id, reqObj )
       .pipe( tap( this.rest.createNotifySnackbar( "successfully-exited" ) ) )
