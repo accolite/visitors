@@ -1,22 +1,18 @@
 package com.accolite.visitors.repository;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.gridfs.GridFSBucket;
-import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSFile;
 
 @Repository
@@ -25,17 +21,14 @@ public class UploadRepositoryImpl implements UploadRepository {
 	@Autowired
 	private GridFsTemplate gridFsTemplate;
 
-	@Autowired
-	private MongoDbFactory mongoDbFactory;
-
 	@Override
-	public String uploadFile(MultipartFile file, String id) throws IOException {
+	public String uploadFile(InputStream inputStream, String id) {
 
 		DBObject metaData = new BasicDBObject();
 		metaData.put("type", "image");
 		metaData.put("visitorId", id);
 
-		Object imageId = gridFsTemplate.store(file.getInputStream(), file.getName(), file.getContentType(), metaData);
+		Object imageId = gridFsTemplate.store(inputStream,id, MediaType.IMAGE_JPEG_VALUE,metaData);
 
 		return imageId.toString();
 	}
@@ -45,19 +38,10 @@ public class UploadRepositoryImpl implements UploadRepository {
 
 		GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("metadata.visitorId").is(id)));
 
-		// GridFsResource gridFsResource = gridFsTemplate.getResource(file);
 		if (file == null) {
 			throw new FileNotFoundException("Image not found / Invalid visitor");
 		}
-		GridFsResource gridFsResource = new GridFsResource(file, getGridFs().openDownloadStream(file.getObjectId()));
-
-		return gridFsResource;
-	}
-
-	private GridFSBucket getGridFs() {
-
-		MongoDatabase db = mongoDbFactory.getDb();
-		return GridFSBuckets.create(db);
+		return gridFsTemplate.getResource(file);
 	}
 
 }

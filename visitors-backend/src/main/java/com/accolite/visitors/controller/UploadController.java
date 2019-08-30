@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.accolite.visitors.service.UploadService;
 
@@ -29,24 +28,24 @@ public class UploadController {
 
 	/**
 	 * Upload photo in MongoDB and update the imageId in the visitor collection
-	 * 
+	 *
 	 * @param id
-	 * @param file
+	 * @param base64String
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalAccessException
 	 */
 	@PostMapping(value = "/add/photo/{id}")
-	public ResponseEntity<String> uploadImage(@PathVariable("id") String id, @RequestBody MultipartFile file)
+	public ResponseEntity<String> uploadImage(@PathVariable("id") String id, @RequestBody String base64String)
 			throws IOException, IllegalAccessException {
 
-		String imageId = service.uploadFile(file, id);
+		String imageId = service.uploadFile(base64String, id);
 		return new ResponseEntity<>(imageId, HttpStatus.OK);
 	}
 
 	/**
 	 * Retrieve image for the particular visitor
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 * @throws FileNotFoundException
