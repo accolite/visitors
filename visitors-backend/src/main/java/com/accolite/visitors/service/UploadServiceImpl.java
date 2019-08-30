@@ -1,14 +1,15 @@
 package com.accolite.visitors.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.accolite.visitors.repository.UploadRepository;
 
@@ -22,9 +23,11 @@ public class UploadServiceImpl implements UploadService {
 	private VisitorService visitorService;
 
 	@Override
-	public String uploadFile(MultipartFile file, String id) throws IOException, IllegalAccessException {
+	public String uploadFile(String file, String id) throws IllegalAccessException {
 
-		String imageId = repository.uploadFile(file, id);
+		byte[] byteArray = Base64.decodeBase64(file.getBytes());
+		InputStream is = new ByteArrayInputStream(byteArray);
+		String imageId = repository.uploadFile(is, id);
 
 		// Add Image Id to the visitor Details
 		// Can be removed if not required since we are having reference of

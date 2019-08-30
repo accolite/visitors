@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.springframework.data.mongodb.gridfs.GridFsResource;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface UploadService {
 
@@ -15,7 +14,7 @@ public interface UploadService {
 	 * @throws IOException
 	 * @throws IllegalAccessException
 	 */
-	String uploadFile(MultipartFile file, String id) throws IOException, IllegalAccessException;
+	String uploadFile(String file, String id) throws IOException, IllegalAccessException;
 
 	/**
 	 * @param id
