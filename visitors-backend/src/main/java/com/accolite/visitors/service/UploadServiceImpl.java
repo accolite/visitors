@@ -1,12 +1,14 @@
 package com.accolite.visitors.service;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.stereotype.Service;
@@ -40,9 +42,13 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	@Override
-	public GridFsResource getFile(String id) throws FileNotFoundException {
+	public String getFile(String id) throws IOException {
 
-		return repository.getFile(id);
+		GridFsResource gridFsResource = repository.getFile(id);
+		InputStream inputStream = gridFsResource.getInputStream();
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		IOUtils.copy(inputStream,outputStream);
+		return Base64.encodeBase64String(outputStream.toByteArray());
 	}
 
 }

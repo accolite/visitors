@@ -3,8 +3,6 @@ package com.accolite.visitors.service;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.springframework.data.mongodb.gridfs.GridFsResource;
-
 public interface UploadService {
 
 	/**
@@ -21,6 +19,6 @@ public interface UploadService {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	GridFsResource getFile(String id) throws FileNotFoundException;
+	String getFile(String id) throws IOException;
 
 }
