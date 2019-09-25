@@ -4,11 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.data.mongodb.gridfs.GridFsResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,14 +47,10 @@ public class UploadController {
 	 * @throws FileNotFoundException
 	 */
 	@GetMapping(value = "/get/photo/{id}")
-	public ResponseEntity<Resource> getImage(@PathVariable("id") String id) throws FileNotFoundException {
+	public ResponseEntity<String> getImage(@PathVariable("id") String id) throws IOException {
 
-		GridFsResource gridFsResource = service.getFile(id);
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.parseMediaType(gridFsResource.getContentType()));
-
-		return new ResponseEntity<>(gridFsResource, headers, HttpStatus.OK);
+		String image = service.getFile(id);
+		return new ResponseEntity<>(image, HttpStatus.OK);
 	}
 
 	// Just for reference
